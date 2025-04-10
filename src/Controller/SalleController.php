@@ -188,7 +188,7 @@ public function edit(Request $request, Salle $salle): Response
             $this->entityManager->flush();
         }
 
-        return $this->redirectToRoute('app_salle_index', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_profilsalle', [], Response::HTTP_SEE_OTHER);
     }
  
     #[Route('/detailsalle/{idSalle}', name: 'details_salle')]

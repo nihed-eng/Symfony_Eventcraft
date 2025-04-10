@@ -20,6 +20,16 @@
 	overflow: hidden;
 }
 
+.btn-primary {
+   
+    --bs-btn-active-bg: #8D598F !important;}
+.dropdown-menu {
+  
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-bg: #B19BB2 !important;
+    --bs-dropdown-link-active-color: #fff;
+    --bs-dropdown-link-active-bg: #B19BB2 !important;}
+
 .home__room__item {
 	height: 493px;
 	position: relative;
@@ -447,15 +457,14 @@ background-color: #000;
                     <div class="home__room__title">
                         <h4>{{ reservation.salle.nomSalle }}</h4>
                         <h2>
-                            <sup>DT</sup>{{ reservation.salle.prix }}
-                            <span>/Par jour</span>
+                            <span> <div class="reservation-dates">
+                        <p><i class="far fa-calendar-alt"></i> De : {{ reservation.dateDebut|date('d/m/Y') }}</p>
+                        <p><i class="far fa-calendar-alt"></i> A : {{ reservation.dateFin|date('d/m/Y') }}</p>
+                    </div></span>
                         </h2>
                     </div>
                     
-                    <div class="reservation-dates">
-                        <p><i class="far fa-calendar-alt"></i> {{ reservation.dateDebut|date('d/m/Y H:i') }}</p>
-                        <p><i class="far fa-calendar-alt"></i> {{ reservation.dateFin|date('d/m/Y H:i') }}</p>
-                    </div>
+                   
                     
                     <a href="{{ path('app_reservation_show', {'idReservation': reservation.idReservation}) }}" 
                        class="btn btn-primary">

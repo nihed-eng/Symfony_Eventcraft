@@ -6,6 +6,8 @@ namespace App\Controller;
 
 use App\Entity\Salle;
 use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\SalleRepository;
+
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -38,4 +40,6 @@ public function index(EntityManagerInterface $entityManager, PaginatorInterface 
     ]);
 }
 }
+
+
 

@@ -9,7 +9,15 @@
     <style>
 
 
-
+.btn-primary {
+   
+    --bs-btn-active-bg: #8D598F !important;}
+.dropdown-menu {
+  
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-bg: #B19BB2 !important;
+    --bs-dropdown-link-active-color: #fff;
+    --bs-dropdown-link-active-bg: #B19BB2 !important;}
 
 /*---------------------
   Home Room
@@ -405,8 +413,17 @@ background-color: #000;
         
         <!-- Boutons ajoutés -->
         <div class="buttons-container">
-              <a href="{{ path('app_profilsalle') }}" class="btn btn-primary me-2">MES SALLES</a>
-              <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>
+<div class="dropdown">
+    <a class="btn btn-primary me-2 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        MES SALLES
+    </a>
+
+    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Événement</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_profilsalle') }}">Salle</a></li>
+        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Offre</a></li>
+        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Décorations</a></li>
+    </ul>              <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>
 <button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
                 Ajouter une salle
               </button>        </div>

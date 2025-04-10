@@ -118,6 +118,8 @@
                 { name: 'prix', label: 'Prix' }
             ];
 
+            
+
             champs.forEach(champ => {
                 const input = form.querySelector(`[name$="[${champ.name}]"]`);
                 if (input && input.value.trim() === "") {
