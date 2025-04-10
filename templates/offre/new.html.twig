@@ -1,0 +1,210 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Créer une Offre{% endblock %}
+
+{% block stylesheets %}
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+        .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+      .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 58%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 30px;
+            margin-top: 15px;
+        }
+
+        .table th {
+            width: 30%;
+            font-weight: bold;
+        }
+
+         .btn-custom, .btn-delete {
+           padding: 5px 10px;
+    /* border-radius: 5px; */
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+        }
+
+           .btn-custom {
+    padding: 5px 10px;
+    border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+}
+.btn-secondary{
+    padding: 5px 10px;
+    border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: #98A695;
+}
+
+        .btn-custom:hover {
+            background-color: #F0C8C6;
+        }
+
+        .btn-delete {
+ background-color: rgb(161, 104, 163);        }
+
+        .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+
+        /* Floating Image Styling */
+        .floating-image {
+            position: fixed;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-10px); }
+            100% { transform: translateY(-50%) translateX(0); }
+        }
+
+        @media (max-width: 1200px) {
+            .floating-image {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- HERO SECTION -->
+    <div class="hero-wrap" style="background-image: url('/images/ajoutdemande.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM SECTION -->
+    <div class="form-container">
+        <section class="ftco-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-12 col-lg-8 mb-5">
+                        <div class="p-5 bg-white">
+                            <h3 class="h5 text-black mb-3">Formulaire de l'Offre</h3>
+                            {{ form_start(form) }}
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="titreOffre">Titre de l'offre</label>
+                                    {{ form_widget(form.titreOffre, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre'}}) }}
+                                    <div class="text-danger small">{{ form_errors(form.titreOffre) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="descriptionOffre">Description</label>
+                                    {{ form_widget(form.descriptionOffre, {'attr': {'class': 'form-control', 'rows': 3, 'placeholder': 'Décrivez votre offre...'}}) }}
+                                    <div class="text-danger small">{{ form_errors(form.descriptionOffre) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="typeOffre">Type d'offre</label>
+                                    {{ form_widget(form.typeOffre, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger small">{{ form_errors(form.typeOffre) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="montant">Montant</label>
+                                    {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'placeholder': 'Montant en €'}}) }}
+                                    <div class="text-danger small">{{ form_errors(form.montant) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12 mb-3 mb-md-0">
+                                    <label class="font-weight-bold" for="dateExp">Date d'expiration</label>
+                                    {{ form_widget(form.dateExp, {'attr': {'class': 'form-control'}}) }}
+                                    <div class="text-danger small">{{ form_errors(form.dateExp) }}</div>
+                                </div>
+                            </div>
+
+                            <div class="row form-group">
+                                <div class="col-md-12">
+                                    <button type="submit" class="btn btn-custom py-2 px-5 w-100">Créer l'Offre</button>
+                                </div>
+                            </div>
+
+                            {{ form_end(form) }}
+                            
+                            <!-- Retour Button -->
+                            <div class="text-center mt-3">
+                                <a href="{{ path('app_offre_index') }}" class="btn btn-secondary py-2 px-5 w-100">Retour à la liste des offres</a>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+
+{% endblock %}
