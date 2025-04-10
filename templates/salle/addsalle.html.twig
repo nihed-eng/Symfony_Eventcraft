@@ -1,0 +1,137 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une nouvelle salle{% endblock %}
+
+{% block body %}
+<section class="h-100 gradient-custom-2">
+  <div class="container py-5 h-100">
+    <div class="row d-flex justify-content-center">
+      <div class="col col-lg-9 col-xl-8">
+        <div class="card">
+          <div class="rounded-top text-white d-flex flex-row align-items-center" style="background-color: #000; height: 200px;">
+            <div class="ms-4 d-flex flex-column align-items-center" style="width: 150px;">
+              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
+                alt="Avatar" class="img-fluid img-thumbnail mt-4 mb-2"
+                style="width: 150px; z-index: 1">
+            </div>
+            <div class="ms-3">
+              {% if app.user %}
+                <h5>{{ app.user.nom }} {{ app.user.prenom }}</h5>
+                <p>{{ app.user.ville ?? 'Ville non spécifiée' }}</p>
+              {% else %}
+                <h5>Utilisateur inconnu</h5>
+                <p>Veuillez vous connecter</p>
+              {% endif %}
+               <a href="{{ path('app_profilsalle') }}" class="btn btn-primary me-2">MES SALLES</a>
+              <a href="{{ path('app_reservation_index') }}" class="btn btn-info">MES RÉSERVATIONS</a>
+            </div>
+          </div>
+          <div class="p-4 text-black bg-body-tertiary">
+            <div class="d-flex justify-content-end text-center py-1">
+              <button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
+                Ajouter une salle
+              </button>
+            </div>
+          </div>
+
+          <h1 class="edit-salle-title">Ajouter une nouvelle Salle</h1>
+
+          {% if form is defined %}
+            {{ form_start(form, {'attr': {'class': 'modal-form', 'style': 'font-family: "Nunito", sans-serif;'}}) }}
+
+            <style>
+              .modal-form input,
+              .modal-form select,
+              .modal-form textarea {
+                font-family: "Nunito", sans-serif !important;
+                width: 100% !important;
+                font-size: 12px !important;
+                border-width: 0 0 1px 0 !important;
+                padding: 6px !important;
+                transition: all 0.3s ease-in-out !important;
+              }
+
+              .edit-salle-title {
+                text-align: center;
+                font-family: sans-serif;
+                font-size: 50px;
+                font-weight: 200;
+                line-height: 1.4;
+                margin: 20px 0 30px 0;
+                color: #CBA979;
+              }
+
+              input[type="text"] {
+                height: 40px !important;
+              }
+            </style>
+
+            {{ form_row(form.nomSalle, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.capacite, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.equipement, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.imageFile, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.locationSalle, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.qualite, {'attr': {'style': 'font-size: 14px;'}}) }}
+            {{ form_row(form.prix, {'attr': {'style': 'font-size: 14px;'}}) }}
+
+            <button type="submit" 
+                    style="background: #CBA979;
+                           color: white;
+                           border: 2px solid #CBA979;
+                           padding: 10px 20px;
+                           cursor: pointer;
+                           font-family: 'Nunito', sans-serif;
+                           font-size: 20px;
+                           width: 100%;
+                           transition: all 0.3s ease;
+                           margin-top: 15px;"
+                    onmouseover="this.style.backgroundColor='#CBA979'; this.style.color='white'"
+                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='#CBA979'">
+                Enregistrer
+            </button>
+
+            {{ form_end(form) }}
+          {% else %}
+            <div class="alert alert-danger">
+                Le formulaire n'est pas disponible. Contactez l'administrateur.
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- SCRIPT DE VALIDATION -->
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const form = document.querySelector('form');
+        form.addEventListener('submit', function (e) {
+            let isValid = true;
+            let message = "";
+
+            const champs = [
+                { name: 'nomSalle', label: 'Nom de la salle' },
+                { name: 'capacite', label: 'Capacité' },
+                { name: 'equipement', label: 'Équipement' },
+                { name: 'locationSalle', label: 'Localisation' },
+                { name: 'qualite', label: 'Qualité' },
+                { name: 'prix', label: 'Prix' }
+            ];
+
+            champs.forEach(champ => {
+                const input = form.querySelector(`[name$="[${champ.name}]"]`);
+                if (input && input.value.trim() === "") {
+                    isValid = false;
+                    message += `- ${champ.label} est requis.\n`;
+                }
+            });
+
+            if (!isValid) {
+                e.preventDefault();
+                alert("Veuillez remplir tous les champs obligatoires :\n" + message);
+            }
+        });
+    });
+  </script>
+</section>
+{% endblock %}

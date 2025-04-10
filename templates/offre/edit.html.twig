@@ -1,0 +1,167 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Modifier Offre{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        /* 🔹 General Styles */
+        body {
+            background: #f8f9fa;
+            font-family: 'Roboto', sans-serif;
+        }
+
+        .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+            .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 58%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            width: 100%;
+            margin-top: 30px;
+            animation: fadeIn 0.8s ease-in-out;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+                .btn-custom {
+    padding: 5px 10px;
+    border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: #CBA979 ;
+}
+   .btn-custom:hover {
+            background-color: #F0C8C6 !important;
+        }
+
+        .btn-custom:hover {
+            background: #283e51;
+        }
+
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+
+        .form-control {
+            border-radius: 8px;
+        }
+
+        .floating-image {
+            position: fixed;
+            right: 5%;
+            top: 50%;
+            transform: translateY(-50%);
+            max-width: 350px;
+            border-radius: 15px;
+            box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0% { transform: translateY(-50%) translateX(0); }
+            50% { transform: translateY(-50%) translateX(-10px); }
+            100% { transform: translateY(-50%) translateX(0); }
+        }
+
+        @media (max-width: 1200px) {
+            .floating-image {
+                display: none;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- HERO SECTION -->
+    <div class="hero-wrap" style="background-image: url('/images/ajoutdemande.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+               
+            </div>
+        </div>
+    </div>
+
+    <!-- FORM SECTION -->
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Modifier l'Offre</h2>
+            {{ form_start(form) }}
+
+            <div class="mb-3">
+                {{ form_label(form.titreOffre, 'Titre de l\'Offre', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.titreOffre, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le titre'}}) }}
+                <div class="text-danger small">{{ form_errors(form.titreOffre) }}</div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.descriptionOffre, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.descriptionOffre, {'attr': {'class': 'form-control', 'rows': 3, 'placeholder': 'Décrivez l\'offre...'}}) }}
+                <div class="text-danger small">{{ form_errors(form.descriptionOffre) }}</div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.typeOffre, 'Type d\'Offre', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.typeOffre, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger small">{{ form_errors(form.typeOffre) }}</div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.montant, 'Montant (€)', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.montant, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le montant'}}) }}
+                <div class="text-danger small">{{ form_errors(form.montant) }}</div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.dateExp, 'Date d\'Expiration', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateExp, {'attr': {'class': 'form-control'}}) }}
+                <div class="text-danger small">{{ form_errors(form.dateExp) }}</div>
+            </div>
+
+            <button type="submit" class="btn btn-custom w-100">Mettre à jour</button>
+
+            {{ form_end(form) }}
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_offre_index') }}" class="text-muted">⬅ Retour à la liste</a>
+            </div>
+        </div>
+    </div>
+
+{% endblock %}

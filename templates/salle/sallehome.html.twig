@@ -1,0 +1,321 @@
+{% extends 'basetemp.html.twig' %}
+
+{% block title %}Event Craft-Salle{% endblock %}
+
+{% block body %}
+    <!-- Hero Section Begin -->
+<section class="hero spad">
+    <div class="overlay"></div>
+    
+    <div class="hero__slider owl-carousel">
+        <div class="hero__item" style="background-image: url('/images/slider3.jpg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider2.jpeg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider1.jpg');"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero__text">
+            <h5>WELCOME HIROTO</h5>
+            <h2>Experience the greatest for your holidays.</h2>
+        </div>
+        <form action="#" class="filter__form">
+            <div class="filter__form__item filter__form__item--search">
+                <p>LocaL</p>
+                <div class="filter__form__input">
+                    <input type="text" placeholder="Search Location">
+                    <span class="icon_search"></span>
+                </div>
+            </div>
+            <div class="filter__form__item">
+                <p>DATE DEBUT</p>
+                <div class="filter__form__datepicker">
+                    <span class="icon_calendar"></span>
+                    <input type="text" class="datepicker_pop check__in">
+                    <i class="arrow_carrot-down"></i>
+                </div>
+            </div>
+            <div class="filter__form__item">
+                <p>DATE FIN</p>
+                <div class="filter__form__datepicker">
+                    <span class="icon_calendar"></span>
+                    <input type="text" class="datepicker_pop check__out">
+                    <i class="arrow_carrot-down"></i>
+                </div>
+            </div>
+            <div class="filter__form__item filter__form__item--select">
+                <p>QUANTITE</p>
+                <div class="filter__form__select">
+                    <span class="icon_group"></span>
+                    <select>
+                        <option value="">QUANTITE</option>
+                        <option value="">2 Adult</option>
+                        <option value="">1 Adult</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary">TROUVER</button>
+        </form>
+    </div>
+</section>
+
+
+    <!-- Hero Section End -->
+
+    <!-- Home About Section Begin -->
+    
+    <!-- Home About Section End -->
+
+    <!-- Services Section Begin -->
+    
+    <!-- Services Section End -->
+
+    <!-- Home Room Section Begin -->
+    <section class="home-room spad" style="margin-top: 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>A LA UNE</h5>
+                    <h2>EXPLORER NOS SALLES</h2>
+                </div>
+            </div>
+        </div>
+    </div>           
+
+    <div class="container-fluid">
+        <div class="row">
+        {% for salle in pagination %}
+    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+  {% if salle.imageSalle %}
+    {# Sépare les chemins s'il y a des virgules (plusieurs images) et prend la première #}
+    {% set firstPath = salle.imageSalle | split(',') | first %}
+
+    {# Garde seulement le nom du fichier, enlève tout le chemin #}
+    {% set filename = firstPath | split('/') | last | split('\\') | last %}
+
+    {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
+    <div class="home__room__item set-bg" style="background-image: url('/images/{{ filename | url_encode }}');">
+{% else %}
+    <div class="home__room__item">
+        <p>Aucune image disponible</p>
+{% endif %}
+
+
+
+
+        
+            <div class="home__room__title">
+                <h4>{{ salle.nomSalle }}</h4>
+                <h2><sup>DT</sup>{{ salle.prix }}<span>/jour</span></h2>
+            </div>
+            <a href="{{ path('details_salle', {'idSalle': salle.idSalle}) }}" class="btn btn-outline-light">CONSULTER MAINTENANT</a>
+        </div>
+    </div>
+{% endfor %}
+
+        </div>
+
+        <!-- Pagination Navigation -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</section>
+
+
+    
+    <section class="latest-blog spad">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h5>MILLEURS SELECTION</h5>
+                        <h2>MIEUX RESERVEES</h2>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-3 p-0 order-lg-1 col-md-6 order-md-1">
+
+                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-1.jpg') }}"></div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-2 col-md-6 order-md-2">
+                    <div class="latest__blog__text">
+                        <div class="label">Hotel</div>
+                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                        <p><i class="fa fa-clock-o"></i> 19th March, 2019</p>
+                        <a href="#">Voir Détails</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-3 col-md-6 order-md-4">
+                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-2.jpg') }}"></div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-4 col-md-6 order-md-3">
+                    <div class="latest__blog__text">
+                        <div class="label">Restaurant</div>
+                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                        <p><i class="fa fa-clock-o"></i> 22th March, 2019</p>
+                        <a href="#">Voir Détails</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-6 col-md-6 order-md-5">
+                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                        style="background-image: url('{{asset('assets/img/latest-blog/lb-3.jpg') }}"></div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-5 col-md-6 order-md-6">
+                    <div class="latest__blog__text">
+                        <div class="label">Travel</div>
+                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                        <p><i class="fa fa-clock-o"></i> 25th March, 2019</p>
+                        <a href="#">Voir Détails</a>
+                    </div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-8 col-md-6 order-md-8">
+                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                        style="background-image: url('{{asset('assets/img/latest-blog/lb-4.jpg') }}"></div>
+                </div>
+                <div class="col-lg-3 p-0 order-lg-7 col-md-6 order-md-7">
+                    <div class="latest__blog__text">
+                        <div class="label">Booking</div>
+                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                        <p><i class="fa fa-clock-o"></i> 29th March, 2019</p>
+                        <a href="#">Voir Détails</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+<section class="testimonial spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="testimonial__text">
+                    <div class="section-title">
+                        <h5>Testimonials</h5>
+                        <h2>What do customers say about us?</h2>
+                    </div>
+                    <div class="testimonial__slider owl-carousel">
+                        <div class="testimonial__item">
+                            <h5>Detailed Review:</h5>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p>This is a review of the product. The quality is great!</p>
+                            <div class="testimonial__author">
+                                <h5>John Doe</h5>
+                                <span>CEO of Example Corp</span>
+                            </div>
+                        </div>
+                        <div class="testimonial__item">
+                            <h5>Detailed Review:</h5>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p>Excellent service, and the product exceeded my expectations!</p>
+                            <div class="testimonial__author">
+                                <h5>Jane Smith</h5>
+                                <span>Marketing Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<!-- Include the necessary scripts for Owl Carousel -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/js/owl.carousel.min.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/js/owl.theme.default.min.css">
+<script>
+    $(document).ready(function() {
+        $(".testimonial__slider").owlCarousel({
+            loop: true,
+            margin: 10,
+            nav: true,
+            dots: true,
+            items: 1,  /* Afficher une seule slide à la fois */
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed: 1000,  /* Vitesse de transition */
+            animateOut: null,  /* Pas d'animation de fade */
+            animateIn: null,   /* Pas d'animation de fade */
+        });
+    });
+</script>
+
+<script>
+    $(document).ready(function() {
+        $(".hero__slider").owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: true,
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed: 1000
+        });
+    });
+</script>
+
+
+<script>
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header__content');
+        if (window.scrollY > 50) {
+            header.style.backgroundColor = 'black';
+        } else {
+            header.style.backgroundColor = 'transparent';
+        }
+    });
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.getElementById('navbarDropdown');
+    const dropdownMenu = dropdownToggle.nextElementSibling;
+
+    // Masquer le menu dropdown par défaut
+    dropdownMenu.classList.remove('show');
+
+    // Toggle l'affichage du dropdown au clic
+    dropdownToggle.addEventListener('click', function (event) {
+        event.preventDefault(); // Empêche le lien de recharger la page
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Fermer le dropdown si on clique ailleurs dans la page
+    document.addEventListener('click', function (event) {
+        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+});
+
+
+
+</script>
+
+
+
+<!-- Your JavaScript to initialize Owl Carousel -->
+
+    <!-- Testimonial Section End -->
+
+    <!-- Home Room Section End -->
+{% endblock %}

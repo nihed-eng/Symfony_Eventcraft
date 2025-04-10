@@ -1,0 +1,519 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Mon Profil{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+
+
+
+
+/*---------------------
+  Home Room
+-----------------------*/
+
+.home-room .container-fluid {
+	padding-right: 0;
+	overflow: hidden;
+}
+
+.home__room__item {
+	height: 493px;
+	position: relative;
+	margin-right: 15px;
+	margin-bottom: 15px;
+}
+
+.home__room__item:hover .home__room__title {
+	top: 0;
+	margin-top: 0;
+	padding: 32px 25px 0;
+}
+
+.home__room__item:hover a {
+	bottom: 32px;
+	opacity: 1;
+	visibility: visible;
+    
+}
+
+.btn-outline-warning {
+    border:none;
+        --bs-btn-hover-border-color: #CBA979;
+        --bs-btn-disabled-border-color: #CBA979;
+        --bs-btn-active-border-color: #CBA979;
+    /* --bs-btn-color: #ffc107; */
+    --bs-btn-border-color: #8D598F;
+    --bs-btn-hover-color: #000;
+    --bs-btn-active-bg: #8D598F;
+    --bs-btn-hover-bg: #8D598F;}
+
+.home__room__item a {
+            --bs-btn-disabled-border-color: #CBA979;
+border: none;
+    border-radius:0;
+	font-size: 18px;
+	color: #ffffff;
+	font-family: "Barlow Condensed", sans-serif;
+	position: relative;
+	padding: 4px 0;
+	display: inline-block;
+	position: absolute;
+	left: 25px;
+	bottom: 0px;
+	opacity: 0;
+	visibility: hidden;
+	-webkit-transition: all, 0.5s;
+	-o-transition: all, 0.5s;
+	transition: all, 0.5s;
+}
+
+.home__room__item a:before {
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	height: 2px;
+	width: 100%;
+	background: #E9AD28;
+	content: "";
+}
+
+.home__room__title {
+	position: absolute;
+	left: 0;
+	top: 100%;
+	width: 100%;
+	padding: 0 25px;
+	margin-top: -120px;
+	-webkit-transition: all, 0.5s;
+	-o-transition: all, 0.5s;
+	transition: all, 0.5s;
+}
+
+.home__room__title h4 {
+	color: #ffffff;
+	margin-bottom: 5px;
+}
+
+.home__room__title h2 {
+	font-size: 48px;
+	color: #ffffff;
+	position: relative;
+	padding-left: 12px;
+}
+
+.home__room__title h2 sup {
+	font-size: 20px;
+	position: absolute;
+	left: 0;
+	top: 15px;
+}
+
+.home__room__title h2 span {
+	font-size: 18px;
+}
+
+.home__explore {
+	padding-top: 65px;
+}
+
+.home__explore h3 {
+	color: #000000;
+	line-height: 50px;
+}
+
+
+.hero__slider {
+    position: relative;
+    top: 0;
+    margin-top: 0;
+    width: 100%;
+    height: 100vh;
+}
+
+.overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.5);  /* Overlay semi-transparent */
+    z-index: 1;  /* L'overlay doit être au-dessus des images */
+}
+
+.hero__item {
+    height: 100vh; /* Chaque image occupe toute la hauteur de l'écran */
+    background-size: cover; /* Couvre l'espace de la section */
+    background-position: center center;
+}
+
+
+
+.hero__text {
+    position: absolute;
+    top: -186%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    text-align: center;
+    z-index: 2; /* En avant du slider */
+}
+
+.container {
+    position: relative;
+    z-index: 2; /* Pour être au-dessus des images */
+}
+
+
+        /* Reset et base */
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        
+.me-2 {
+  border:none;
+    border-radius:0;
+    border-bottom: 1px solid #000;
+    color: #000;
+    background-color: transparent;
+    margin-right: .5rem !important;
+}
+
+.me-2:hover {
+  border-radius:0;
+background-color: #000;
+    margin-right: .5rem !important;
+}
+
+.text-body {
+    border-radius: 0;
+    background-color: #000;
+    color: white !important;
+}
+
+.text-body:hover { border:none;
+    border-radius:0;
+    border-bottom: 1px solid #000;
+    color: #000 !important;
+    background-color: transparent;
+}
+
+
+
+
+.buttons-container {
+    position: absolute;
+    top: 84px;
+    right: -60px;
+    display: flex;
+    gap: 10px;
+    padding: 10px;
+}
+
+@media (max-width: 768px) { /* Responsive pour les tablettes et mobiles */
+    .buttons-container {
+        flex-direction: column;
+        right: 10px;
+        top: 10px;
+    }
+
+    .buttons-container button {
+        width: 100px;
+    }
+}
+
+
+        /* Hero section */
+        .hero-section {
+           width: 100%;
+    height: 50vh;
+    background-image: url(/images/offre.jpeg);
+    background-size: cover;
+    background-position: center;
+    position: relative;
+    margin-top: -57px;
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+        
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            color: white;
+            text-align: center;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding-top: 80px; /* Espace pour l'image de profil */
+        }
+        
+        /* Profile section - positionnée en superposition */
+        .profile-section {
+            text-align: center;
+            position: relative;
+            z-index: 10;
+            margin-top: -75px; /* Déplacement vers le haut */
+            margin-bottom: 30px;
+        }
+        
+        .profile-image {
+            width: 150px;
+            height: 150px;
+            border-radius: 50%;
+            object-fit: cover;
+            margin: 0 auto 1rem;
+            border: 5px solid white;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        
+        /* Contenu des salles */
+        .salles-container {
+            padding: 30px;
+            background-color: white;
+        }
+        
+        /* Conteneur principal centré */
+        .main-centered-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            width: 100%;
+            padding: 0 15px;
+        }
+        
+        /* Footer */
+        #main-footer {
+            background: #343a40;
+            color: white;
+            padding: 20px 0;
+            text-align: center;
+        }
+
+        /* Styles pour les cartes */
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .card-text {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .btn-container {
+            margin-top: auto;
+            padding-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero-section {
+                height: 30vh;
+            }
+            
+            .profile-image {
+                width: 120px;
+                height: 120px;
+            }
+            
+            .profile-section {
+                margin-top: -60px;
+            }
+            
+            .hero-content {
+                padding-top: 60px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div>
+    <!-- Hero Section -->
+    <section class="hero-section">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <div class="container">
+                <div class="row justify-content-center">
+                    <div class="col-12 text-center">
+                        <h1 class="display-4 mb-3">Liste des Salles</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Profile Section - Superposée partiellement sur la hero -->
+  <section class="profile-section">
+    <div class="container text-center position-relative">
+        <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" 
+             alt="User" class="profile-image">
+        {% if app.user %}
+            <h3>{{ app.user.nom }} {{ app.user.prenom }}</h3>
+            <p class="text-muted">{{ app.user.email }}</p>
+        {% endif %}
+        
+        <!-- Boutons ajoutés -->
+        <div class="buttons-container">
+              <a href="{{ path('app_profilsalle') }}" class="btn btn-primary me-2">MES SALLES</a>
+              <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>
+<button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
+                Ajouter une salle
+              </button>        </div>
+    </div>
+</section>
+    
+
+    <!-- Liste des salles -->
+    <section class="home-room spad" style="margin-top: 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                        <h2>Bienvenue {{ app.user.prenom|default('Utilisateur') }}</h2>
+
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="container-fluid">
+        <div class="row">
+        {% for salle in pagination %}
+    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+        {% if salle.imageSalle %}
+            <div class="home__room__item set-bg" style="background-image: url('{{ asset('images/' ~ salle.imageSalle) }}');">
+        {% else %}
+            <div class="home__room__item">
+                <p>Aucune image disponible</p>
+        {% endif %}
+        
+            <div class="home__room__title">
+                <h4>{{ salle.nomSalle }}</h4>
+                <h2><sup></sup>{{ salle.prix }}<span>/DT</span></h2>
+            </div>
+
+            
+            <div class="home__room__buttons mt-2" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+    <a href="{{ path('app_salle_edit', {'idSalle': salle.idSalle}) }}" 
+       class="btn btn-outline-warning" 
+       style=" margin: 0 auto; width: 150px; text-align: center; left: 50%; transform: translateX(-50%);">
+       Modifier
+    </a>
+    
+    <form method="post" action="{{ path('app_salle_delete', {'idSalle': salle.idSalle}) }}"
+          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?');" style="margin: 0;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.idSalle) }}">
+        <button type="submit" class="btn btn-outline-danger" style="font-size: 18px; color: #ffffff; font-family: 'Barlow Condensed', sans-serif; position: relative; padding: 4px 0; display: inline-block; border: none; background: none;">
+            <i class="ion-ios-trash" style="font-size: 37px; color: #ffffff; transition: color 0.3s; padding-right: 10px;" ></i>
+        </button>
+        <style>
+            button.btn-outline-danger:hover i.ion-ios-trash {
+            color: red;
+            }
+        </style>
+    </form>
+</div>
+ 
+
+        </div>
+    </div>
+{% endfor %}
+
+        </div>
+
+        <!-- Pagination Navigation -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</section>
+
+    <!-- Footer -->
+    <footer id="main-footer">
+        <div class="container">
+            <div class="row">
+                <div class="col-12">
+                    <p class="mb-0">&copy; {{ "now"|date("Y") }} Mon Application. Tous droits réservés.</p>
+                </div>
+            </div>
+        </div>
+    </footer>
+</div>
+
+<!-- Modal d'édition -->
+<div id="editModal" class="modal fade" tabindex="-1" aria-labelledby="editModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="editModalLabel">Modifier la Salle</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div id="editFormContainer"></div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+function openEditModal(idSalle) {
+    fetch(`/salle/edit/${idSalle}`)
+        .then(response => response.text())
+        .then(html => {
+            document.getElementById('editFormContainer').innerHTML = html;
+            const editModal = new bootstrap.Modal(document.getElementById('editModal'));
+            editModal.show();
+        });
+}
+</script>
+{% endblock %}
