@@ -57,47 +57,30 @@ final class SalleController extends AbstractController
     #[Route('/new', name: 'app_salle_new', methods: ['GET', 'POST'])]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
-        // Créer l'objet salle
         $salle = new Salle();
+        $user = $this->getUser();
         
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser(); // Récupère l'utilisateur connecté
-        
-        // Vérifier si l'utilisateur est connecté
         if (!$user) {
-            throw new \Exception("Vous devez être connecté pour ajouter une salle.");
+            $this->addFlash('error', 'Vous devez être connecté pour ajouter une salle.');
+            return $this->redirectToRoute('app_login');
         }
         
-        // Associer l'utilisateur connecté à la salle
         $salle->setUser($user);
-        
-        // Créer et gérer le formulaire
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
         
-        // Si le formulaire est soumis et valide
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Gérer le fichier image
-            $imageFile = $form->get('imageFile')->getData();
-            
-            if ($imageFile) {
-                $newFilename = uniqid().'.'.$imageFile->guessExtension();
-                $imageFile->move(
-                    $this->getParameter('images_directory'), // Assure-toi d'avoir configuré le paramètre 'images_directory'
-                    $newFilename
-                );
-                $salle->setImageSalle($newFilename);  // Associer le nom du fichier image à la salle
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                // Les erreurs seront automatiquement passées au template
             }
-        
-            // Persister et sauvegarder la salle
-            $entityManager->persist($salle);
-            $entityManager->flush();
-        
-            // Redirection vers la liste des salles
-            return $this->redirectToRoute('app_profilsalle');
+            
+            if ($form->isValid()) {
+                // ... traitement du formulaire valide ...
+                $this->addFlash('success', 'La salle a été créée avec succès!');
+                return $this->redirectToRoute('app_profilsalle');
+            }
         }
         
-        // Afficher le formulaire
         return $this->render('salle/addsalle.html.twig', [
             'form' => $form->createView(),
         ]);
@@ -147,38 +130,45 @@ final class SalleController extends AbstractController
     }
     
 
-  // SalleController.php
-
-
-#[Route('/edit/{idSalle}', name: 'app_salle_edit', methods: ['GET', 'POST'])]
-public function edit(Request $request, Salle $salle): Response
-{
-    $form = $this->createForm(SalleType::class, $salle);
-    $form->handleRequest($request);
-
-    if ($form->isSubmitted() && $form->isValid()) {
-        $imageFile = $form->get('imageFile')->getData();
-        
-        if ($imageFile) {
-            $newFilename = uniqid().'.'.$imageFile->guessExtension();
-            $imageFile->move(
-                $this->getParameter('images_directory'),
-                $newFilename
-            );
-            $salle->setImageSalle($newFilename);
-        }
-
-        $this->entityManager->flush();
-        return $this->redirectToRoute('app_profilsalle');
-    }
-
-    return $this->render('salle/edit_salle_modal.html.twig', [
-        'form' => $form->createView(),
-        'salle' => $salle,
-    ]);
-} 
+    #[Route('/edit/{idSalle}', name: 'app_salle_edit', methods: ['GET', 'POST'])]
+    public function edit(Request $request, Salle $salle, EntityManagerInterface $entityManager): Response
+    {
+        $form = $this->createForm(SalleType::class, $salle);
+        $form->handleRequest($request);
     
-
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                $imageFile = $form->get('imageFile')->getData();
+                
+                if ($imageFile) {
+                    // Supprimer l'ancienne image si elle existe
+                    if ($salle->getImageSalle()) {
+                        $oldImagePath = $this->getParameter('images_directory').'/'.$salle->getImageSalle();
+                        if (file_exists($oldImagePath)) {
+                            unlink($oldImagePath);
+                        }
+                    }
+                    
+                    $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                    $imageFile->move(
+                        $this->getParameter('images_directory'),
+                        $newFilename
+                    );
+                    $salle->setImageSalle($newFilename);
+                }
+    
+                $entityManager->flush();
+                $this->addFlash('success', 'La salle a été modifiée avec succès!');
+                return $this->redirectToRoute('app_profilsalle');
+            }
+            
+        }
+    
+        return $this->render('salle/edit_salle_modal.html.twig', [
+            'form' => $form->createView(),
+            'salle' => $salle
+        ]);
+    }
 
     #[Route('/{idSalle}', name: 'app_salle_delete', methods: ['POST'])]
     public function delete(Request $request, Salle $salle): Response

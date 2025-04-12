@@ -11,6 +11,8 @@ use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\File;
 
 class SalleType extends AbstractType
@@ -20,50 +22,45 @@ class SalleType extends AbstractType
         $builder
             ->add('nomSalle', TextType::class, [
                 'label' => 'Nom de la salle',
-                'attr' => [
-                    'required' => true,
-                    'minlength' => 3,
-                    'maxlength' => 50,
-                    'pattern' => '[A-Za-z0-9\s\-]+',
-                    'title' => 'Le nom doit contenir au moins 3 caractères, sans caractères spéciaux.'
-                ]
+                'attr' => ['class' => 'form-control'],
+               
             ])
             ->add('capacite', IntegerType::class, [
                 'label' => 'Capacité',
-                'attr' => [
-                    'min' => 1,
-                    'max' => 1000,
-                    'title' => 'Capacité minimale : 1'
-                ]
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new Positive(['message' => 'La capacité doit être un nombre positif']),
+                ],
             ])
+           
             ->add('equipement', TextareaType::class, [
                 'label' => 'Équipements',
-                'attr' => ['rows' => 3]
+                'attr' => ['class' => 'form-control', 'rows' => 3],
+               
             ])
             ->add('imageFile', FileType::class, [
                 'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
-                'constraints' => [
-                    new File([
-                        'maxSize' => '2M',
-                        'mimeTypes' => ['image/jpeg', 'image/png'],
-                    ])
-                ]
+                'attr' => ['class' => 'form-control'],
+              
             ])
             ->add('locationSalle', TextType::class, [
-                'label' => 'Localisation'
+                'label' => 'Localisation',
+                'attr' => ['class' => 'form-control'],
+             
             ])
             ->add('qualite', TextType::class, [
-                'label' => 'Qualité'
+                'label' => 'Qualité',
+                'attr' => ['class' => 'form-control'],
+                'required' => false
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix (€)',
-                'attr' => [
-                    'min' => 0,
-                    'step' => 0.01,
-                    'title' => 'Le prix doit être supérieur ou égal à 0'
-                ]
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new Positive(['message' => 'Le prix doit être un nombre positif']),
+                ],
             ]);
     }
 

@@ -1,139 +1,224 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Ajouter une nouvelle salle{% endblock %}
+{% block title %}Ajouter une salle{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --primary-color: #8D598F;
+            --secondary-color: #CBA979;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .add-salle-card:hover {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        
+        .add-salle-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin: 0 0 40px 0;
+            color: var(--primary-color);
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .add-salle-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+        
+        .modal-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            background: rgba(141, 89, 143, 0.05);
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+        .form-submit {
+            grid-column: span 2;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .form-submit:hover {
+            background: #6d4470;
+        }
+        
+        /* Styles des erreurs qui s'intègrent dans le design existant */
+        .form-error {
+            color: #dc3545;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .form-control.error {
+            border-color: #dc3545;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .modal-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+    </style>
+{% endblock %}
 
 {% block body %}
-<section class="h-100 gradient-custom-2">
-  <div class="container py-5 h-100">
-    <div class="row d-flex justify-content-center">
-      <div class="col col-lg-9 col-xl-8">
-        <div class="card">
-          <div class="rounded-top text-white d-flex flex-row align-items-center" style="background-color: #000; height: 200px;">
-            <div class="ms-4 d-flex flex-column align-items-center" style="width: 150px;">
-              <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp"
-                alt="Avatar" class="img-fluid img-thumbnail mt-4 mb-2"
-                style="width: 150px; z-index: 1">
+<section class="add-salle-section">
+  <div class="add-salle-container">
+    <div class="add-salle-card">
+        <h1 class="add-salle-title">Ajouter une nouvelle salle</h1>
+        
+        {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
+            
+            <div class="form-group">
+                {{ form_label(form.nomSalle) }}
+                {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
             </div>
-            <div class="ms-3">
-              {% if app.user %}
-                <h5>{{ app.user.nom }} {{ app.user.prenom }}</h5>
-                <p>{{ app.user.ville ?? 'Ville non spécifiée' }}</p>
-              {% else %}
-                <h5>Utilisateur inconnu</h5>
-                <p>Veuillez vous connecter</p>
-              {% endif %}
-               <a href="{{ path('app_profilsalle') }}" class="btn btn-primary me-2">MES SALLES</a>
-              <a href="{{ path('app_reservation_index') }}" class="btn btn-info">MES RÉSERVATIONS</a>
+            
+            <div class="form-group">
+                {{ form_label(form.capacite) }}
+                {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
             </div>
-          </div>
-          <div class="p-4 text-black bg-body-tertiary">
-            <div class="d-flex justify-content-end text-center py-1">
-              <button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
-                Ajouter une salle
-              </button>
+            
+            <div class="form-group">
+                {{ form_label(form.equipement) }}
+                {{ form_widget(form.equipement, {'attr': {'class': 'form-control', 'rows': 3 ~ (form.equipement.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
             </div>
-          </div>
-
-          <h1 class="edit-salle-title">Ajouter une nouvelle Salle</h1>
-
-          {% if form is defined %}
-            {{ form_start(form, {'attr': {'class': 'modal-form', 'style': 'font-family: "Nunito", sans-serif;'}}) }}
-
-            <style>
-              .modal-form input,
-              .modal-form select,
-              .modal-form textarea {
-                font-family: "Nunito", sans-serif !important;
-                width: 100% !important;
-                font-size: 12px !important;
-                border-width: 0 0 1px 0 !important;
-                padding: 6px !important;
-                transition: all 0.3s ease-in-out !important;
-              }
-
-              .edit-salle-title {
-                text-align: center;
-                font-family: sans-serif;
-                font-size: 50px;
-                font-weight: 200;
-                line-height: 1.4;
-                margin: 20px 0 30px 0;
-                color: #CBA979;
-              }
-
-              input[type="text"] {
-                height: 40px !important;
-              }
-            </style>
-
-            {{ form_row(form.nomSalle, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.capacite, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.equipement, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.imageFile, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.locationSalle, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.qualite, {'attr': {'style': 'font-size: 14px;'}}) }}
-            {{ form_row(form.prix, {'attr': {'style': 'font-size: 14px;'}}) }}
-
-            <button type="submit" 
-                    style="background: #CBA979;
-                           color: white;
-                           border: 2px solid #CBA979;
-                           padding: 10px 20px;
-                           cursor: pointer;
-                           font-family: 'Nunito', sans-serif;
-                           font-size: 20px;
-                           width: 100%;
-                           transition: all 0.3s ease;
-                           margin-top: 15px;"
-                    onmouseover="this.style.backgroundColor='#CBA979'; this.style.color='white'"
-                    onmouseout="this.style.backgroundColor='transparent'; this.style.color='#CBA979'">
-                Enregistrer
+            
+            <div class="form-group">
+                {{ form_label(form.locationSalle) }}
+                {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.qualite) }}
+                {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.prix) }}
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group" style="grid-column: span 2;">
+                {{ form_label(form.imageFile) }}
+                {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.imageFile, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <button type="submit" class="form-submit pulse-animation">
+                <i class="fas fa-plus-circle"></i> Créer la salle
             </button>
-
-            {{ form_end(form) }}
-          {% else %}
-            <div class="alert alert-danger">
-                Le formulaire n'est pas disponible. Contactez l'administrateur.
-            </div>
-          {% endif %}
-        </div>
-      </div>
+            
+        {{ form_end(form) }}
     </div>
   </div>
-
-  <!-- SCRIPT DE VALIDATION -->
-  <script>
-    document.addEventListener('DOMContentLoaded', function () {
-        const form = document.querySelector('form');
-        form.addEventListener('submit', function (e) {
-            let isValid = true;
-            let message = "";
-
-            const champs = [
-                { name: 'nomSalle', label: 'Nom de la salle' },
-                { name: 'capacite', label: 'Capacité' },
-                { name: 'equipement', label: 'Équipement' },
-                { name: 'locationSalle', label: 'Localisation' },
-                { name: 'qualite', label: 'Qualité' },
-                { name: 'prix', label: 'Prix' }
-            ];
-
-            
-
-            champs.forEach(champ => {
-                const input = form.querySelector(`[name$="[${champ.name}]"]`);
-                if (input && input.value.trim() === "") {
-                    isValid = false;
-                    message += `- ${champ.label} est requis.\n`;
-                }
-            });
-
-            if (!isValid) {
-                e.preventDefault();
-                alert("Veuillez remplir tous les champs obligatoires :\n" + message);
-            }
-        });
-    });
-  </script>
 </section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Désactive la validation HTML5 native
+            document.querySelector('form').setAttribute('novalidate', true);
+            
+            // Ajoute la classe error aux champs invalides
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    this.querySelectorAll('.form-control').forEach(input => {
+                        if (input.value.trim() === '' && input.hasAttribute('required')) {
+                            input.classList.add('error');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
 {% endblock %}

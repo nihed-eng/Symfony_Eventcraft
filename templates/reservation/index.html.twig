@@ -9,17 +9,6 @@
     <style>
 
 
-
-
-/*---------------------
-  Home Room
------------------------*/
-
-.home-room .container-fluid {
-	padding-right: 0;
-	overflow: hidden;
-}
-
 .btn-primary {
    
     --bs-btn-active-bg: #8D598F !important;}
@@ -29,6 +18,15 @@
     --bs-dropdown-link-hover-bg: #B19BB2 !important;
     --bs-dropdown-link-active-color: #fff;
     --bs-dropdown-link-active-bg: #B19BB2 !important;}
+
+/*---------------------
+  Home Room
+-----------------------*/
+
+.home-room .container-fluid {
+	padding-right: 0;
+	overflow: hidden;
+}
 
 .home__room__item {
 	height: 493px;
@@ -72,7 +70,7 @@ border: none;
 	padding: 4px 0;
 	display: inline-block;
 	position: absolute;
-	left: 25px;
+	left: 30%;
 	bottom: 0px;
 	opacity: 0;
 	visibility: hidden;
@@ -384,6 +382,45 @@ background-color: #000;
                 padding-top: 60px;
             }
         }
+
+        
+        .details-button:hover {
+            background-color: white;
+            color: #000;
+        }
+        
+        .delete-button-form {
+            position: absolute;
+            right: 0;
+            top: 0;
+        }
+        
+        .delete-button {
+            font-size: 18px;
+            color: #ffffff;
+            font-family: 'Barlow Condensed', sans-serif;
+            padding: 4px 0;
+            display: inline-block;
+            border: none;
+            background: none;
+            cursor: pointer;
+        }
+        
+        .delete-icon {
+                margin-right: 7px;
+    font-size: 35px;
+            color: #ffffff;
+            transition: all 0.3s ease;
+        }
+        
+        .delete-icon:hover {
+            color: #ff4444;
+            transform: scale(1.1);
+        }
+        .custom-btn:hover {
+    background-color: #CBA979 !important;
+    color: white !important;
+}
     </style>
 {% endblock %}
 
@@ -415,80 +452,103 @@ background-color: #000;
         
         <!-- Boutons ajoutés -->
         <div class="buttons-container">
-              <a href="{{ path('app_profilsalle') }}" class="btn btn-primary me-2">MES SALLES</a>
-              <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>
-<button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
+   <div class="dropdown">
+    <a class="btn btn-primary me-2 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
+        MES SALLES
+    </a>
+
+     <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+            <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Événement</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_profilsalle') }}">Salle</a></li>
+        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Offre</a></li>
+        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Décorations</a></li>
+     </ul>              <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>
+      <button type="button" class="btn btn-outline-dark text-body" onclick="window.location.href='{{ path('app_salle_new') }}'">
                 Ajouter une salle
-              </button>        </div>
+              </button>     
+                 </div>
     </div>
 </section>
-
-
-    <!-- Liste des salles -->
-   {# ... le reste de votre template reste inchangé jusqu'à la section des réservations ... #}
-
 <!-- Liste des réservations -->
-<section class="home-room spad" style="margin-top: 70px;">
-    <div class="container">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="section-title">
-                    <h5>A LA UNE</h5>
-                    <h2>MES RÉSERVATIONS</h2>
+   <section class="home-room spad" style="margin-top: 70px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h2 style="text-align: center; color:#CBA979;">MES RÉSERVATIONS</h2>
+                    </div>
                 </div>
             </div>
         </div>
-    </div>
-    
-    <div class="container-fluid">
-        <div class="row">
-           {% for reservation in pagination %}
-    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
-        {% if reservation.salle.imageSalle %}
-            <div class="home__room__item set-bg" 
-
-                 style="background-image: url('{{ asset('images/' ~  reservation.salle.imageSalle) }}');">
-        {% else %}
-            <div class="home__room__item no-image">
-                <p>Aucune image disponible</p>
-        {% endif %}
         
-                    
-                    <div class="home__room__title">
-                        <h4>{{ reservation.salle.nomSalle }}</h4>
-                        <h2>
-                            <span> <div class="reservation-dates">
-                        <p><i class="far fa-calendar-alt"></i> De : {{ reservation.dateDebut|date('d/m/Y') }}</p>
-                        <p><i class="far fa-calendar-alt"></i> A : {{ reservation.dateFin|date('d/m/Y') }}</p>
-                    </div></span>
-                        </h2>
+        <div class="container-fluid">
+            <div class="row">
+                {% for reservation in pagination %}
+                    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                        {% if reservation.salle.imageSalle %}
+                            <div class="home__room__item set-bg" 
+                                {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+                                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                                style="background-image: url('/images/{{ filename | url_encode }}');">
+                        {% else %}
+                            <div class="home__room__item no-image">
+                                <p>Aucune image disponible</p>
+                        {% endif %}
+                        
+                        <div class="home__room__title">
+                            <h4>{{ reservation.salle.nomSalle }}</h4>
+                            <h2>
+                                <span>
+                                    <div class="reservation-dates">
+                                        <p><i class="far fa-calendar-alt"></i> De : {{ reservation.dateDebut|date('d/m/Y') }}</p>
+                                        <p><i class="far fa-calendar-alt"></i> A : {{ reservation.dateFin|date('d/m/Y') }}</p>
+                                    </div>
+                                </span>
+                            </h2>
+                        </div>
+                        
+                        <div class="button-wrapper" style="text-align: center;">
+                        <div style="text-align: center;">
+  <a href="{{ path('app_reservation_show', {'idReservation': reservation.idReservation}) }}" 
+     class="custom-btn"
+     style="display: inline-block; 
+            padding: 8px 20px; 
+            border: 1px solid white; 
+            color: white; 
+            text-decoration: none;
+            transition: all 0.3s ease;">
+    <i class="fas fa-eye"></i> Voir détails
+  </a>
+</div>
+                            
+                            <form method="post" 
+                                  action="{{ path('app_reservation_delete', {'idReservation': reservation.idReservation}) }}"
+                                  onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette Réservation ?');"
+                                  class="delete-button-form">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ reservation.idReservation) }}">
+                                <button type="submit" class="delete-button">
+                                    <i class="ion-ios-trash delete-icon"></i>
+                                </button>
+                            </form>
+                        </div>
+                        
+                        </div> <!-- Fermeture du div home__room__item -->
                     </div>
-                    
-                   
-                    
-                    <a href="{{ path('app_reservation_show', {'idReservation': reservation.idReservation}) }}" 
-                       class="btn btn-primary">
-                        <i class="fas fa-eye"></i> Voir détails
-                    </a>
-                    </div> <!-- Fermeture du div home__room__item -->
-                </div>
-            {% else %}
-                <div class="col-12">
-                    <div class="alert alert-info text-center py-4">
-                        <i class="fas fa-info-circle"></i> Aucune réservation trouvée
+                {% else %}
+                    <div class="col-12">
+                        <div class="alert alert-info text-center py-4">
+                            <i class="fas fa-info-circle"></i> Aucune réservation trouvée
+                        </div>
                     </div>
-                </div>
-            {% endfor %}
+                {% endfor %}
+            </div>
+            
+            <!-- Pagination -->
+            <div class="d-flex justify-content-center mt-4">
+                {{ knp_pagination_render(pagination) }}
+            </div>
         </div>
-        
-        <!-- Pagination -->
-        <div class="d-flex justify-content-center mt-4">
-            {{ knp_pagination_render(pagination) }}
-        </div>
-    </div>
-</section>
-
-{# ... le reste de votre template ... #}
+    </section>
 
     <!-- Footer -->
     <footer id="main-footer">

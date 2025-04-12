@@ -14,7 +14,7 @@ class ReservationType extends AbstractType
     {
      $builder
     ->add('dateDebut', DateType::class, [
-        'label' => 'Check In',
+        'label' => 'Date Début',
         'widget' => 'single_text',  // Utilisation de 'single_text' pour un champ unique
         'attr' => [
             'class' => 'form-control datepicker', // Ajoutez cette classe pour cibler le champ avec le plugin JS
@@ -24,7 +24,7 @@ class ReservationType extends AbstractType
         'required' => true
     ])
     ->add('dateFin', DateType::class, [
-        'label' => 'Check Out',
+        'label' => 'Date Fin',
         'widget' => 'single_text',  // Utilisation de 'single_text' pour un champ unique
         'attr' => [
             'class' => 'form-control datepicker', // Ajoutez cette classe pour cibler le champ avec le plugin JS

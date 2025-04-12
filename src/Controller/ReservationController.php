@@ -30,23 +30,22 @@ final class ReservationController extends AbstractController
     {
         $user = $this->getUser();
     
-        // Créer la requête pour récupérer les réservations de l'utilisateur connecté
-        $query = $em->getRepository(Reservation::class)
-            ->createQueryBuilder('r')
-            ->leftJoin('r.salle', 's')
-            ->addSelect('s') // Charger les salles associées
-            ->leftJoin('r.user', 'u')
-            ->addSelect('u'); // Charger l'utilisateur associé
-    
-        // Si l'utilisateur est connecté et qu'il n'est pas un administrateur
-        if ($user && !$this->isGranted('ROLE_ADMIN')) {
-            $query->where('r.user = :user')  // Filtrer les réservations de l'utilisateur connecté
-                  ->setParameter('user', $user);
+        if (!$user) {
+            throw $this->createAccessDeniedException('Vous devez être connecté pour accéder à vos réservations.');
         }
     
-        // Paginer les résultats
+        $queryBuilder = $em->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->leftJoin('r.salle', 's')
+            ->addSelect('s')
+            ->leftJoin('r.user', 'u')
+            ->addSelect('u')
+            ->where('r.user = :user')
+            ->setParameter('user', $user)
+            ->orderBy('r.dateDebut', 'DESC'); // Tri par date de début décroissante
+    
         $pagination = $paginator->paginate(
-            $query->getQuery(),
+            $queryBuilder->getQuery(),
             $request->query->getInt('page', 1),
             10 // Nombre d'éléments par page
         );

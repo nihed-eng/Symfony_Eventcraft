@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity]
 #[ORM\Table(name: 'salle')]
@@ -14,29 +15,59 @@ class Salle
     private int $idSalle;
 
     #[ORM\Column(name: 'nom_salle', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la salle est obligatoire")]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: "Le nom doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+    )]
     private string $nomSalle;
 
     #[ORM\Column(name: 'capacité', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "La capacité est obligatoire")]
+    #[Assert\Regex(
+        pattern: "/^[0-9]+$/",
+        message: "La capacité doit être un nombre"
+    )]
     private string $capacite;
 
     #[ORM\Column(name: 'équipement', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "L'équipement est obligatoire")]
     private string $equipement;
 
     #[ORM\Column(name: 'image_salle', type: 'string', length: 255)]
-    private ?string $imageSalle = null; 
+    #[Assert\Image(
+        maxSize: "2M",
+        mimeTypes: ["image/jpeg", "image/png", "image/webp"],
+        mimeTypesMessage: "Veuillez uploader une image valide (JPEG, PNG ou WEBP)"
+    )]
+    private ?string $imageSalle = null;
 
     #[ORM\Column(name: 'location_salle', type: 'string', length: 255)]
+    #[Assert\NotBlank(message: "La localisation est obligatoire")]
     private string $locationSalle;
 
     #[ORM\Column(name: 'qualite', type: 'string', length: 255, nullable: true)]
+    #[Assert\Choice(
+        choices: ["standard", "premium", "luxe"],
+        message: "Choisissez une qualité valide (standard, premium ou luxe)"
+    )]
     private ?string $qualite;
 
     #[ORM\Column(name: 'prix', type: 'decimal', precision: 10, scale: 2, nullable: true)]
+    #[Assert\NotBlank(message: "Le prix est obligatoire")]
+    #[Assert\Positive(message: "Le prix doit être positif")]
+    #[Assert\Type(
+        type: "numeric",
+        message: "Le prix doit être un nombre"
+    )]
     private ?string $prix;
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?Utilisateur $user;
+
 
     public function getIdSalle(): int
     {
