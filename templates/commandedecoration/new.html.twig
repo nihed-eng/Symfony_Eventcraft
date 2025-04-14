@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une commande de décoration{% endblock %}
+
+{% block body %}
+    <h1>Ajouter une commande de décoration</h1>
+
+    {{ form_start(form) }}
+        {{ form_row(form.quantite) }}
+        {{ form_row(form.prix) }}
+        {{ form_row(form.dateCommande) }}
+        {{ form_row(form.decoration) }}
+        
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+    {{ form_end(form) }}
+{% endblock %}

@@ -1,0 +1,160 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Demande - {{ demande.nom }}{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+         .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+      .hero-wrap .overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 58%;
+    background: rgba(0, 0, 0, 0.5);
+}
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .card {
+            border-radius: 12px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            background: white;
+            padding: 30px;
+margin-top: 15px         }
+
+        .table th {
+            width: 30%;
+            font-weight: bold;
+        }
+
+           .btn-custom, .btn-delete {
+           padding: 5px 10px;
+     border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+        }
+
+           .btn-custom {
+    padding: 5px 10px;
+ border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+}
+.btn-secondary{
+    padding: 5px 10px;
+    border-radius: 0px; 
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: #98A695;
+}
+
+        .btn-custom:hover {
+            background-color: #F0C8C6;
+        }
+
+        .btn-delete {
+ background-color: rgb(161, 104, 163);        }
+
+        .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="hero-wrap" style="background-image: url('/images/mariage.jpeg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-center">
+                <div class="col-md-12 ftco-animate text-center mb-5">
+                    <p class="breadcrumbs mb-0">
+                        <span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> 
+                        <span>Demande</span>
+                    </p>
+                    <h1 class="mb-3 bread">Demande - {{ demande.nom }}</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <section class="ftco-section bg-light">
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <table class="table">
+                        <tbody>
+                            <tr>
+                                <th>Nom</th>
+                                <td>{{ demande.nom }}</td>
+                            </tr>
+                            <tr>
+                                <th>Description</th>
+                                <td>{{ demande.description }}</td>
+                            </tr>
+                            <tr>
+                                <th>Statut</th>
+                                <td>{{ demande.statutDemande }}</td>
+                            </tr>
+                            <tr>
+                                <th>Date</th>
+                                <td>{{ demande.dateDemande ? demande.dateDemande|date('Y-m-d') : '' }}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ path('app_demande_index') }}" class="btn btn-secondary">Retour</a>
+                        <div>
+                            <a href="{{ path('app_demande_edit', {'idDemande': demande.idDemande}) }}" class="btn-custom">✏ Modifier</a>
+                            <form method="post" action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?');">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
+                                <button type="submit" class="btn-delete">🗑 Supprimer</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

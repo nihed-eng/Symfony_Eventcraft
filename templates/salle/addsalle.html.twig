@@ -1,0 +1,224 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter une salle{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --primary-color: #8D598F;
+            --secondary-color: #CBA979;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 30px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .add-salle-card:hover {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+        
+        .add-salle-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin: 0 0 40px 0;
+            color: var(--primary-color);
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .add-salle-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+        
+        .modal-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+            position: relative;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            background: #f9f9f9;
+            transition: all 0.3s ease;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            background: rgba(141, 89, 143, 0.05);
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+        .form-submit {
+            grid-column: span 2;
+            background: var(--primary-color);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+        .form-submit:hover {
+            background: #6d4470;
+        }
+        
+        /* Styles des erreurs qui s'intègrent dans le design existant */
+        .form-error {
+            color: #dc3545;
+            font-size: 0.8em;
+            margin-top: 5px;
+            display: block;
+        }
+        
+        .form-control.error {
+            border-color: #dc3545;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .modal-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<section class="add-salle-section">
+  <div class="add-salle-container">
+    <div class="add-salle-card">
+        <h1 class="add-salle-title">Ajouter une nouvelle salle</h1>
+        
+        {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
+            
+            <div class="form-group">
+                {{ form_label(form.nomSalle) }}
+                {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.capacite) }}
+                {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.equipement) }}
+                {{ form_widget(form.equipement, {'attr': {'class': 'form-control', 'rows': 3 ~ (form.equipement.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.locationSalle) }}
+                {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.qualite) }}
+                {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.prix) }}
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <div class="form-group" style="grid-column: span 2;">
+                {{ form_label(form.imageFile) }}
+                {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.imageFile, {'attr': {'class': 'form-error'}}) }}
+            </div>
+            
+            <button type="submit" class="form-submit pulse-animation">
+                <i class="fas fa-plus-circle"></i> Créer la salle
+            </button>
+            
+        {{ form_end(form) }}
+    </div>
+  </div>
+</section>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Désactive la validation HTML5 native
+            document.querySelector('form').setAttribute('novalidate', true);
+            
+            // Ajoute la classe error aux champs invalides
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    this.querySelectorAll('.form-control').forEach(input => {
+                        if (input.value.trim() === '' && input.hasAttribute('required')) {
+                            input.classList.add('error');
+                        }
+                    });
+                });
+            });
+        });
+    </script>
+{% endblock %}
