@@ -1,0 +1,348 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails Réservation #{{ reservation.idReservation }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --primary-color: #8D598F;
+            --secondary-color: #CBA979;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .hero-cover {
+            height: 300px;
+            position: relative;
+            overflow: hidden;
+            border-radius: 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        
+        .hero-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+        
+        .hero-cover:hover .hero-image {
+            transform: scale(1.03);
+        }
+        
+        .hero-overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background: linear-gradient(to bottom, rgba(0,0,0,0.1), rgba(0,0,0,0.5));
+            display: flex;
+            align-items: flex-end;
+            padding: 2rem;
+            color: white;
+        }
+        
+        .hero-title {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.3);
+        }
+        
+        .hero-subtitle {
+            font-size: 1.2rem;
+            opacity: 0.9;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.3);
+        }
+        
+        .reservation-container {
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            padding: 0 15px;
+        }
+        
+        .reservation-card {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            overflow: hidden;
+            margin-bottom: 2rem;
+            border: none;
+        }
+        
+        .card-header {
+            background: linear-gradient(135deg, var(--primary-color), #6d4470);
+            color: white;
+            padding: 1.5rem;
+            font-size: 1.25rem;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+        }
+        
+        .card-header i {
+            margin-right: 10px;
+            font-size: 1.5rem;
+        }
+        
+        .info-section {
+            padding: 2rem;
+        }
+        
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+        }
+        
+        .info-box {
+            background: var(--light-gray);
+            border-radius: 10px;
+            padding: 1.5rem;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        .info-box h3 {
+            color: var(--primary-color);
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+            padding-bottom: 0.5rem;
+            border-bottom: 2px solid var(--secondary-color);
+            display: inline-block;
+        }
+        
+        .info-item {
+            margin-bottom: 0.75rem;
+            display: flex;
+        }
+        
+        .info-item strong {
+            min-width: 100px;
+            color: var(--dark-gray);
+        }
+        
+        .action-buttons {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+        
+        .btn-back {
+            background: white;
+            color: var(--dark-gray);
+            border: 1px solid #dee2e6;
+        }
+        
+        .btn-back:hover {
+            background: #f1f3f5;
+        }
+        
+        .btn-edit {
+               border-radius: 0;
+    width: 100%;
+    background: var(--secondary-color);
+    color: white;
+    border: none;
+        }
+        
+        .btn-edit:hover {
+            background: #b8935a;
+            color: white;
+        }
+        
+     
+        
+        .status-badge {
+            display: inline-block;
+            padding: 0.35rem 0.75rem;
+            border-radius: 50px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+        
+        .status-active {
+            background: #d1fae5;
+            color: #065f46;
+        }
+        
+        .status-past {
+            background: #fee2e2;
+            color: #b91c1c;
+        }
+        
+        @media (max-width: 768px) {
+            .hero-cover {
+                height: 220px;
+            }
+            
+            .hero-title {
+                font-size: 2rem;
+            }
+            
+            .action-buttons {
+                margin-top: 1rem;
+                width: 100%;
+            }
+            
+            .btn {
+                flex: 1;
+                text-align: center;
+            }
+        }
+
+.btn-print {
+            background: #ffffff;
+            color: var(--dark-gray);
+            border: 1px solid #dee2e6;
+            margin-left: 15px;
+        }
+
+        .btn-print:hover {
+            background: #f1f3f5;
+            color: var(--dark-gray);
+        }
+
+        /* Styles spécifiques pour l'impression */
+        @media print {
+            body * {
+                visibility: hidden;
+            }
+            .reservation-container, .reservation-container * {
+                visibility: visible;
+            }
+            .reservation-container {
+                position: absolute;
+                left: 0;
+                top: 0;
+                width: 100%;
+                padding: 0;
+                margin: 0;
+            }
+            .action-buttons, .hero-cover {
+                display: none;
+            }
+        }
+
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="hero-cover">
+    {% if reservation.salle.imageSalle %}
+        {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+        {% set filename = firstPath | split('/') | last | split('\\') | last %}
+        <img src="{{ asset('/images/' ~ filename) }}" class="hero-image" alt="{{ reservation.salle.nomSalle }}">
+    {% else %}
+        <img src="{{ asset('images/default-salle.jpg') }}" class="hero-image" alt="Salle par défaut">
+    {% endif %}
+    
+    <div class="hero-overlay">
+        <div>
+            <h1 class="hero-title">{{ reservation.salle.nomSalle }}</h1>
+            <div class="hero-subtitle">
+                <span>Réservation #{{ reservation.idReservation }}</span>
+                <button onclick="window.print()" class="btn btn-print">
+                    <i class="fas fa-print"></i> Imprimer
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="reservation-container">
+    <div class="reservation-card">
+        <div class="card-header">
+            <i class="fas fa-calendar-alt"></i>
+            <span>Détails de la réservation</span>
+        </div>
+        
+        <div class="info-section">
+            <div class="info-grid">
+                <div class="info-box">
+                    <h3><i class="fas fa-door-open me-2"></i>Informations Salle</h3>
+                    <div class="info-item">
+                        <strong>Nom:</strong>
+                        <span>{{ reservation.salle.nomSalle }}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Lieu:</strong>
+                        <span>{{ reservation.salle.locationSalle }}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Capacité:</strong>
+                        <span>{{ reservation.salle.capacite }} personnes</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Prix:</strong>
+                        <span>{{ reservation.salle.prix }} €</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-clock me-2"></i>Dates</h3>
+                    <div class="info-item">
+                        <strong>Début:</strong>
+                        <span>{{ reservation.dateDebut|date('d/m/Y H:i') }}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Fin:</strong>
+                        <span>{{ reservation.dateFin|date('d/m/Y H:i') }}</span>
+                    </div>
+                    <div class="info-item">
+                        <strong>Durée:</strong>
+                        <span>{{ reservation.dateDebut.diff(reservation.dateFin).format('%d jours %h heures') }}</span>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3><i class="fas fa-user me-2"></i>Client</h3>
+                    {% if reservation.user %}
+                        <div class="info-item">
+                            <strong>Nom:</strong>
+                            <span>{{ reservation.user.nom }} {{ reservation.user.prenom }}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Email:</strong>
+                            <span>{{ reservation.user.email }}</span>
+                        </div>
+                        <div class="info-item">
+                            <strong>Téléphone:</strong>
+                            <span>{{ reservation.user.telephone ?? 'Non renseigné' }}</span>
+                        </div>
+                    {% else %}
+                        <div class="text-muted">Aucun utilisateur associé</div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="action-buttons">
+        <a href="{{ path('app_all_reservations') }}" class="btn btn-back">
+            <i class="fas fa-arrow-left"></i> Retour
+        </a>
+        <a href="{{ path('app_reservation_edit', {'idReservation': reservation.idReservation}) }}" 
+           class="btn btn-edit">
+            <i class="fas fa-edit"></i> Modifier
+        </a>
+        <form method="post" action="{{ path('app_reservation_delete', {'idReservation': reservation.idReservation}) }}" 
+              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette réservation ?');"
+              style="display: inline;">
+           
+        </form>
+    </div>
+</div>
+{% endblock %}

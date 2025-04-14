@@ -1,0 +1,41 @@
+{# templates/partials/showsalles.html.twig #}
+<style>
+.hotel-facilities {height: 1000px !important;}
+</style>
+
+<div class="hotel-facilities" id="hotel-facilities" style="height: 1000px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <div class="section-title text-center">
+                    <h2>Explorez Nos Salles</h2>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            {% for salle in pagination %}
+                <div class="col-md-4"> {# 3 par ligne (col-md-4) #}
+                    <div class="room-card">
+                        <div class="room-image-wrapper">
+                        </div>
+                        <div class="room-details">
+                            <h3>{{ salle.nomSalle }}</h3>
+                            <p>Capacité : {{ salle.capacite }}</p>
+                            <p>Équipement : {{ salle.equipement }}</p>
+                            <p>Publié par : {{ salle.user ? salle.user.getNom() : 'Anonyme' }}</p>
+                            <p class="room-price">{{ salle.prix }}€ / NUIT</p>
+<a href="{{ path('details_salle', {'idSalle': salle.idSalle}) }}" class="book-now-button">CONSULTER</a>
+                        </div>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Controls -->
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</div>
+

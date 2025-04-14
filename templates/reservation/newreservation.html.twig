@@ -1,0 +1,72 @@
+{% extends 'bas.html.twig' %}
+
+{% block title %}Nouvelle réservation - {{ salle.nomSalle }}{% endblock %}
+
+{% block body %}
+<div class="container">
+    <h1>Réserver {{ salle.nomSalle }}</h1>
+
+    <!-- Lien pour ouvrir la modale -->
+    <a href="#" class="btn btn-primary mt-3" data-toggle="modal" data-target="#reservationModal" onclick="loadReservationForm({{ salle.idSalle }})">
+        RESERVER
+    </a>
+
+    <!-- Modale pour afficher le formulaire de réservation -->
+    <div class="modal fade" id="reservationModal" tabindex="-1" role="dialog" aria-labelledby="reservationModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="reservationModalLabel">Réserver {{ salle.nomSalle }}</h5>
+                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <!-- Le formulaire sera chargé ici dynamiquement via AJAX -->
+                    <div id="reservationFormContainer">
+                        <!-- Le formulaire sera chargé ici -->
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Fermer</button>
+                    <button type="submit" class="btn btn-primary">Réserver</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <img src="{{ asset('images/' ~ salle.imageSalle|split('\\')|last) }}" class="card-img-top" alt="{{ salle.nomSalle }}">
+            <div class="card-body">
+                <h5 class="card-title">{{ salle.nomSalle }}</h5>
+                <p class="card-text">{{ salle.locationSalle }}</p>
+                <p class="card-text">Capacité: {{ salle.capacite }} personnes</p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <!-- Assurez-vous que jQuery est inclus avant ce script -->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <!-- Script pour charger le formulaire dans la modale via AJAX -->
+    <script>
+        function loadReservationForm(idSalle) {
+            // Utilisez AJAX pour charger le formulaire
+            $.ajax({
+                url: '{{ path('app_reservation_new', {'idSalle': 'ID_SALLE'}) }}'.replace('ID_SALLE', idSalle),  // Remplacez l'ID de la salle
+                type: 'GET',
+                success: function(response) {
+                    // Chargez le contenu du formulaire dans la modale
+                    $('#reservationFormContainer').html(response);
+                },
+                error: function(xhr, status, error) {
+                    console.error("Erreur lors du chargement du formulaire : " + error);
+                }
+            });
+        }
+    </script>
+{% endblock %}

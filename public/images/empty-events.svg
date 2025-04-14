@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="400px" height="300px" viewBox="0 0 400 300" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <rect fill="#F8FAFC" x="0" y="0" width="400" height="300"></rect>
+        <g transform="translate(100, 50)">
+            <!-- Calendar outline -->
+            <rect fill="#E5E7EB" x="0" y="0" width="200" height="180" rx="8"></rect>
+            <rect fill="#FFFFFF" x="10" y="40" width="180" height="130" rx="4"></rect>
+            
+            <!-- Calendar header -->
+            <rect fill="#6366F1" x="0" y="0" width="200" height="30" rx="8 8 0 0"></rect>
+            
+            <!-- Calendar days -->
+            <circle fill="#F3F4F6" cx="40" cy="70" r="15"></circle>
+            <circle fill="#F3F4F6" cx="80" cy="70" r="15"></circle>
+            <circle fill="#F3F4F6" cx="120" cy="70" r="15"></circle>
+            <circle fill="#F3F4F6" cx="160" cy="70" r="15"></circle>
+            
+            <circle fill="#F3F4F6" cx="40" cy="110" r="15"></circle>
+            <circle fill="#F3F4F6" cx="80" cy="110" r="15"></circle>
+            <circle fill="#EC4899" cx="120" cy="110" r="15"></circle>
+            <circle fill="#F3F4F6" cx="160" cy="110" r="15"></circle>
+            
+            <circle fill="#F3F4F6" cx="40" cy="150" r="15"></circle>
+            <circle fill="#F3F4F6" cx="80" cy="150" r="15"></circle>
+            <circle fill="#F3F4F6" cx="120" cy="150" r="15"></circle>
+            <circle fill="#F3F4F6" cx="160" cy="150" r="15"></circle>
+            
+            <!-- Plus icon -->
+            <circle fill="#6366F1" cx="180" cy="180" r="20" opacity="0.8"></circle>
+            <rect fill="#FFFFFF" x="172" y="178" width="16" height="4" rx="2"></rect>
+            <rect fill="#FFFFFF" x="178" y="172" width="4" height="16" rx="2"></rect>
+        </g>
+    </g>
+</svg>

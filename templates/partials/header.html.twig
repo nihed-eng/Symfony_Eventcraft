@@ -1,0 +1,79 @@
+
+<div class="header__content">
+    <!-- Partie gauche (1/3 de l'écran) -->
+    <div class="canvas__open">&#9776;</div>
+
+   <div class="header__nav">
+    <nav class="header__menu">
+        <ul class="menu__class">
+            {% if app.user %}
+                <li><a href="{{ path('app_events') }}">Evenements</a></li>
+                <li><a href="{{ path('app_offre_index') }}">Offre</a></li>
+                <li><a href="{{ path('app_salle_index') }}">Salle</a></li>
+                <li><a href="{{ path('decoration_welcom') }}">Décorations</a></li>
+                                <li><a href="{{ path('app_reclamation_new') }}">Submit Complaint</a></li>
+
+
+            {% else %}
+                <li><a href="{{ path('app_events') }}">Evenements</a></li>
+                <li><a href="{{ path('app_offre_index') }}">Offre</a></li>
+                <li><a href="{{ path('app_salle_index') }}">Salle</a></li>
+                <li><a href="{{ path('decoration_welcom') }}">Décorations</a></li>
+                <li><a href="{{ path('app_reclamation_new') }}">Submit Complaint</a></li>
+
+
+           {% endif %}
+        </ul>
+    </nav>
+</div>
+
+
+    <!-- Partie milieu (logo centré) -->
+    <div class="header__logo">
+        <a href="{{ path('app_home') }}">
+            <img src="/images/logoblanc.png" alt="Logo" class="center-logo">
+        </a>
+    </div>
+
+    <!-- Partie droite (1/3 de l'écran) -->
+    <div class="header__top__auth">
+        <ul>
+            {% if app.user %}
+                <!-- Affichage du nom de l'utilisateur avec un menu déroulant -->
+   <li class="nav-item dropdown">
+    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" aria-expanded="false">
+        <i class="fas fa-user-circle me-1"></i>
+        {{ app.user.firstName|default(app.user.email|split('@')[0]) }}
+    </a>
+    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
+        <li><a class="dropdown-item" href="{{ path('app_profilsalle') }}"><i class="fas fa-user me-2"></i>Profile</a></li>
+        <li><a class="dropdown-item" href="{{ path('app_settings') }}"><i class="fas fa-cog me-2"></i>Settings</a></li>
+        {% if is_granted('ROLE_ADMIN') %}
+            <li><a class="dropdown-item" href="{{ path('app_admin_dashboard') }}"><i class="fas fa-tachometer-alt me-2"></i>Admin Dashboard</a></li>
+        {% endif %}
+        <li><hr class="dropdown-divider"></li>
+        <li><a class="dropdown-item text-danger" href="{{ path('app_logout') }}"><i class="fas fa-sign-out-alt me-2"></i>Logout</a></li>
+    </ul>
+</li>
+
+
+
+            {% else %}
+                <!-- Si l'utilisateur n'est pas connecté -->
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_login') }}"><i class="fas fa-sign-in-alt me-1"></i>Login</a></li>
+                <li class="nav-item"><a class="nav-link" href="{{ path('app_register') }}"><i class="fas fa-user-plus me-1"></i>Register</a></li>
+            {% endif %}
+        </ul>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const canvasOpen = document.querySelector('.canvas__open');
+        const offcanvasMenu = document.querySelector('.offcanvas-menu-wrapper');
+
+        canvasOpen.addEventListener('click', function () {
+            offcanvasMenu.classList.toggle('open');
+        });
+    });
+</script>

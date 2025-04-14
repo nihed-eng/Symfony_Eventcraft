@@ -1,0 +1,212 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Liste des Offres{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+
+        .p-4 {
+    margin-bottom: -35px;
+}
+
+        .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-wrap .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 58%  ;
+            background: rgba(0, 0, 0, 0.5);
+        } 
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .breadcrumbs a {
+            color: white;
+        }
+
+        .ftco-section {
+            padding: 50px 0;
+        }
+
+        .job-post-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .job-post-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-post-item-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .job-post-item-header h2 {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .one-forth {
+            justify-content: flex-end;
+        }
+
+       .btn-custom {
+    padding: 5px 10px;
+    /* border-radius: 5px; */
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+}
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #CBA979;
+    border-radius: 0;
+    border: 1px;
+}
+
+
+.btn-primary:hover {
+    --bs-btn-color: #fff;
+background-color:#98A695; ;
+    border-radius: 0;
+    color:#FFF;
+    border: 1px rgb(10, 9, 10) important!;
+}
+
+
+        .btn-custom:hover {
+            background-color: #F0C8C6;
+        }
+
+        .btn-delete {
+          padding: 5px 10px;
+    /* border-radius: 5px; */
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+        }
+
+        .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            color: #6c757d;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+                <div class="col-md-12 ftco-animate text-center mb-5">
+                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Offres</span></p>
+                    <h1 class="mb-3 bread">Liste des Offres</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 pr-lg-4">
+                <div class="row">
+                    {% for offre in offres %}
+                        <div class="col-md-12 ftco-animate">
+                            <div class="job-post-item p-4 d-flex align-items-center">
+                                <div class="one-third mb-4 mb-md-0">
+                                    <span class="subadge">{{ offre.typeOffre }}</span>
+                                    <div class="job-post-item-header align-items-center">
+                                        <h2 class="mr-3 text-black"><a href="{{ path('app_offre_show', {'id': offre.id}) }}">{{ offre.titreOffre }}</a></h2>
+                                    </div>
+                                    <div class="job-post-item-body d-block d-md-flex">
+                                        <div class="mr-3"><span class="icon-file-text"></span> <span>{{ offre.descriptionOffre }}</span></div>
+                                        <div><span class="icon-calendar"></span> <span>{{ offre.dateExp ? offre.dateExp|date('Y-m-d') : '' }}</span></div>
+                                    </div>
+                                </div>
+                                <div class="one-forth ml-auto d-flex align-items-center mt-4 mt-md-0">
+                                    <a href="{{ path('app_offre_show', {'id': offre.id}) }}" class="btn-custom mr-2">👁 Voir</a>
+                                    <a href="{{ path('app_offre_edit', {'id': offre.id}) }}" class="btn-custom mr-2">✏ Modifier</a>
+                                    <form method="post" action="{{ path('app_offre_delete', {'id': offre.id}) }}" style="display:inline;" onsubmit="return confirm('⚠️ Voulez-vous vraiment supprimer cette offre ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offre.id) }}">
+                                        <button type="submit" class="btn-delete">🗑 Supprimer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-md-12 ftco-animate">
+                            <p class="text-center text-muted">Aucune offre trouvée.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+            </div>
+            <div class="col-lg-3 sidebar">
+                <div class="p-4 ftco-animate">
+                    <a href="{{ path('app_offre_new') }}" class="btn btn-primary">➕ Ajouter une Offre</a>
+                    
+                </div>
+                 <div class="p-4 ftco-animate">
+                    <a href="{{ path('app_demande_index') }}" class="btn btn-primary">Liste des Demandes</a>
+                    
+                </div>
+                
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}

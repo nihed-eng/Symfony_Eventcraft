@@ -1,0 +1,173 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Réservation - {{ reservation.salle.nomSalle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .reservation-container {
+            max-width: 1200px;
+            margin: 30px auto;
+            padding: 20px;
+            background: #fff;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+        
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .reservation-card {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+        
+        .room-image-container {
+            flex: 1;
+            max-width: 500px;
+            height: 250px;
+            border-radius: 0px;
+            overflow: hidden;
+            position: relative;
+        }
+        
+        .room-image-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s;
+        }
+        
+        .room-image-container:hover .room-image-bg {
+            transform: scale(1.05);
+        }
+        
+        .reservation-details {
+            flex: 2;
+        }
+        
+        .reservation-form {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+        }
+        
+        .form-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+        
+        .btn-save {
+               width: 100%;
+    border-color: #8D598F;
+    color:#8D598F;
+    padding: 10px 25px;
+    font-size: 16px;
+    border-radius:0;
+            transition: all 0.3s;
+            
+        }
+        
+        .btn-save:hover {
+            color:#FFF;
+            background-color: #6d4470;
+            border-color: #6d4470;
+        }
+        
+        .back-link {
+            color: #6c757d;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+        
+        .back-link:hover {
+            color: #5a6268;
+        }
+        
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+        
+        .form-control {
+            border-radius: 4px;
+            padding: 10px 15px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="reservation-container">
+    <div class="reservation-header">
+        <h1>Modifier Réservation</h1>
+        <a href="{{ path('app_reservation_index') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+    
+    <div class="reservation-card">
+        {% if reservation.salle.imageSalle %}
+            <div class="room-image-container">
+                {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                <div class="room-image-bg" style="background-image: url('/images/{{ filename | url_encode }}');"></div>
+            </div>
+        {% endif %}
+        
+        <div class="reservation-details">
+            <h2>{{ reservation.salle.nomSalle }}</h2>
+            <p><strong>Lieu:</strong> {{ reservation.salle.locationSalle }}</p>
+            <p><strong>Capacité:</strong> {{ reservation.salle.capacite }} personnes</p>
+            <p><strong>Prix:</strong> {{ reservation.salle.prix }} €</p>
+            
+            <div class="reservation-period">
+                <h4>Période de réservation actuelle</h4>
+                <p><strong>Du:</strong> {{ reservation.dateDebut|date('d/m/Y H:i') }}</p>
+                <p><strong>Au:</strong> {{ reservation.dateFin|date('d/m/Y H:i') }}</p>
+            </div>
+        </div>
+    </div>
+    
+    <div class="reservation-form">
+        {{ form_start(form, {'attr': {'id': 'reservation-form'}}) }}
+            {% for field in form %}
+                {% if field.vars.name != '_token' %}
+                    <div class="mb-3">
+                        {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+                        {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+                        {{ form_errors(field) }}
+                    </div>
+                {% endif %}
+            {% endfor %}
+        {{ form_end(form) }}
+        
+        <div class="form-actions">
+            <button type="submit" form="reservation-form" class="btn btn-save">
+                <i class="fas fa-save"></i> Enregistrer les modifications
+            </button>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            $('.datetimepicker').datetimepicker({
+                format: 'DD/MM/YYYY HH:mm',
+                sideBySide: true
+            });
+        });
+    </script>
+{% endblock %}
