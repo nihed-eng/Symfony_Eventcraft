@@ -1,0 +1,236 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Liste des Offres{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+
+        .p-4 {
+    margin-bottom: -35px;
+}
+
+        .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-wrap .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 58%  ;
+            background: rgba(0, 0, 0, 0.5);
+        } 
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .breadcrumbs a {
+            color: white;
+        }
+
+        .ftco-section {
+            padding: 50px 0;
+        }
+
+        .job-post-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background: white;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .job-post-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .job-post-item-header {
+            display: flex;
+            align-items: center;
+            width: 100%;
+        }
+
+        .job-post-item-header h2 {
+            flex-grow: 1;
+            text-align: left;
+        }
+
+        .one-forth {
+            justify-content: flex-end;
+        }
+
+       .btn-custom {
+    padding: 5px 10px;
+    /* border-radius: 5px; */
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+}
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #CBA979;
+    border-radius: 0;
+    border: 1px;
+}
+
+
+.btn-primary:hover {
+    --bs-btn-color: #fff;
+background-color:#98A695; ;
+    border-radius: 0;
+    color:#FFF;
+    border: 1px rgb(10, 9, 10) important!;
+}
+
+
+        .btn-custom:hover {
+            background-color: #F0C8C6;
+        }
+
+        .btn-delete {
+          padding: 5px 10px;
+    /* border-radius: 5px; */
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+        }
+
+        .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            color: #6c757d;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    {% if salle.imageSalle %}
+        {# Sépare les chemins s'il y a des virgules (plusieurs images) et prend la première #}
+        {% set firstPath = salle.imageSalle | split(',') | first %}
+
+        {# Garde seulement le nom du fichier, enlève tout le chemin #}
+        {% set filename = firstPath | split('/') | last | split('\\') | last %}
+
+        {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
+        <div class="hero-wrap" style="background-image: url('/images/{{ filename | url_encode }}');">
+    {% else %}
+        <div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
+    {% endif %}
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+                <div class="col-md-12 ftco-animate text-center mb-5">
+                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Salle <i class="ion-ios-arrow-forward"></i></a></span> <span>Détails</span></p>
+                    <h1 class="mb-3 bread">Détails de la Salle</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <div class="image-section">
+            <div class="header-text"><h1>{{ salle.nomSalle }}</h1></div>
+        </div>
+
+        <section class="ftco-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 pr-lg-4">
+                        <div class="row">
+                            <div class="details-section">
+                                <div class="info-box">
+                                    <h2>Informations</h2>
+                                    <p><strong>Adresse :</strong> {{ salle.locationSalle }}</p>
+                                    <p><strong>Capacité :</strong> {{ salle.capacite }} personnes</p>
+                                    <p><strong>Description :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    
+                                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn-primary">RÉSERVER MAINTENANT</a>
+                                </div>
+
+                                <div class="calendar-container">
+                                    <h2>Disponibilité</h2>
+                                    <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
+                                    
+                                    {% if events is not empty %}
+                                        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var calendarEl = document.getElementById('calendar');
+                                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                initialView: 'dayGridMonth',
+                                                locale: 'fr',
+                                                headerToolbar: {
+                                                    left: 'prev,next today',
+                                                    center: 'title',
+                                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                                },
+                                                events: {{ events|raw }},
+                                                selectable: true,
+                                                select: function(info) {
+                                                    // Optional: add select handler
+                                                }
+                                            });
+                                            calendar.render();
+                                        });
+                                        </script>
+                                    {% else %}
+                                        <div class="no-reservation">
+                                            <p>Aucune réservation n'a encore été effectuée pour cette salle.</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

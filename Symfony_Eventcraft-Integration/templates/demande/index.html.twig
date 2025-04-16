@@ -1,0 +1,326 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Liste des Demandes{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+       .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-wrap .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 58%  ;
+            background: rgba(0, 0, 0, 0.5);
+        } 
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .hero-wrap .breadcrumbs {
+            margin-bottom: 20px;
+        }
+
+        .hero-wrap .breadcrumbs a {
+            color: white;
+        }
+
+        .ftco-section {
+            padding: 50px 0;
+        }
+
+    .job-post-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: white;
+    margin-bottom: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.job-post-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+}
+
+.job-post-item-header {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.job-post-item-header h2 {
+    flex-grow: 1;
+    text-align: left;
+}
+
+.one-forth {
+    justify-content: flex-end;
+}
+
+.btn-custom, .btn-delete {
+    padding: 5px 10px;
+    border-radius: 5px;
+    text-decoration: none;
+    color: white;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+}
+
+       .btn-custom {
+    padding: 5px 10px;
+    border-radius: 0px;
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+}
+.btn-primary {
+    --bs-btn-color: #fff;
+    --bs-btn-bg: #CBA979;
+    border-radius: 0;
+    border: 1px;
+}
+
+
+.btn-primary:hover {
+    --bs-btn-color: #fff;
+background-color:#98A695; ;
+    border-radius: 0;
+    color:#FFF;
+    border: 1px rgb(10, 9, 10) important!;
+}
+
+
+        .btn-custom:hover {
+            background-color: #F0C8C6;
+        }
+
+        .btn-delete {
+          padding: 5px 10px;
+    border-radius: 0px;
+    text-decoration: none;
+    color: white;
+    display: inline-flex
+;
+    align-items: center;
+    border: none;
+    margin: 4px;
+    justify-content: center;
+    background-color: rgb(161, 104, 163);
+        }
+
+        .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+a {
+    color: #6c757d;
+    text-decoration: none;
+}
+        .heading-sidebar {
+            font-size: 1.5rem;
+            margin-bottom: 20px;
+        }
+
+        .search-form .form-group {
+            position: relative;
+        }
+
+        .search-form .icon {
+            position: absolute;
+            top: 50%;
+            left: 10px;
+            transform: translateY(-50%);
+        }
+
+        .search-form .form-control {
+            padding-left: 30px;
+        }
+
+        .browse-form label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .block-27 ul {
+            list-style: none;
+            padding: 0;
+            display: flex;
+            justify-content: center;
+        }
+
+        .block-27 ul li {
+            margin: 0 5px;
+        }
+
+        .block-27 ul li a, .block-27 ul li span {
+            padding: 8px 12px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            text-decoration: none;
+            color: #333;
+        }
+
+        .block-27 ul li.active span {
+            background-color: #2a918f;
+            color: white;
+            border-color: #2a918f;
+        }
+
+        .ftco-section-parallax {
+            background-image: url('images/bg_1.jpg');
+            background-size: cover;
+            background-position: center;
+            padding: 100px 0;
+            color: white;
+        }
+
+        .parallax-img {
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .subscribe-form .form-group {
+            display: flex;
+        }
+
+        .subscribe-form .submit {
+            background-color: #2a918f;
+            border: none;
+            color: white;
+            padding: 10px 20px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="hero-wrap hero-wrap-2" style="background-image: url('images/bg_1.jpg');" data-stellar-background-ratio="0.5">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+                <div class="col-md-12 ftco-animate text-center mb-5">
+                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Demandes</span></p>
+                    <h1 class="mb-3 bread">Liste des Demandes</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   <section class="ftco-section bg-light">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-9 pr-lg-4">
+                <div class="row">
+                    {% for demande in demandes %}
+                        <div class="col-md-12 ftco-animate">
+                            <div class="job-post-item p-4 d-flex align-items-center">
+                                <div class="one-third mb-4 mb-md-0">
+                                                                        <span class="subadge">{{ demande.statutDemande }}</span>
+
+                                    <div class="job-post-item-header align-items-center">
+                                        <h2 class="mr-3 text-black"><a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}">{{ demande.nom }}</a></h2>
+                                    </div>
+                                    <div class="job-post-item-body d-block d-md-flex">
+                                        <div class="mr-3"><span class="icon-file-text"></span> <span>{{ demande.description }}</span></div>
+                                        <div><span class="icon-calendar"></span> <span>{{ demande.dateDemande ? demande.dateDemande|date('Y-m-d') : '' }}</span></div>
+                                    </div>
+                                </div>
+                                <div class="one-forth ml-auto d-flex align-items-center mt-4 mt-md-0">
+                                    <a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}" class="btn-custom mr-2">👁 Voir</a>
+                                    <a href="{{ path('app_demande_edit', {'idDemande': demande.idDemande}) }}" class="btn-custom mr-2">✏ Modifier</a>
+                                    <form method="post" action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
+                                        <button type="submit" class="btn-delete">🗑 Supprimer</button>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    {% else %}
+                        <div class="col-md-12 ftco-animate">
+                            <p class="text-center text-muted">Aucune demande trouvée.</p>
+                        </div>
+                    {% endfor %}
+                </div>
+                <div class="row mt-5">
+                    <div class="col text-center">
+                        <div class="block-27">
+                            <ul>
+                                <li><a href="#">&lt;</a></li>
+                                <li class="active"><span>1</span></li>
+                                <li><a href="#">2</a></li>
+                                <li><a href="#">3</a></li>
+                                <li><a href="#">4</a></li>
+                                <li><a href="#">5</a></li>
+                                <li><a href="#">&gt;</a></li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-lg-3 sidebar">
+                <div class="p-4 ftco-animate">
+                    <a href="{{ path('app_demande_new') }}" class="btn btn-primary">➕ Ajouter une Demande</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+    <section class="ftco-section-parallax">
+        <div class="parallax-img d-flex align-items-center">
+            <div class="container">
+                <div class="row d-flex justify-content-center">
+                    <div class="col-md-7 text-center heading-section heading-section-white ftco-animate">
+                        <h2>S'inscrire à notre Newsletter</h2>
+                        <p>Restez informé des dernières demandes et mises à jour.</p>
+                        <div class="row d-flex justify-content-center mt-4 mb-4">
+                            <div class="col-md-12">
+                                <form action="#" class="subscribe-form">
+                                    <div class="form-group d-flex">
+                                        <input type="text" class="form-control" placeholder="Entrez votre adresse email">
+                                        <input type="submit" value="S'inscrire" class="submit px-3">
+                                    </div>
+                                </form>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

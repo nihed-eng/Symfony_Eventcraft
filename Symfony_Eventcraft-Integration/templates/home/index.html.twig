@@ -1,0 +1,122 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Bienvenue sur EventCraft{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .hero-section {
+            background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+            padding: 6rem 0;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-title {
+            font-size: 3rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            animation: fadeInDown 1s;
+        }
+        .py-5 {
+            background-color: white;
+        }
+
+        .hero-subtitle {
+            font-size: 1.25rem;
+            opacity: 0.9;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s;
+        }
+
+        .feature-card {
+            background: white;
+            border-radius: var(--border-radius);
+            padding: 2rem;
+            text-align: center;
+            transition: var(--transition);
+            height: 100%;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .feature-icon {
+            font-size: 2.5rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        @keyframes fadeInDown {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <section class="hero-section">
+        <div class="container">
+            <h1 class="hero-title">Bienvenue sur EventCraft</h1>
+            <p class="hero-subtitle">Créez, gérez et vivez des événements inoubliables</p>
+            {% if not app.user %}
+                <div class="d-flex justify-content-center gap-3">
+                    <a href="{{ path('app_register') }}" class="btn btn-light btn-lg">
+                        <i class="fas fa-user-plus me-2"></i>Commencer
+                    </a>
+                    <a href="{{ path('app_login') }}" class="btn btn-outline-light btn-lg">
+                        <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                    </a>
+                </div>
+            {% endif %}
+        </div>
+    </section>
+
+    <section class="py-5">
+        <div class="container">
+            <div class="row g-4">
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-calendar-alt feature-icon"></i>
+                        <h3>Gestion d'Événements</h3>
+                        <p class="text-muted">Créez et gérez vos événements facilement. Définissez les dates, lieux et tous les détails nécessaires pour vos participants.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-ticket-alt feature-icon"></i>
+                        <h3>Gestion des Billets</h3>
+                        <p class="text-muted">Vendez des billets, suivez les présences et gérez les inscriptions en un seul endroit.</p>
+                    </div>
+                </div>
+                <div class="col-md-4">
+                    <div class="feature-card">
+                        <i class="fas fa-comments feature-icon"></i>
+                        <h3>Support Client</h3>
+                        <p class="text-muted">Obtenez de l'aide quand vous en avez besoin. Notre système de réclamation assure que vos préoccupations sont entendues et traitées.</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+{% endblock %}

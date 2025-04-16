@@ -1,0 +1,194 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}My Complaints{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+       .reclamation-list {
+    background: #ffffff;
+    border-radius: var(--border-radius);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.reclamation-item {
+    border-left: 4px solid var(--primary);
+    background: #ffffff;
+    transition: var(--transition);
+}
+
+.reclamation-item:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.1);
+}
+
+.status-badge {
+    padding: 0.35rem 0.75rem;
+    border-radius: 2rem;
+    font-size: 0.875rem;
+    font-weight: 500;
+}
+
+.status-pending {
+    background-color: var(--primary-subtle);
+    color: var(--primary);
+}
+
+.status-resolved {
+    background-color: #dcfce7;
+    color: #16a34a;
+}
+
+.btn-new-reclamation {
+    background: linear-gradient(135deg, var(--primary) 0%, var(--secondary) 100%);
+    border: none;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: var(--border-radius);
+    transition: var(--transition);
+}
+
+.btn-new-reclamation:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(99, 102, 241, 0.2);
+    color: white;
+}
+
+.response-preview {
+    margin-top: 0.75rem;
+    padding-top: 0.75rem;
+    border-top: 1px dashed rgba(0, 0, 0, 0.1);
+}
+
+.response-preview-content {
+    background-color: var(--primary-subtle);
+    border-left: 3px solid var(--primary);
+    padding: 0.75rem;
+    border-radius: 0.25rem;
+    font-style: italic;
+    color: var(--primary);
+}
+
+.response-preview-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    font-size: 0.875rem;
+    color: #6c757d;
+}
+
+.admin-icon {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    width: 20px;
+    height: 20px;
+    background: linear-gradient(135deg, #6366f1, #ec4899);
+    border-radius: 50%;
+    color: white;
+    margin-right: 0.5rem;
+    font-size: 0.625rem;
+}
+
+/* Added styles to change the light blue background to white */
+body {
+    background-color: white !important;
+}
+
+.container.py-5 {
+    background-color: white !important;
+}
+
+/* This targets the main content area under the navbar */
+main, .main-content {
+    background-color: white !important;
+}
+
+/* Target any specific parent container that might have the blue background */
+.page-wrapper, .content-wrapper, .page-content {
+    background-color: white !important;
+}
+
+/* Target the specific area visible in your screenshot */
+.container.py-5 {
+    background-color: white !important;
+}
+
+/* Force any outer containers to be white */
+html, body, div#app, div#root {
+    background-color: white !important;
+}
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h2 mb-0">My Complaints</h1>
+            <a href="{{ path('app_reclamation_new') }}" class="btn btn-new-reclamation">
+                <i class="fas fa-plus-circle me-2"></i>New Complaint
+            </a>
+        </div>
+
+        {% for message in app.flashes('success') %}
+            <div class="alert alert-success alert-dismissible fade show animate__animated animate__fadeIn" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        {% endfor %}
+
+        <div class="reclamation-list">
+            {% if reclamations is empty %}
+                <div class="text-center py-5">
+                    <i class="fas fa-inbox fa-3x text-muted mb-3"></i>
+                    <p class="text-muted mb-0">Vous n'avez pas encore soumis de réclamation.</p>
+                </div>
+            {% else %}
+                {% for reclamation in reclamations %}
+                    <div class="reclamation-item p-4 mb-3 bg-white">
+                        <div class="d-flex justify-content-between align-items-start">
+                            <div>
+                                <h5 class="mb-1">{{ reclamation.subject }}</h5>
+                                <p class="text-muted mb-2">
+                                    <small>
+                                        <i class="far fa-clock me-1"></i>
+                                        {{ reclamation.createdAt|date('d/m/Y H:i') }}
+                                    </small>
+                                </p>
+                                <p class="mb-0">{{ reclamation.description|slice(0, 150) }}{% if reclamation.description|length > 150 %}...{% endif %}</p>
+                                
+                                {% if reclamation.status == 'resolved' and reclamation.response %}
+                                    <div class="response-preview">
+                                        <div class="response-preview-header">
+                                            <span class="admin-icon">
+                                                <i class="fas fa-user-shield"></i>
+                                            </span>
+                                            <span>Réponse de l'administrateur :</span>
+                                        </div>
+                                        <div class="response-preview-content">
+                                            {{ reclamation.response.content|slice(0, 100) }}{% if reclamation.response.content|length > 100 %}...{% endif %}
+                                        </div>
+                                    </div>
+                                {% endif %}
+                            </div>
+                            <div class="ms-3">
+                                <span class="status-badge {% if reclamation.status == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
+                                    {% if reclamation.status == 'resolved' %}
+                                        Résolu
+                                    {% else %}
+                                        En attente
+                                    {% endif %}
+                                </span>
+                            </div>
+                        </div>
+                        <div class="mt-3">
+                            <a href="{{ path('app_reclamation_show', {'id': reclamation.id}) }}" class="btn btn-sm btn-outline-primary">
+                                <i class="fas fa-eye me-1"></i>Voir les détails
+                            </a>
+                        </div>
+                    </div>
+                {% endfor %}
+            {% endif %}
+        </div>
+    </div>
+{% endblock %}

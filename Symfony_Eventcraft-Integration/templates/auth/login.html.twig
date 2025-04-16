@@ -1,0 +1,89 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Se connecter{% endblock %}
+
+{% block body %}
+<div class="d-flex min-vh-100">
+    <!-- Left side with gradient background -->
+    <div class="d-none d-lg-flex flex-column justify-content-center align-items-center text-white text-center p-5" style="background: linear-gradient(135deg, #8a5cf6, #d53f8c); width: 50%;">
+        <h1 class="display-4 fw-bold mb-4">Bienvenue sur<br>EventCraft</h1>
+        <p class="lead">Créez, gérez et organisez vos événements en toute simplicité.</p>
+    </div>
+    
+    <!-- Right side with login form -->
+    <div class="d-flex flex-column justify-content-center p-4 bg-white" style="width: 50%;">
+        <div class="container">
+            <div class="text-center mb-4">
+                <h2>Connexion</h2>
+                <p class="text-muted">Accédez à votre compte EventCraft</p>
+            </div>
+
+            {% if error %}
+                <div class="alert alert-danger" role="alert">
+                    {{ error.messageKey|trans(error.messageData, 'security') }}
+                </div>
+            {% endif %}
+
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            {% for message in app.flashes('error') %}
+                <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                </div>
+            {% endfor %}
+
+            <form method="post">
+                <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+                
+                <div class="form-floating mb-3">
+                    <input type="email" name="email" id="email" class="form-control" placeholder="Adresse email" value="{{ last_username }}" required autofocus>
+                    <label for="email">Adresse email</label>
+                </div>
+                
+                <div class="form-floating mb-3">
+                    <input type="password" name="password" id="password" class="form-control" placeholder="Mot de passe" required>
+                    <label for="password">Mot de passe</label>
+                </div>
+                
+                <div class="form-check mb-3">
+                    <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" checked>
+                    <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <button type="submit" class="btn btn-primary btn-lg" style="background: linear-gradient(to right, #8a5cf6, #d53f8c); border: none;">
+                        <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                    </button>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <a href="{{ path('app_forgot_password') }}" class="text-decoration-none">Mot de passe oublié ?</a>
+                </div>
+                
+                <div class="text-center mt-3">
+                    <p class="mb-0">Vous n'avez pas de compte ? <a href="{{ path('app_register') }}" class="text-decoration-none">S'inscrire</a></p>
+                </div>
+            </form>
+            
+            <div class="mt-4">
+                <div class="d-flex align-items-center mb-3">
+                    <hr class="flex-grow-1">
+                    <span class="mx-3 text-muted">Ou continuer avec</span>
+                    <hr class="flex-grow-1">
+                </div>
+                
+                <div class="d-grid gap-2">
+                    <a href="{{ path('connect_google') }}" class="btn btn-outline-secondary">
+                        <img src="https://www.google.com/favicon.ico" alt="Google" width="16" height="16" class="me-2">
+                        Se connecter avec Google
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
