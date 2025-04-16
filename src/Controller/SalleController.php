@@ -4,6 +4,8 @@
 
 namespace App\Controller;
 
+
+
 use App\Entity\Utilisateur;
 use App\Entity\Salle;
 use App\Entity\Reservation;
@@ -61,24 +63,30 @@ final class SalleController extends AbstractController
         $user = $this->getUser();
         
         if (!$user) {
-            $this->addFlash('error', 'Vous devez être connecté pour ajouter une salle.');
-            return $this->redirectToRoute('app_login');
+            throw new \Exception("Vous devez être connecté pour ajouter une salle.");
         }
         
         $salle->setUser($user);
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
         
-        if ($form->isSubmitted()) {
-            if (!$form->isValid()) {
-                // Les erreurs seront automatiquement passées au template
-            }
+        if ($form->isSubmitted() && $form->isValid()) {
+            $imageFile = $form->get('imageFile')->getData();
             
-            if ($form->isValid()) {
-                // ... traitement du formulaire valide ...
-                $this->addFlash('success', 'La salle a été créée avec succès!');
-                return $this->redirectToRoute('app_profilsalle');
+            if ($imageFile) {
+                $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                $imageFile->move(
+                    $this->getParameter('images_directory'),
+                    $newFilename
+                );
+                $salle->setImageSalle($newFilename);
             }
+        
+            $entityManager->persist($salle);
+            $entityManager->flush();
+        
+            $this->addFlash('success', 'La salle a été créée avec succès!');
+            return $this->redirectToRoute('app_profilsalle');
         }
         
         return $this->render('salle/addsalle.html.twig', [

@@ -15,7 +15,7 @@
   \**********************/
 /***/ (() => {
 
-eval("console.log(\"Hello, Webpack!\");\r\n\n\n//# sourceURL=webpack://eventcraft/./src/index.js?");
+eval("console.log(\"Hello, Webpack!\");\n\n\n//# sourceURL=webpack://eventcraft/./src/index.js?");
 
 /***/ })
 

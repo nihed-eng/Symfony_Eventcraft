@@ -1,0 +1,263 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des salles - Admin EventCraft{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    .stats-card {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    .stats-card-body {
+        padding: 1.5rem;
+    }
+    
+    .stats-card-value {
+        font-size: 2rem;
+        font-weight: 700;
+        margin-bottom: 0.5rem;
+    }
+    
+    .stats-card-title {
+        font-size: 1rem;
+        font-weight: 600;
+        margin-bottom: 0.25rem;
+    }
+    
+    .stats-card-subtitle {
+        font-size: 0.8rem;
+        opacity: 0.8;
+    }
+    
+    .stats-card-icon {
+        font-size: 3rem;
+        opacity: 0.2;
+        position: absolute;
+        right: 1.5rem;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+    
+    .data-card {
+        background: #fff;
+        border-radius: 10px;
+        box-shadow: 0 2px 15px rgba(0,0,0,0.05);
+        overflow: hidden;
+    }
+    
+    .data-card-header {
+        padding: 1.5rem;
+        border-bottom: 1px solid #eee;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .data-card-title {
+        margin: 0;
+        font-size: 1.25rem;
+        font-weight: 600;
+    }
+    
+    .data-card-body {
+        padding: 1.5rem;
+    }
+    
+    .table-hover tbody tr:hover {
+        background-color: rgba(0,0,0,0.02);
+    }
+    
+    .bg-purple {
+        background-color: #6f42c1 !important;
+    }
+    
+    .badge {
+        font-weight: 500;
+        padding: 0.35em 0.65em;
+    }
+    
+    .btn-action {
+        width: 32px;
+        height: 32px;
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        padding: 0;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="admin-title mb-1">Gestion des salles</h1>
+        <p class="text-muted mb-0">Gérez l'ensemble des salles disponibles</p>
+    </div>
+    <a href="{{ path('app_admin_salle_new') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Ajouter une salle
+    </a>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Statistiques -->
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-primary text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|length }}</div>
+                <div class="stats-card-title">Total Salles</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-door-open"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-success text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.prix < 100)|length }}</div>
+                <div class="stats-card-title">Salles économiques</div>
+                <div class="stats-card-subtitle">Moins de 100DT</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-euro-sign"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-info text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.qualite == 'luxe')|length }}</div>
+                <div class="stats-card-title">Salles luxe</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-warning text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.capacite >= 100)|length }}</div>
+                <div class="stats-card-title">Grandes salles</div>
+                <div class="stats-card-subtitle">100+ personnes</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Liste des salles -->
+<div class="card shadow-sm">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0">Dernières salles ajoutées</h5>
+        <a href="{{ path('app_admin_salles_full') }}" class="btn btn-outline-primary">
+            <i class="fas fa-list me-1"></i> Voir toutes les salles
+        </a>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Capacité</th>
+                        <th>Localisation</th>
+                        <th>Qualité</th>
+                        <th>Prix</th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salle in salles|slice(0, 5) %}
+                    <tr>
+                        <td>{{ salle.idSalle }}</td>
+    <td>
+    <div class="d-flex align-items-center">
+        {% if salle.imageSalle %}
+            
+        {% else %}
+            <div class="bg-light rounded me-2 d-flex align-items-center justify-content-center"
+                 style="width: 40px; height: 40px;">
+                <i class="fas fa-door-open text-muted"></i>
+            </div>
+        {% endif %}
+        <span>{{ salle.nomSalle }}</span>
+    </div>
+</td>
+                        <td>{{ salle.capacite }} <small class="text-muted">personnes</small></td>
+                        <td>{{ salle.locationSalle }}</td>
+                        <td>
+                            <span class="badge bg-{{ salle.qualite == 'luxe' ? 'purple' : (salle.qualite == 'premium' ? 'primary' : 'secondary') }}">
+                                {{ salle.qualite|capitalize }}
+                            </span>
+                        </td>
+                        <td>{{ salle.prix }} <small class="text-muted">DT</small></td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ path('admin_salle_details', {'idSalle': salle.idSalle}) }}" 
+                                   class="btn btn-sm btn-action btn-info" 
+                                   title="Voir détails">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_admin_salle_edit', {'id': salle.idSalle}) }}" 
+                                   class="btn btn-sm btn-action btn-warning" 
+                                   title="Modifier">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" 
+                                      action="{{ path('admin_salle_delete', {'id': salle.idSalle}) }}" 
+                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.idSalle) }}">
+                                    <button type="submit" class="btn btn-sm btn-action btn-danger" title="Supprimer">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <div class="py-3">
+                                <i class="fas fa-door-open fa-3x text-muted mb-3"></i>
+                                <p class="text-muted mb-0">Aucune salle enregistrée pour le moment.</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+// Confirmation avant suppression
+document.querySelectorAll('form[onsubmit]').forEach(form => {
+    form.addEventListener('submit', function(e) {
+        if (!confirm(this.getAttribute('data-confirm'))) {
+            e.preventDefault();
+        }
+    });
+});
+</script>
+{% endblock %}

@@ -15,44 +15,47 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
-
+use App\Repository\UtilisateurRepository;
 
 
 class CommandeDecorationController extends AbstractController
 {
    
     
-    #[Route('/commandedecoration/new', name: 'commande_decoration_new')]
-    public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
-    {
-        $commandeDecoration = new CommandeDecoration();
-        
-        // Récupérer l'utilisateur connecté
-        $user = $security->getUser();
-        if (!$user) {
-            throw $this->createAccessDeniedException('Vous devez être connecté pour ajouter une commande.');
-        }
+    #[Route('/commande/new/{idDecoration?}', name: 'app_commande_decoration_new')]
+public function new(Request $request, EntityManagerInterface $entityManager, UtilisateurRepository $userRepository, DecorationRepository $decorationRepository, int $idDecoration): Response
+{
+    $commandeDecoration = new CommandeDecoration();
 
-        // Créer le formulaire et définir l'utilisateur connecté comme valeur par défaut
-        $form = $this->createForm(CommandeDecorationType::class, $commandeDecoration, [
-            'user' => $user // Passer l'utilisateur connecté comme option
-        ]);
-
-        $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Sauvegarder la commande de décoration
-            $entityManager->persist($commandeDecoration);
-            $entityManager->flush();
-
-            // Redirection vers la page de succès ou autre
-            return $this->redirectToRoute('decoration_index');
-        }
-
-        return $this->render('commandedecoration/new.html.twig', [
-            'form' => $form->createView(),
-        ]);
+    $decoration = $decorationRepository->find($idDecoration);
+    if (!$decoration) {
+        throw $this->createNotFoundException("Décoration non trouvée");
     }
+
+    $user = $this->getUser();
+    if (!$user) {
+        throw $this->createAccessDeniedException("Utilisateur non connecté");
+    }
+
+    $commandeDecoration->setDecoration($decoration);
+    $commandeDecoration->setUser($user);
+
+    $form = $this->createForm(CommandeDecorationType::class, $commandeDecoration);
+    $form->handleRequest($request);
+
+    if ($form->isSubmitted() && $form->isValid()) {
+        $entityManager->persist($commandeDecoration);
+        $entityManager->flush();
+
+        return $this->redirectToRoute('decoration_index'); // ou une autre route
+    }
+
+    return $this->render('commandedecoration/new.html.twig', [
+        'form' => $form->createView(),
+        'decoration' => $decoration,
+    ]);
+}
+
 
     #[Route('/decoration', name: 'decoration_index')]
 public function index(

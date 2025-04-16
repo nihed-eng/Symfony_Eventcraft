@@ -146,8 +146,9 @@
             {{ form_end(form) }}
 
             <div class="text-center mt-3">
-                <a href="{{ path('app_demande_index') }}" class="text-muted">⬅ Retour à la liste</a>
-            </div>
+    <a href="{{ path('app_offre_demandes', {'id': demande.offre.idOffre}) }}" class="text-muted">⬅ Retour à la liste</a>
+</div>
+
         </div>
     </div>
 

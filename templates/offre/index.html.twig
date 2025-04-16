@@ -1,212 +1,117 @@
-{% extends 'baseoffre.html.twig' %}
+{% extends 'basetemp.html.twig' %}
 
-{% block title %}Liste des Offres{% endblock %}
-
-{% block stylesheets %}
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: #f8f9fa;
-        }
-
-
-        .p-4 {
-    margin-bottom: -35px;
-}
-
-        .hero-wrap {
-            background-size: cover;
-            background-position: center center;
-            height: 400px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: white;
-            text-align: center;
-        }
-
-        .hero-wrap .overlay {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 58%  ;
-            background: rgba(0, 0, 0, 0.5);
-        } 
-
-        .hero-wrap h1 {
-            font-size: 3rem;
-            font-weight: 700;
-        }
-
-        .breadcrumbs a {
-            color: white;
-        }
-
-        .ftco-section {
-            padding: 50px 0;
-        }
-
-        .job-post-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            background: white;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .job-post-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
-        }
-
-        .job-post-item-header {
-            display: flex;
-            align-items: center;
-            width: 100%;
-        }
-
-        .job-post-item-header h2 {
-            flex-grow: 1;
-            text-align: left;
-        }
-
-        .one-forth {
-            justify-content: flex-end;
-        }
-
-       .btn-custom {
-    padding: 5px 10px;
-    /* border-radius: 5px; */
-    text-decoration: none;
-    color: white;
-    display: inline-flex
-;
-    align-items: center;
-    border: none;
-    margin: 4px;
-    justify-content: center;
-    background-color: rgb(161, 104, 163);
-}
-.btn-primary {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: #CBA979;
-    border-radius: 0;
-    border: 1px;
-}
-
-
-.btn-primary:hover {
-    --bs-btn-color: #fff;
-background-color:#98A695; ;
-    border-radius: 0;
-    color:#FFF;
-    border: 1px rgb(10, 9, 10) important!;
-}
-
-
-        .btn-custom:hover {
-            background-color: #F0C8C6;
-        }
-
-        .btn-delete {
-          padding: 5px 10px;
-    /* border-radius: 5px; */
-    text-decoration: none;
-    color: white;
-    display: inline-flex
-;
-    align-items: center;
-    border: none;
-    margin: 4px;
-    justify-content: center;
-    background-color: rgb(161, 104, 163);
-        }
-
-        .btn-delete:hover {
-            background-color: #F0C8C6;
-        }
-
-        .sidebar-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
-
-        a {
-            color: #6c757d;
-            text-decoration: none;
-        }
-    </style>
-{% endblock %}
+{% block title %}Event Craft - Offres{% endblock %}
 
 {% block body %}
-<div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
+    <!-- Hero Section -->
+    <section class="hero spad">
         <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text align-items-end justify-content-start">
-                <div class="col-md-12 ftco-animate text-center mb-5">
-                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Offres</span></p>
-                    <h1 class="mb-3 bread">Liste des Offres</h1>
-                </div>
-            </div>
+        
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item" style="background-image: url('/images/slider3.jpg');"></div>
+            <div class="hero__item" style="background-image: url('/images/slider2.jpeg');"></div>
+            <div class="hero__item" style="background-image: url('/images/slider1.jpg');"></div>
         </div>
-    </div>
+        
+        <div class="container">
+            <div class="hero__text">
+                <h5>WELCOME HIROTO</h5>
+                <h2>Découvrez nos meilleures offres</h2>
+            </div>
+            <form action="#" class="filter__form">
+                <!-- Vos champs de filtre existants... -->
+            </form>
+        </div>
+    </section>
 
-   <section class="ftco-section bg-light">
-    <div class="container">
+    <!-- Offers Section -->
+    <section class="home-room spad" style="margin-top: 70px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h5>A LA UNE</h5>
+                        <h2>NOS MEILLEURES OFFRES</h2>
+                    </div>
+                </div>
+            </div>
+        </div>           
+
+       <div class="container-fluid">
+        <div class="d-flex justify-content-end mb-4 gap-3">
+            <a href="{{ path('app_offre_new') }}" class="btn" style="background-color: rgb(161, 104, 163); border-color: rgb(161, 104, 163); color: white;">
+                <i class="fas fa-plus"></i> Ajouter une Offre
+            </a>
+        </div>
         <div class="row">
-            <div class="col-lg-9 pr-lg-4">
-                <div class="row">
-                    {% for offre in offres %}
-                        <div class="col-md-12 ftco-animate">
-                            <div class="job-post-item p-4 d-flex align-items-center">
-                                <div class="one-third mb-4 mb-md-0">
-                                    <span class="subadge">{{ offre.typeOffre }}</span>
-                                    <div class="job-post-item-header align-items-center">
-                                        <h2 class="mr-3 text-black"><a href="{{ path('app_offre_show', {'id': offre.id}) }}">{{ offre.titreOffre }}</a></h2>
-                                    </div>
-                                    <div class="job-post-item-body d-block d-md-flex">
-                                        <div class="mr-3"><span class="icon-file-text"></span> <span>{{ offre.descriptionOffre }}</span></div>
-                                        <div><span class="icon-calendar"></span> <span>{{ offre.dateExp ? offre.dateExp|date('Y-m-d') : '' }}</span></div>
-                                    </div>
-                                </div>
-                                <div class="one-forth ml-auto d-flex align-items-center mt-4 mt-md-0">
-                                    <a href="{{ path('app_offre_show', {'id': offre.id}) }}" class="btn-custom mr-2">👁 Voir</a>
-                                    <a href="{{ path('app_offre_edit', {'id': offre.id}) }}" class="btn-custom mr-2">✏ Modifier</a>
-                                    <form method="post" action="{{ path('app_offre_delete', {'id': offre.id}) }}" style="display:inline;" onsubmit="return confirm('⚠️ Voulez-vous vraiment supprimer cette offre ?');">
-                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offre.id) }}">
-                                        <button type="submit" class="btn-delete">🗑 Supprimer</button>
-                                    </form>
-                                </div>
-                            </div>
+            {% for offre in pagination %}
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="home__room__item set-bg" style="background-image: url('/images/offre.jpeg');">
+                        <div class="home__room__title">
+                            <h4>{{ offre.titreOffre }}</h4>
+                            <h2><sup>DT</sup>{{ offre.montant }}<span>/{{ offre.typeOffre }}</span></h2>
+                            <p class="expiry-date">
+                                {% if offre.dateExp < date() %}
+                                    <span class="badge bg-danger">Expirée</span>
+                                {% elseif offre.dateExp < date('+7 days') %}
+                                    <span class="badge bg-warning">Bientôt</span>
+                                {% endif %}
+                                {{ offre.dateExp|date('d/m/Y') }}
+                            </p>
                         </div>
-                    {% else %}
-                        <div class="col-md-12 ftco-animate">
-                            <p class="text-center text-muted">Aucune offre trouvée.</p>
+                        <div class="d-flex justify-content-between p-3">
+<a href="{{ path('app_offre_show', {'id': offre.id}) }}" class="btn btn-outline-light">VOIR DÉTAILS</a>
                         </div>
-                    {% endfor %}
+                    </div>
                 </div>
-            </div>
-            <div class="col-lg-3 sidebar">
-                <div class="p-4 ftco-animate">
-                    <a href="{{ path('app_offre_new') }}" class="btn btn-primary">➕ Ajouter une Offre</a>
-                    
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucune offre disponible pour le moment</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ path('app_demande_index') }}" class="btn btn-primary">
+                            <i class="fas fa-list"></i> Voir les Demandes
+                        </a>
+                        <a href="{{ path('app_offre_new') }}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Ajouter une Offre
+                        </a>
+                    </div>
                 </div>
-                 <div class="p-4 ftco-animate">
-                    <a href="{{ path('app_demande_index') }}" class="btn btn-primary">Liste des Demandes</a>
-                    
-                </div>
-                
-            </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Navigation -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
         </div>
     </div>
 </section>
+
+<!-- JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $(".hero__slider").owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: true,
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed: 1000
+        });
+    });
+
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header__content');
+        if (window.scrollY > 50) {
+            header.style.backgroundColor = 'black';
+        } else {
+            header.style.backgroundColor = 'transparent';
+        }
+    });
+</script>
 {% endblock %}

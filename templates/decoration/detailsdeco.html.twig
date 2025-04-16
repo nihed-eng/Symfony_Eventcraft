@@ -125,7 +125,7 @@
                                 <p><strong>Stock disponible :</strong> {{ decoration.stock }}</p>
                                 <p><strong>Prix :</strong> {{ decoration.prix }} DT</p>
 
-                                <a href="{{ path('commande_decoration_new', {'idDecor': decoration.idDecor}) }}" class="btn-primary">RÉSERVER MAINTENANT</a>
+<a href="{{ path('app_commande_decoration_new', { idDecoration: decoration.idDecor }) }}">Commander</a>
                             </div>
                         </div>
                     </div>

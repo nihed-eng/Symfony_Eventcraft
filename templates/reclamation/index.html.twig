@@ -55,68 +55,28 @@
 }
 
 .response-preview {
-    margin-top: 0.75rem;
-    padding-top: 0.75rem;
-    border-top: 1px dashed rgba(0, 0, 0, 0.1);
-}
-
-.response-preview-content {
-    background-color: var(--primary-subtle);
-    border-left: 3px solid var(--primary);
-    padding: 0.75rem;
-    border-radius: 0.25rem;
-    font-style: italic;
-    color: var(--primary);
+    margin-top: 1rem;
+    padding: 1rem;
+    background-color: #f8fafc;
+    border-radius: 0.5rem;
+    border-left: 3px solid #64748b;
 }
 
 .response-preview-header {
     display: flex;
     align-items: center;
     margin-bottom: 0.5rem;
+    color: #64748b;
     font-size: 0.875rem;
-    color: #6c757d;
 }
 
 .admin-icon {
-    display: inline-flex;
-    align-items: center;
-    justify-content: center;
-    width: 20px;
-    height: 20px;
-    background: linear-gradient(135deg, #6366f1, #ec4899);
-    border-radius: 50%;
-    color: white;
     margin-right: 0.5rem;
-    font-size: 0.625rem;
 }
 
-/* Added styles to change the light blue background to white */
-body {
-    background-color: white !important;
-}
-
-.container.py-5 {
-    background-color: white !important;
-}
-
-/* This targets the main content area under the navbar */
-main, .main-content {
-    background-color: white !important;
-}
-
-/* Target any specific parent container that might have the blue background */
-.page-wrapper, .content-wrapper, .page-content {
-    background-color: white !important;
-}
-
-/* Target the specific area visible in your screenshot */
-.container.py-5 {
-    background-color: white !important;
-}
-
-/* Force any outer containers to be white */
-html, body, div#app, div#root {
-    background-color: white !important;
+.response-preview-content {
+    color: #475569;
+    font-size: 0.875rem;
 }
     </style>
 {% endblock %}
@@ -148,16 +108,16 @@ html, body, div#app, div#root {
                     <div class="reclamation-item p-4 mb-3 bg-white">
                         <div class="d-flex justify-content-between align-items-start">
                             <div>
-                                <h5 class="mb-1">{{ reclamation.subject }}</h5>
+                                <h5 class="mb-1">{{ reclamation.titre }}</h5>
                                 <p class="text-muted mb-2">
                                     <small>
                                         <i class="far fa-clock me-1"></i>
-                                        {{ reclamation.createdAt|date('d/m/Y H:i') }}
+                                        {{ reclamation.date|date('d/m/Y') }}
                                     </small>
                                 </p>
                                 <p class="mb-0">{{ reclamation.description|slice(0, 150) }}{% if reclamation.description|length > 150 %}...{% endif %}</p>
                                 
-                                {% if reclamation.status == 'resolved' and reclamation.response %}
+                                {% if reclamation.statut == 'resolved' and reclamation.response %}
                                     <div class="response-preview">
                                         <div class="response-preview-header">
                                             <span class="admin-icon">
@@ -166,14 +126,14 @@ html, body, div#app, div#root {
                                             <span>Réponse de l'administrateur :</span>
                                         </div>
                                         <div class="response-preview-content">
-                                            {{ reclamation.response.content|slice(0, 100) }}{% if reclamation.response.content|length > 100 %}...{% endif %}
+                                            {{ reclamation.response.contenu|slice(0, 100) }}{% if reclamation.response.contenu|length > 100 %}...{% endif %}
                                         </div>
                                     </div>
                                 {% endif %}
                             </div>
                             <div class="ms-3">
-                                <span class="status-badge {% if reclamation.status == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
-                                    {% if reclamation.status == 'resolved' %}
+                                <span class="status-badge {% if reclamation.statut == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
+                                    {% if reclamation.statut == 'resolved' %}
                                         Résolu
                                     {% else %}
                                         En attente
@@ -191,4 +151,9 @@ html, body, div#app, div#root {
             {% endif %}
         </div>
     </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 {% endblock %}
