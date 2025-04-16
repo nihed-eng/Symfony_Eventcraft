@@ -16,22 +16,13 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
-    public function index(SalleRepository $salleRepository): Response
+    public function index(): Response
     {
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-        
-        // Récupérer les salles de l'utilisateur connecté
-        $salles = $salleRepository->findBy(['user' => $user]); // Supposons que Salle a une relation avec User
-        
-        // Passer les salles à la vue
         return $this->render('profile/index.html.twig', [
-            'user' => $user,
-            'salles' => $salles,  // Passer les salles à la vue
-            'activeTab' => 'profile',
+            'user' => $this->getUser(),
+            'activeTab' => 'profile'
         ]);
     }
-
 
     #[Route('/profile/update', name: 'app_profile_update', methods: ['POST'])]
     public function updateProfile(Request $request, EntityManagerInterface $entityManager): Response

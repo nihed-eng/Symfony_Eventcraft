@@ -1,0 +1,39 @@
+{# templates/admin/salle/new.html.twig #}
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Ajouter une nouvelle salle | Admin{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="admin-title mb-0">Ajouter une nouvelle salle</h1>
+    </div>
+    <a href="{{ path('app_admin_salles_full') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i> Retour à la liste
+    </a>
+</div>
+
+<div class="card shadow-sm">
+    <div class="card-body">
+        {{ form_start(form) }}
+            <div class="row">
+                <div class="col-md-6">
+                    {{ form_row(form.nomSalle) }}
+                    {{ form_row(form.capacite) }}
+                    {{ form_row(form.locationSalle) }}
+                </div>
+                <div class="col-md-6">
+                    {{ form_row(form.equipement) }}
+                    {{ form_row(form.qualite) }}
+                    {{ form_row(form.prix) }}
+                    {{ form_row(form.imageFile) }}
+                </div>
+            </div>
+            
+            <button type="submit" class="btn btn-primary mt-3">
+                <i class="fas fa-save me-2"></i> Créer la salle
+            </button>
+        {{ form_end(form) }}
+    </div>
+</div>
+{% endblock %}

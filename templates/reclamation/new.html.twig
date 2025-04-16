@@ -64,9 +64,9 @@
                 <div class="reclamation-form">
                     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
                         <div class="mb-4">
-                            {{ form_label(form.subject, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
-                            {{ form_widget(form.subject) }}
-                            {{ form_errors(form.subject) }}
+                            {{ form_label(form.titre, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.titre) }}
+                            {{ form_errors(form.titre) }}
                             <div class="invalid-feedback">
                                 Veuillez fournir un sujet pour votre réclamation.
                             </div>
@@ -78,6 +78,15 @@
                             {{ form_errors(form.description) }}
                             <div class="invalid-feedback">
                                 Veuillez fournir une description de votre réclamation.
+                            </div>
+                        </div>
+
+                        <div class="mb-4">
+                            {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.type) }}
+                            {{ form_errors(form.type) }}
+                            <div class="invalid-feedback">
+                                Veuillez sélectionner un type de réclamation.
                             </div>
                         </div>
 

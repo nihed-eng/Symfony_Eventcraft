@@ -4,34 +4,27 @@ namespace App\Entity;
 
 use App\Repository\ResetPasswordRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
 
 #[ORM\Entity(repositoryClass: ResetPasswordRequestRepository::class)]
-class ResetPasswordRequest
+class ResetPasswordRequest implements ResetPasswordRequestInterface
 {
+    use ResetPasswordRequestTrait;
+
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
-    #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
     private ?Utilisateur $user = null;
 
-    #[ORM\Column(length: 6)]
-    private ?string $verificationCode = null;
-
-    #[ORM\Column]
-    private ?\DateTimeImmutable $expiresAt = null;
-
-    #[ORM\Column]
-    private ?bool $isVerified = false;
-
-    public function __construct(Utilisateur $user)
+    public function __construct(Utilisateur $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken)
     {
         $this->user = $user;
-        $this->verificationCode = sprintf('%06d', random_int(0, 999999));
-        $this->expiresAt = new \DateTimeImmutable('+30 minutes');
-        $this->isVerified = false;
+        $this->initialize($expiresAt, $selector, $hashedToken);
     }
 
     public function getId(): ?int
@@ -39,34 +32,8 @@ class ResetPasswordRequest
         return $this->id;
     }
 
-    public function getUser(): ?Utilisateur
+    public function getUser(): object
     {
         return $this->user;
-    }
-
-    public function getVerificationCode(): ?string
-    {
-        return $this->verificationCode;
-    }
-
-    public function getExpiresAt(): ?\DateTimeImmutable
-    {
-        return $this->expiresAt;
-    }
-
-    public function isVerified(): ?bool
-    {
-        return $this->isVerified;
-    }
-
-    public function setIsVerified(bool $isVerified): self
-    {
-        $this->isVerified = $isVerified;
-        return $this;
-    }
-
-    public function isExpired(): bool
-    {
-        return $this->expiresAt <= new \DateTimeImmutable();
     }
 }

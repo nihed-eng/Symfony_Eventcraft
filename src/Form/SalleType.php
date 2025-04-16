@@ -2,6 +2,7 @@
 
 namespace App\Form;
 
+
 use App\Entity\Salle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -9,6 +10,8 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -50,10 +53,17 @@ class SalleType extends AbstractType
                 'attr' => ['class' => 'form-control'],
              
             ])
-            ->add('qualite', TextType::class, [
+            ->add('qualite', ChoiceType::class, [
                 'label' => 'Qualité',
+                'choices' => [
+                    'Bien' => 'Bien', 
+                    'Très bien' => 'Très bien',
+                    'Superbe' => 'Superbe',
+                    'Exceptionnelle' => 'Exceptionnelle'
+                ],
                 'attr' => ['class' => 'form-control'],
-                'required' => false
+                'required' => false,
+                'placeholder' => 'Sélectionnez une qualité...'
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix (€)',

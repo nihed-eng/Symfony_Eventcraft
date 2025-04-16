@@ -37,7 +37,10 @@ class OffreType extends AbstractType
             ->add('dateExp', DateType::class, [
                 'label' => "Date d'expiration",
                 'widget' => 'single_text',
+                'required' => true, // s'assurer que le champ est obligatoire
+                'attr' => ['placeholder' => 'Choisissez une date'],
             ])
+            
        ;
     }
 

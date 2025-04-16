@@ -148,8 +148,13 @@ background-color:#98A695; ;
 {% endblock %}
 {% block body %}
     {% if salle.imageSalle %}
+        {# Sépare les chemins s'il y a des virgules (plusieurs images) et prend la première #}
         {% set firstPath = salle.imageSalle | split(',') | first %}
+
+        {# Garde seulement le nom du fichier, enlève tout le chemin #}
         {% set filename = firstPath | split('/') | last | split('\\') | last %}
+
+        {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
         <div class="hero-wrap" style="background-image: url('/images/{{ filename | url_encode }}');">
     {% else %}
         <div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
@@ -165,66 +170,67 @@ background-color:#98A695; ;
         </div>
     </div>
 
-    <div class="container my-4">
-        <h1 class="text-center">{{ salle.nomSalle }}</h1>
-    </div>
+    <div class="container">
+        <div class="image-section">
+            <div class="header-text"><h1>{{ salle.nomSalle }}</h1></div>
+        </div>
 
-    <section class="ftco-section bg-light">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-9 pr-lg-4">
-                    <div class="row">
-                        <div class="details-section">
-                            <div class="info-box">
-                                <h2>Informations</h2>
-                                <p><strong>Adresse :</strong> {{ salle.locationSalle }}</p>
-                                <p><strong>Capacité :</strong> {{ salle.capacite }} personnes</p>
-                                <p><strong>Description :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                
-                                <div class="d-flex justify-content-end mb-3">
-                                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn btn-primary">RÉSERVER MAINTENANT</a>
+        <section class="ftco-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 pr-lg-4">
+                        <div class="row">
+                            <div class="details-section">
+                                <div class="info-box">
+                                    <h2>Informations</h2>
+                                    <p><strong>Adresse :</strong> {{ salle.locationSalle }}</p>
+                                    <p><strong>Capacité :</strong> {{ salle.capacite }} personnes</p>
+                                    <p><strong>Description :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
+                                    
+                                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn-primary">RÉSERVER MAINTENANT</a>
                                 </div>
-                            </div>
 
-                            <div class="calendar-container">
-                                <h2>Disponibilité</h2>
-                                <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
-                                
-                                {% if events is not empty %}
-                                    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
-                                    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
-                                    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+                                <div class="calendar-container">
+                                    <h2>Disponibilité</h2>
+                                    <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
+                                    
+                                    {% if events is not empty %}
+                                        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
 
-                                    <script>
-                                    document.addEventListener('DOMContentLoaded', function() {
-                                        var calendarEl = document.getElementById('calendar');
-                                        var calendar = new FullCalendar.Calendar(calendarEl, {
-                                            initialView: 'dayGridMonth',
-                                            locale: 'fr',
-                                            headerToolbar: {
-                                                left: 'prev,next today',
-                                                center: 'title',
-                                                right: 'dayGridMonth,timeGridWeek,timeGridDay'
-                                            },
-                                            events: {{ events|raw }},
-                                            selectable: true,
-                                            select: function(info) {
-                                                // Optional: add select handler
-                                            }
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var calendarEl = document.getElementById('calendar');
+                                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                initialView: 'dayGridMonth',
+                                                locale: 'fr',
+                                                headerToolbar: {
+                                                    left: 'prev,next today',
+                                                    center: 'title',
+                                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                                },
+                                                events: {{ events|raw }},
+                                                selectable: true,
+                                                select: function(info) {
+                                                    // Optional: add select handler
+                                                }
+                                            });
+                                            calendar.render();
                                         });
-                                        calendar.render();
-                                    });
-                                    </script>
-                                {% else %}
-                                    <div class="no-reservation">
-                                        <p>Aucune réservation n'a encore été effectuée pour cette salle.</p>
-                                    </div>
-                                {% endif %}
+                                        </script>
+                                    {% else %}
+                                        <div class="no-reservation">
+                                            <p>Aucune réservation n'a encore été effectuée pour cette salle.</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
                             </div>
                         </div>
                     </div>
+
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 {% endblock %}

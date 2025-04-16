@@ -1,0 +1,78 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des Demandes - Admin EventCraft{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1 class="admin-title">Gestion des Demandes</h1>
+</div>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<div class="data-card">
+    <div class="data-card-header d-flex justify-content-between align-items-center">
+        <h2 class="data-card-title">Liste des Demandes</h2>
+       
+    </div>
+
+    <div class="data-card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+    <tr>
+        <th>ID</th>
+        <th>Nom</th>
+        <th>Offre</th> {# Nouvelle colonne #}
+        <th>Description</th>
+        <th>Statut</th>
+        <th>Date</th>
+        <th>Actions</th>
+    </tr>
+</thead>
+<tbody>
+    {% for demande in demandes %}
+        <tr>
+            <td>{{ demande.idDemande }}</td>
+            <td>{{ demande.nom }}</td>
+            <td>{{ demande.offre.titreOffre }}</td>
+{# Affichage du nom de l'offre liée #}
+            <td>
+                {{ demande.description|length > 60 
+                    ? demande.description|slice(0, 60) ~ '...' 
+                    : demande.description }}
+            </td>
+            <td>
+                <span class="badge 
+                    {% if demande.statutDemande == 'En attente' %}bg-warning
+                    {% elseif demande.statutDemande == 'Acceptée' %}bg-success
+                    {% else %}bg-danger{% endif %}">
+                    {{ demande.statutDemande }}
+                </span>
+            </td>
+            <td>{{ demande.dateDemande|date('d/m/Y') }}</td>
+            <td>
+                <a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}" class="btn btn-sm btn-outline-info">
+                    <i class="fas fa-eye"></i> Détails
+                </a>
+            </td>
+        </tr>
+    {% else %}
+        <tr>
+            <td colspan="7" class="text-center text-muted py-4">
+                Aucune demande enregistrée pour le moment.
+            </td>
+        </tr>
+    {% endfor %}
+</tbody>
+      </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

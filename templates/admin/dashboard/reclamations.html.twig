@@ -27,10 +27,11 @@
                     <tr>
                         <th>ID</th>
                         <th>Utilisateur</th>
-                        <th>Sujet</th>
+                        <th>Titre</th>
                         <th>Description</th>
-                        <th>Status</th>
-                        <th>Date de création</th>
+                        <th>Type</th>
+                        <th>Statut</th>
+                        <th>Date</th>
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -38,26 +39,96 @@
                     {% for reclamation in reclamations %}
                         <tr>
                             <td>{{ reclamation.id }}</td>
-                            <td>{{ reclamation.user.firstName }} {{ reclamation.user.lastName }}</td>
-                            <td>{{ reclamation.subject }}</td>
+                            <td>{{ reclamation.user.prenom }} {{ reclamation.user.nom }}</td>
+                            <td>{{ reclamation.titre }}</td>
                             <td>{{ reclamation.description|slice(0, 50) }}...</td>
+                            <td>{{ reclamation.type }}</td>
                             <td>
-                                {% if reclamation.status == 'pending' %}
-                                    <span class="status-badge status-pending">En attente</span>
+                                {% if reclamation.statut == 'pending' %}
+                                    <span class="badge bg-warning">En attente</span>
                                 {% else %}
-                                    <span class="status-badge status-resolved">Résolu</span>
+                                    <span class="badge bg-success">Résolu</span>
                                 {% endif %}
                             </td>
-                            <td>{{ reclamation.createdAt|date('d/m/Y H:i') }}</td>
+                            <td>{{ reclamation.date|date('d/m/Y H:i') }}</td>
                             <td>
-                                {% if reclamation.status == 'pending' %}
-                                    <button type="button" class="btn btn-primary btn-respond" data-bs-toggle="modal" data-bs-target="#respondModal{{ reclamation.id }}">
+                                {% if reclamation.statut == 'pending' %}
+                                    <button type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#respondModal{{ reclamation.id }}">
                                         <i class="fas fa-reply"></i> Répondre
                                     </button>
+
+                                    <div class="modal fade" id="respondModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="respondModalLabel{{ reclamation.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="respondModalLabel{{ reclamation.id }}">Répondre à la réclamation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <form action="{{ path('app_admin_reclamation_respond', {'id': reclamation.id}) }}" method="post">
+                                                    <div class="modal-body">
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Titre</label>
+                                                            <input type="text" class="form-control" value="{{ reclamation.titre }}" disabled>
+                                                        </div>
+                                                        
+                                                        <div class="mb-3">
+                                                            <label class="form-label">Description</label>
+                                                            <textarea class="form-control" rows="3" disabled>{{ reclamation.description }}</textarea>
+                                                        </div>
+
+                                                        <div class="mb-3">
+                                                            <label for="response{{ reclamation.id }}" class="form-label">Votre réponse</label>
+                                                            <textarea class="form-control" id="response{{ reclamation.id }}" name="response" rows="3" required></textarea>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                        <button type="submit" class="btn btn-primary">Envoyer</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {% else %}
-                                    <button type="button" class="btn btn-success btn-respond" data-bs-toggle="modal" data-bs-target="#viewResponseModal{{ reclamation.id }}">
-                                        <i class="fas fa-eye"></i> Voir la réponse
+                                    <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#viewResponseModal{{ reclamation.id }}">
+                                        <i class="fas fa-eye"></i> Voir
                                     </button>
+
+                                    <div class="modal fade" id="viewResponseModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="viewResponseModalLabel{{ reclamation.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="viewResponseModalLabel{{ reclamation.id }}">Détails de la réclamation</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Titre</label>
+                                                        <input type="text" class="form-control" value="{{ reclamation.titre }}" disabled>
+                                                    </div>
+                                                    
+                                                    <div class="mb-3">
+                                                        <label class="form-label">Description</label>
+                                                        <textarea class="form-control" rows="3" disabled>{{ reclamation.description }}</textarea>
+                                                    </div>
+
+                                                    <div class="card bg-light mt-4 mb-3">
+                                                        <div class="card-header">
+                                                            <div>
+                                                                <strong>Réponse</strong>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-body">
+                                                            <p class="card-text">{{ reclamation.response.contenu|nl2br }}</p>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
                                 {% endif %}
                             </td>
                         </tr>
@@ -67,87 +138,6 @@
         </div>
     </div>
 </div>
-
-{# Response Modals #}
-{% for reclamation in reclamations %}
-    {% if reclamation.status == 'pending' %}
-        {# Respond Modal #}
-        <div class="modal fade" id="respondModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="respondModalLabel{{ reclamation.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="respondModalLabel{{ reclamation.id }}">Répondre à la réclamation #{{ reclamation.id }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <form action="{{ path('app_admin_reclamation_respond', {'id': reclamation.id}) }}" method="POST">
-                        <div class="modal-body">
-                            <input type="hidden" name="_token" value="{{ csrf_token('respond-reclamation-' ~ reclamation.id) }}">
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Sujet</label>
-                                <input type="text" class="form-control" value="{{ reclamation.subject }}" disabled>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label class="form-label">Description</label>
-                                <textarea class="form-control" rows="3" disabled>{{ reclamation.description }}</textarea>
-                            </div>
-                            
-                            <div class="mb-3">
-                                <label for="response{{ reclamation.id }}" class="form-label">Votre réponse</label>
-                                <textarea class="form-control" id="response{{ reclamation.id }}" name="response" rows="5" required></textarea>
-                            </div>
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
-                            <button type="submit" class="btn btn-primary">Envoyer la réponse</button>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    {% else %}
-        {# View Response Modal #}
-        <div class="modal fade" id="viewResponseModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="viewResponseModalLabel{{ reclamation.id }}" aria-hidden="true">
-            <div class="modal-dialog modal-lg">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="viewResponseModalLabel{{ reclamation.id }}">Réponse à la réclamation #{{ reclamation.id }}</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <div class="mb-3">
-                            <label class="form-label">Sujet</label>
-                            <input type="text" class="form-control" value="{{ reclamation.subject }}" disabled>
-                        </div>
-                        
-                        <div class="mb-3">
-                            <label class="form-label">Description</label>
-                            <textarea class="form-control" rows="3" disabled>{{ reclamation.description }}</textarea>
-                        </div>
-                        
-                        <div class="card bg-light mt-4 mb-3">
-                            <div class="card-header d-flex justify-content-between align-items-center">
-                                <div>
-                                    <strong>Réponse par:</strong> {{ reclamation.response.respondedBy.firstName }} {{ reclamation.response.respondedBy.lastName }}
-                                </div>
-                                <div>
-                                    <small class="text-muted">{{ reclamation.response.createdAt|date('d/m/Y H:i') }}</small>
-                                </div>
-                            </div>
-                            <div class="card-body">
-                                <p class="card-text">{{ reclamation.response.content|nl2br }}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
-                    </div>
-                </div>
-            </div>
-        </div>
-    {% endif %}
-{% endfor %}
 {% endblock %}
 
 {% block javascripts %}

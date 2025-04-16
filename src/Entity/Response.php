@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use App\Repository\ResponseRepository;
+use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ResponseRepository::class)]
@@ -10,12 +11,15 @@ use Doctrine\ORM\Mapping as ORM;
 class Response
 {
     #[ORM\Id]
-    #[ORM\GeneratedValue]
-    #[ORM\Column]
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(name: 'id_reponse', type: Types::INTEGER)]
     private ?int $id = null;
 
-    #[ORM\OneToOne(inversedBy: 'response', targetEntity: Reclamation::class)]
-    #[ORM\JoinColumn(name: 'reclamation_id', referencedColumnName: 'id')]
+    #[ORM\Column(name: 'contenu_reponse', type: Types::STRING, length: 255)]
+    private ?string $contenu = null;
+
+    #[ORM\OneToOne(inversedBy: 'response')]
+    #[ORM\JoinColumn(name: 'reclamation_id', referencedColumnName: 'id_reclamation', nullable: false)]
     private ?Reclamation $reclamation = null;
 
     public function getId(): ?int
@@ -28,7 +32,7 @@ class Response
         return $this->contenu;
     }
 
-    public function setContenu(string $contenu): static
+    public function setContenu(string $contenu): self
     {
         $this->contenu = $contenu;
         return $this;
@@ -39,7 +43,7 @@ class Response
         return $this->reclamation;
     }
 
-    public function setReclamation(Reclamation $reclamation): static
+    public function setReclamation(Reclamation $reclamation): self
     {
         $this->reclamation = $reclamation;
         return $this;
