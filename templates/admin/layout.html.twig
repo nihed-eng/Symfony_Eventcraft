@@ -293,6 +293,18 @@
             <span>commandes</span>
         </a>
     </li>
+    <li>
+        <a href="{{ path('admin_commentaire_index') }}" class="admin-nav-link {{ app.request.get('_route') == 'admin_commentaire_index' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>commentaire</span>
+        </a>
+    </li>
+      <li>
+        <a href="{{ path('admin_forum_index') }}" class="admin-nav-link {{ app.request.get('_route') == 'admin_forum_index' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>forum</span>
+        </a>
+    </li>
 </ul>
 
             <h4 class="admin-nav-title mt-4">Compte</h4>
