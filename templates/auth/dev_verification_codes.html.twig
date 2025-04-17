@@ -1,0 +1,90 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dev Verification Codes{% endblock %}
+
+{% block body %}
+<div class="container mt-5">
+    <div class="card border-warning">
+        <div class="card-header bg-warning text-dark">
+            <h2><i class="fas fa-code"></i> Development Verification Codes</h2>
+            <p class="mb-0"><strong>WARNING:</strong> This page is for development purposes only and should not be accessible in production.</p>
+        </div>
+        <div class="card-body">
+            {% if resetData %}
+                <div class="alert alert-info mb-4">
+                    <h4 class="alert-heading">Current Verification Code</h4>
+                    <div class="d-flex align-items-center">
+                        <div class="display-4 fw-bold me-3" style="letter-spacing: 8px; font-family: monospace;">{{ resetData.code }}</div>
+                        <div>
+                            <p class="mb-0">For email: <strong>{{ resetData.email }}</strong></p>
+                            <p class="mb-0 text-muted small">Expires at: {{ resetData.expiresAt|date('Y-m-d H:i:s') }}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <a href="{{ path('app_verify_code', {'email': resetData.email}) }}" class="btn btn-primary">
+                        <i class="fas fa-arrow-right"></i> Go to Verification Page
+                    </a>
+                </div>
+
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <h5>Complete Reset Data</h5>
+                    </div>
+                    <div class="card-body">
+                        <pre class="bg-light p-3">{{ resetData|json_encode(constant('JSON_PRETTY_PRINT')) }}</pre>
+                    </div>
+                </div>
+            {% else %}
+                <div class="alert alert-warning">
+                    <h4 class="alert-heading">No verification codes found</h4>
+                    <p>No reset password data was found in the session. You need to initiate a password reset first.</p>
+                    <hr>
+                    <a href="{{ path('app_forgot_password_request') }}" class="btn btn-primary">
+                        <i class="fas fa-unlock-alt"></i> Go to Password Reset Page
+                    </a>
+                </div>
+            {% endif %}
+
+            <div class="card">
+                <div class="card-header">
+                    <h5>Session Data</h5>
+                </div>
+                <div class="card-body">
+                    <div class="table-responsive">
+                        <table class="table table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Key</th>
+                                    <th>Value</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for key, value in sessionData %}
+                                <tr>
+                                    <td><code>{{ key }}</code></td>
+                                    <td>
+                                        {% if value starts with '{' and value ends with '}' %}
+                                            <pre class="mb-0">{{ value|json_encode(constant('JSON_PRETTY_PRINT'))|raw }}</pre>
+                                        {% else %}
+                                            {{ value }}
+                                        {% endif %}
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="card-footer">
+            <div class="d-flex justify-content-between align-items-center">
+                <a href="{{ path('app_forgot_password_request') }}" class="btn btn-secondary">
+                    <i class="fas fa-arrow-left"></i> Back to Password Reset
+                </a>
+                <span class="text-muted">Development Tools - EventCraft</span>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

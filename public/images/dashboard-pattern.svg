@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg width="800px" height="600px" viewBox="0 0 800 600" version="1.1" xmlns="http://www.w3.org/2000/svg">
+    <g stroke="none" stroke-width="1" fill="none" fill-rule="evenodd">
+        <g fill="#FFFFFF" fill-opacity="0.15">
+            <circle cx="700" cy="300" r="40"></circle>
+            <circle cx="700" cy="300" r="80"></circle>
+            <circle cx="700" cy="300" r="120"></circle>
+            <circle cx="700" cy="300" r="160"></circle>
+            <path d="M600,100 L650,100 L650,150 L600,150 Z"></path>
+            <path d="M700,100 L750,100 L750,150 L700,150 Z"></path>
+            <path d="M600,200 L650,200 L650,250 L600,250 Z"></path>
+            <path d="M700,200 L750,200 L750,250 L700,250 Z"></path>
+            <path d="M600,300 L650,300 L650,350 L600,350 Z"></path>
+            <path d="M700,300 L750,300 L750,350 L700,350 Z"></path>
+            <path d="M600,400 L650,400 L650,450 L600,450 Z"></path>
+            <path d="M700,400 L750,400 L750,450 L700,450 Z"></path>
+            <path d="M600,500 L650,500 L650,550 L600,550 Z"></path>
+            <path d="M700,500 L750,500 L750,550 L700,550 Z"></path>
+        </g>
+    </g>
+</svg>
