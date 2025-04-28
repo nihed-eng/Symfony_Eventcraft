@@ -238,11 +238,45 @@
             <div class="admin-avatar">
                 <i class="fas fa-user-shield"></i>
             </div>
+<<<<<<< HEAD
             <h3 class="admin-welcome">{{ app.user.prenom }}</h3>
+=======
+<<<<<<< HEAD
+            <h3 class="admin-welcome">{{ app.user.firstName }}</h3>
+=======
+            <h3 class="admin-welcome">{{ app.user.prenom }}</h3>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             <span class="admin-role">Administrateur</span>
         </div>
 
         <nav class="admin-nav">
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            <h4 class="admin-nav-title">Menu Principal</h4>
+            <ul class="admin-nav-items">
+                <li>
+                    <a href="{{ path('app_admin_dashboard') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' }}">
+                        <i class="fas fa-tachometer-alt"></i>
+                        <span>Tableau de bord</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_users') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_users' ? 'active' }}">
+                        <i class="fas fa-users"></i>
+                        <span>Utilisateurs</span>
+                    </a>
+                </li>
+                <li>
+                    <a href="{{ path('app_admin_reclamations') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_reclamations' ? 'active' }}">
+                        <i class="fas fa-exclamation-circle"></i>
+                        <span>Réclamations</span>
+                    </a>
+                </li>
+            </ul>
+=======
+>>>>>>> c139a4e (Résolution des conflits)
            <h4 class="admin-nav-title">Menu Principal</h4>
 <ul class="admin-nav-items">
     <li>
@@ -306,6 +340,10 @@
         </a>
     </li>
 </ul>
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
             <h4 class="admin-nav-title mt-4">Compte</h4>
             <ul class="admin-nav-items">
@@ -349,6 +387,11 @@
 
 {% block javascripts %}
     {{ parent() }}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
     <script>
   function toggleSubMenu() {
     const submenu = document.getElementById("submenu");
@@ -356,4 +399,8 @@
   }
 </script>
 
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 {% endblock %}

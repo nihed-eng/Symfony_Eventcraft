@@ -16,6 +16,23 @@ use Symfony\Component\Security\Http\Attribute\IsGranted;
 class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
+<<<<<<< HEAD
+    public function index(): Response
+=======
+<<<<<<< HEAD
+    public function index(SalleRepository $salleRepository): Response
+>>>>>>> c139a4e (Résolution des conflits)
+    {
+        return $this->render('profile/index.html.twig', [
+            'user' => $this->getUser(),
+            'activeTab' => 'profile'
+        ]);
+    }
+
+<<<<<<< HEAD
+=======
+
+=======
     public function index(): Response
     {
         return $this->render('profile/index.html.twig', [
@@ -24,6 +41,8 @@ class ProfileController extends AbstractController
         ]);
     }
 
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     #[Route('/profile/update', name: 'app_profile_update', methods: ['POST'])]
     public function updateProfile(Request $request, EntityManagerInterface $entityManager): Response
     {

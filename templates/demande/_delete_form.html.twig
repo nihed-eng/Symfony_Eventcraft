@@ -1,4 +1,16 @@
+<<<<<<< HEAD
 <form action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" method="POST">
     <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
     <button type="submit" class="btn btn-danger">Delete</button>
+=======
+<<<<<<< HEAD
+<form method="post" action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" onsubmit="return confirm('Are you sure you want to delete this item?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
+    <button class="btn">Delete</button>
+=======
+<form action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
+    <button type="submit" class="btn btn-danger">Delete</button>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 </form>

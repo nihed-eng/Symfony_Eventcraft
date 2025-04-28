@@ -144,7 +144,15 @@ margin-top: 15px         }
                         </tbody>
                     </table>
                     <div class="d-flex justify-content-between mt-4">
+<<<<<<< HEAD
 <a href="{{ path('app_offre_demandes', {'id': offre.id}) }}" class="btn btn-secondary">Retour</a>
+=======
+<<<<<<< HEAD
+                        <a href="{{ path('app_demande_index') }}" class="btn btn-secondary">Retour</a>
+=======
+<a href="{{ path('app_offre_demandes', {'id': offre.id}) }}" class="btn btn-secondary">Retour</a>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                         <div>
                             <a href="{{ path('app_demande_edit', {'idDemande': demande.idDemande}) }}" class="btn-custom">✏ Modifier</a>
                             <form method="post" action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette demande ?');">

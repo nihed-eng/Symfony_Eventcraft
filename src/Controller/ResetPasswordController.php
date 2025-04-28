@@ -3,14 +3,70 @@
 namespace App\Controller;
 
 use App\Entity\Utilisateur;
+<<<<<<< HEAD
 use App\Service\EmailService;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+=======
+<<<<<<< HEAD
+use App\Entity\ResetPasswordRequest;
+use App\Repository\UtilisateurRepository;
+use App\Repository\ResetPasswordRequestRepository;
+use App\Service\EmailService;
+=======
+use App\Service\EmailService;
+use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Bridge\Twig\Mime\TemplatedEmail;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
 use Symfony\Component\Routing\Annotation\Route;
+<<<<<<< HEAD
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+
+use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
+use SymfonyCasts\Bundle\ResetPassword\Exception\ResetPasswordExceptionInterface;
+use SymfonyCasts\Bundle\ResetPassword\Exception\TooManyPasswordRequestsException;
+use SymfonyCasts\Bundle\ResetPassword\ResetPasswordHelperInterface;
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+use Psr\Log\LoggerInterface;
+
+#[Route('/reset-password')]
+class ResetPasswordController extends AbstractController
+{
+    use ResetPasswordControllerTrait;
+
+    public function __construct(
+        private ResetPasswordHelperInterface $resetPasswordHelper,
+        private EntityManagerInterface $entityManager,
+        private LoggerInterface $logger,
+        private EmailService $emailService
+    ) {
+    }
+
+    #[Route('', name: 'app_forgot_password_request')]
+    public function request(Request $request): Response
+    {
+        // Display form for user to enter email
+        if ($request->isMethod('POST')) {
+            $email = $request->request->get('email');
+
+            if (!$email) {
+                $this->addFlash('reset_password_error', 'Veuillez entrer une adresse email.');
+                return $this->redirectToRoute('app_forgot_password_request');
+            }
+
+<<<<<<< HEAD
+=======
+            // Don't reveal if the email exists
+            $this->addFlash('reset_password_error', 'Si un compte existe avec cette adresse e-mail, un code de vérification vous sera envoyé.');
+            return $this->redirectToRoute('app_verify_code', ['email' => $email]);
+=======
 use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
 
 use SymfonyCasts\Bundle\ResetPassword\Controller\ResetPasswordControllerTrait;
@@ -44,6 +100,7 @@ class ResetPasswordController extends AbstractController
                 return $this->redirectToRoute('app_forgot_password_request');
             }
 
+>>>>>>> c139a4e (Résolution des conflits)
             // Look for user with that email
             $user = $this->entityManager->getRepository(Utilisateur::class)->findOneBy(['email' => $email]);
 
@@ -144,11 +201,129 @@ class ResetPasswordController extends AbstractController
                 $this->addFlash('reset_password_error', $errorMessage);
                 return $this->redirectToRoute('app_forgot_password_request');
             }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         }
 
         return $this->render('auth/forgot_password.html.twig');
     }
 
+<<<<<<< HEAD
+    #[Route('/verify-code', name: 'app_verify_code')]
+=======
+<<<<<<< HEAD
+    #[Route('/verify-code', name: 'app_verify_code', methods: ['GET', 'POST'])]
+>>>>>>> c139a4e (Résolution des conflits)
+    public function verifyCode(Request $request): Response
+    {
+        $email = $request->query->get('email');
+        
+        if (!$email) {
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+        
+        $resetData = $request->getSession()->get('reset_password_data');
+        
+        // If no reset data or email mismatch or expired, redirect to request page
+        if (!$resetData || $resetData['email'] !== $email || time() > $resetData['expiresAt']) {
+            $this->addFlash('reset_password_error', 'Code de vérification invalide ou expiré.');
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+        
+        if ($request->isMethod('POST')) {
+            $submittedCode = $request->request->get('code');
+            
+            if (empty($submittedCode)) {
+                $this->addFlash('reset_password_error', 'Veuillez entrer le code de vérification.');
+                return $this->render('auth/verify_code.html.twig', ['email' => $email]);
+            }
+            
+            if ($submittedCode === $resetData['code']) {
+                // Code verified, mark as verified in session
+                $resetData['verified'] = true;
+                $request->getSession()->set('reset_password_data', $resetData);
+                
+                return $this->redirectToRoute('app_reset_password_final', ['email' => $email]);
+            }
+            
+            $this->addFlash('reset_password_error', 'Code de vérification incorrect.');
+        }
+        
+        return $this->render('auth/verify_code.html.twig', ['email' => $email]);
+    }
+
+    #[Route('/reset-final', name: 'app_reset_password_final')]
+    public function resetFinal(Request $request, UserPasswordHasherInterface $passwordHasher): Response
+    {
+        $email = $request->query->get('email');
+        
+        if (!$email) {
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+        
+        $resetData = $request->getSession()->get('reset_password_data');
+        
+        // Check if reset data exists, email matches, code is verified, and token is not expired
+        if (!$resetData || $resetData['email'] !== $email || !isset($resetData['verified']) || time() > $resetData['expiresAt']) {
+            $this->addFlash('reset_password_error', 'Votre session de réinitialisation de mot de passe a expiré ou est invalide.');
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+        
+        $user = $this->entityManager->getRepository(Utilisateur::class)->find($resetData['userIdentifier']);
+        
+        if (!$user) {
+            $this->addFlash('reset_password_error', 'Une erreur est survenue lors de la réinitialisation du mot de passe.');
+            return $this->redirectToRoute('app_forgot_password_request');
+        }
+        
+        if ($request->isMethod('POST')) {
+            $password = $request->request->get('password');
+            $passwordConfirm = $request->request->get('password_confirm');
+            
+            if (!$password || !$passwordConfirm) {
+                $this->addFlash('reset_password_error', 'Veuillez entrer un mot de passe.');
+                return $this->render('auth/reset_password_final.html.twig');
+            }
+            
+            if ($password !== $passwordConfirm) {
+                $this->addFlash('reset_password_error', 'Les mots de passe ne correspondent pas.');
+                return $this->render('auth/reset_password_final.html.twig');
+            }
+            
+            try {
+                // Update the password
+                $encodedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $password
+                );
+                
+                $user->setPassword($encodedPassword);
+                $this->entityManager->flush();
+                
+                // Remove the reset request from database
+                $this->resetPasswordHelper->removeResetRequest($resetData['token']);
+                
+                // Clear session data
+                $request->getSession()->remove('reset_password_data');
+                
+                $this->addFlash('success', 'Votre mot de passe a été réinitialisé avec succès.');
+                return $this->redirectToRoute('app_login');
+            } catch (\Exception $e) {
+                $this->logger->error('Password update failed: ' . $e->getMessage());
+                $this->addFlash('reset_password_error', 'Une erreur est survenue lors de la mise à jour de votre mot de passe.');
+                return $this->render('auth/reset_password_final.html.twig');
+            }
+        }
+        
+        return $this->render('auth/reset_password_final.html.twig');
+    }
+
+<<<<<<< HEAD
+=======
+        return $this->render('auth/reset_password.html.twig');
+=======
     #[Route('/verify-code', name: 'app_verify_code')]
     public function verifyCode(Request $request): Response
     {
@@ -254,6 +429,7 @@ class ResetPasswordController extends AbstractController
         return $this->render('auth/reset_password_final.html.twig');
     }
 
+>>>>>>> c139a4e (Résolution des conflits)
     #[Route('/debug-token-info', name: 'app_debug_token_info')]
     public function debugTokenInfo(Request $request): Response
     {
@@ -338,5 +514,9 @@ class ResetPasswordController extends AbstractController
         
         $this->addFlash('success', 'Les demandes précédentes de réinitialisation de mot de passe ont été supprimées.');
         return $this->redirectToRoute('app_forgot_password_request');
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     }
 }

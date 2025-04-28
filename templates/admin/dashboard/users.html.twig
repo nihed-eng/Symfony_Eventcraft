@@ -30,6 +30,13 @@
                         <th>Email</th>
                         <th>Rôle</th>
                         <th>Statut</th>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                        <th>Date d'inscription</th>
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -37,24 +44,76 @@
                     {% for user in users %}
                         <tr>
                             <td>{{ user.id }}</td>
+<<<<<<< HEAD
                             <td>{{ user.prenom }} {{ user.nom }}</td>
                             <td>{{ user.email }}</td>
                             <td>
                                 {% if user.role == 'ROLE_ADMIN' %}
+=======
+<<<<<<< HEAD
+                            <td>{{ user.firstName }} {{ user.lastName }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if 'ROLE_ADMIN' in user.roles %}
+=======
+                            <td>{{ user.prenom }} {{ user.nom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.role == 'ROLE_ADMIN' %}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                     <span class="badge bg-primary">Admin</span>
                                 {% else %}
                                     <span class="badge bg-secondary">User</span>
                                 {% endif %}
                             </td>
                             <td>
+<<<<<<< HEAD
+                                {% if user.statutCompte == 'active' %}
+=======
+<<<<<<< HEAD
+                                {% if user.statutCompte == 'banned' %}
+                                    <span class="badge bg-danger">Banni</span>
+                                {% else %}
+>>>>>>> c139a4e (Résolution des conflits)
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+<<<<<<< HEAD
+                                    <span class="badge bg-danger">Banni</span>
+=======
+                                    <span class="text-muted">Non disponible</span>
+=======
                                 {% if user.statutCompte == 'active' %}
                                     <span class="badge bg-success">Actif</span>
                                 {% else %}
                                     <span class="badge bg-danger">Banni</span>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                 {% endif %}
                             </td>
                             <td>
                                 {% if app.user != user %}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                                    <div class="btn-group">
+                                        <form method="post" action="{{ path('app_admin_user_toggle_ban', {'id': user.id}) }}" style="display: inline-block"
+                                              onsubmit="return confirm('Êtes-vous sûr de vouloir {% if user.statutCompte == 'banned' %}réactiver{% else %}bannir{% endif %} cet utilisateur ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('toggle-ban-user-' ~ user.id) }}">
+                                            <button type="submit" class="btn {% if user.statutCompte == 'banned' %}btn-success{% else %}btn-warning{% endif %} btn-sm">
+                                                <i class="fas {% if user.statutCompte == 'banned' %}fa-user-check{% else %}fa-user-slash{% endif %}"></i>
+                                            </button>
+                                        </form>
+                                        <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" style="display: inline-block; margin-left: 5px;"
+                                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                            <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                                            <button type="submit" class="btn btn-danger btn-sm">
+                                                <i class="fas fa-trash"></i>
+                                            </button>
+                                        </form>
+                                    </div>
+=======
+>>>>>>> c139a4e (Résolution des conflits)
                                     {% if user.role != 'ROLE_ADMIN' %}
                                         {% if user.statutCompte == 'active' %}
                                             <form method="post" action="{{ path('app_admin_user_ban', {'id': user.id}) }}" style="display: inline-block">
@@ -79,6 +138,10 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                 {% endif %}
                             </td>
                         </tr>

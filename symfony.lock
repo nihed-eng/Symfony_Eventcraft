@@ -29,6 +29,11 @@
     "knplabs/knp-paginator-bundle": {
         "version": "v6.7.0"
     },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
     "knplabs/knp-snappy-bundle": {
         "version": "1.10",
         "recipe": {
@@ -41,6 +46,10 @@
             "./config/packages/knp_snappy.yaml"
         ]
     },
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     "phpunit/phpunit": {
         "version": "9.6",
         "recipe": {
@@ -323,6 +332,11 @@
             "./webpack.config.js"
         ]
     },
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
     "symfonycasts/reset-password-bundle": {
         "version": "1.23",
         "recipe": {
@@ -335,6 +349,10 @@
             "./config/packages/reset_password.yaml"
         ]
     },
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     "twig/extra-bundle": {
         "version": "v3.20.0"
     }

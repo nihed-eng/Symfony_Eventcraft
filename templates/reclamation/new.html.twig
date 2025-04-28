@@ -64,9 +64,21 @@
                 <div class="reclamation-form">
                     {{ form_start(form, {'attr': {'class': 'needs-validation', 'novalidate': 'novalidate'}}) }}
                         <div class="mb-4">
+<<<<<<< HEAD
                             {{ form_label(form.titre, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
                             {{ form_widget(form.titre) }}
                             {{ form_errors(form.titre) }}
+=======
+<<<<<<< HEAD
+                            {{ form_label(form.subject, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.subject) }}
+                            {{ form_errors(form.subject) }}
+=======
+                            {{ form_label(form.titre, 'Sujet', {'label_attr': {'class': 'form-label'}}) }}
+                            {{ form_widget(form.titre) }}
+                            {{ form_errors(form.titre) }}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                             <div class="invalid-feedback">
                                 Veuillez fournir un sujet pour votre réclamation.
                             </div>
@@ -81,6 +93,11 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
                         <div class="mb-4">
                             {{ form_label(form.type, 'Type', {'label_attr': {'class': 'form-label'}}) }}
                             {{ form_widget(form.type) }}
@@ -90,6 +107,10 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                         <div class="d-flex justify-content-end">
                             <a href="{{ path('app_reclamation_index') }}" class="btn btn-secondary me-2">
                                 <i class="fas fa-times me-2"></i>Annuler

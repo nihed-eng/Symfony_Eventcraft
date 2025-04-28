@@ -16,6 +16,7 @@ class Reservation
     private int $idReservation;
 
     #[ORM\Column(name: 'date_debut', type: 'datetime')]
+<<<<<<< HEAD
     #[Assert\NotBlank(message: "La date de début est obligatoire")]
     #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date valide")]
     #[Assert\GreaterThan(
@@ -25,6 +26,23 @@ class Reservation
     private ?\DateTimeInterface $dateDebut = null;
 
     #[ORM\Column(name: 'date_fin', type: 'datetime')]
+=======
+<<<<<<< HEAD
+    private \DateTime $dateDebut;
+
+    #[ORM\Column(name: 'date_fin', type: 'datetime')]
+    private \DateTime $dateFin;
+=======
+    #[Assert\NotBlank(message: "La date de début est obligatoire")]
+    #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date valide")]
+    #[Assert\GreaterThan(
+        value: "today",
+        message: "La date de début doit être dans le futur"
+    )]
+    private ?\DateTimeInterface $dateDebut = null;
+
+    #[ORM\Column(name: 'date_fin', type: 'datetime')]
+>>>>>>> c139a4e (Résolution des conflits)
     #[Assert\NotBlank(message: "La date de fin est obligatoire")]
     #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date valide")]
     #[Assert\GreaterThan(
@@ -33,6 +51,10 @@ class Reservation
     )]
     private ?\DateTimeInterface $dateFin = null;
 
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
     #[ORM\ManyToOne(targetEntity: Salle::class)]
     #[ORM\JoinColumn(name: 'salle', referencedColumnName: 'id_salle')]

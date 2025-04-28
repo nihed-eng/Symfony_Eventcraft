@@ -1,6 +1,14 @@
 {% extends 'base.html.twig' %}
 
+<<<<<<< HEAD
 {% block title %}Modifier une salle{% endblock %}
+=======
+<<<<<<< HEAD
+{% block title %}Modifier la salle{% endblock %}
+=======
+{% block title %}Modifier une salle{% endblock %}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 {% block stylesheets %}
     {{ parent() }}
@@ -11,6 +19,80 @@
             --light-gray: #f8f9fa;
             --dark-gray: #343a40;
         }
+<<<<<<< HEAD
+        select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 2.5em;
+    cursor: pointer;
+}
+   body {
+            position: relative;
+            min-height: 100vh;
+        }
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/salle1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            opacity: 0.9;
+            filter: brightness(0.8);
+        }
+
+select.form-control:focus {
+    border-color: #8D598F;
+    box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+}
+            
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .form-errors {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+<<<<<<< HEAD
+            background: rgb(255 255 255 / 66%);
+
+=======
+=======
         select.form-control {
     -webkit-appearance: none;
     -moz-appearance: none;
@@ -78,13 +160,29 @@ select.form-control:focus {
             background: white;
             background: rgb(255 255 255 / 66%);
 
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e0e0e0;
             padding: 40px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
+<<<<<<< HEAD
         
         .add-salle-title {
+=======
+<<<<<<< HEAD
+
+        .edit-salle-card:hover {
+            box-shadow: 0 5px 25px rgba(0,0,0,0.1);
+        }
+
+        .edit-salle-title {
+=======
+        
+        .add-salle-title {
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             text-align: center;
             font-size: 32px;
             font-weight: 300;
@@ -94,8 +192,18 @@ select.form-control:focus {
             border-bottom: 1px solid #e0e0e0;
             position: relative;
         }
+<<<<<<< HEAD
         
         .add-salle-title::after {
+=======
+<<<<<<< HEAD
+
+        .edit-salle-title::after {
+=======
+        
+        .add-salle-title::after {
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             content: '';
             position: absolute;
             bottom: -1px;
@@ -105,31 +213,71 @@ select.form-control:focus {
             height: 2px;
             background: var(--secondary-color);
         }
+<<<<<<< HEAD
         
+=======
+<<<<<<< HEAD
+
+=======
+        
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         .modal-form {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
         }
+<<<<<<< HEAD
+        
+=======
+<<<<<<< HEAD
+
+>>>>>>> c139a4e (Résolution des conflits)
+        .form-group {
+            margin-bottom: 25px;
+        }
+<<<<<<< HEAD
+        
+=======
+
+=======
         
         .form-group {
             margin-bottom: 25px;
         }
         
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         .form-group label {
             display: block;
             margin-bottom: 8px;
             font-size: 14px;
             color: #555;
             font-weight: 500;
+<<<<<<< HEAD
         }
         
+=======
+<<<<<<< HEAD
+            transition: all 0.3s ease;
+        }
+
+=======
+        }
+        
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         .form-control {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             font-size: 14px;
             background: #f9f9f9;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            transition: all 0.3s ease;
+>>>>>>> c139a4e (Résolution des conflits)
         }
         
         .form-control:focus {
@@ -172,10 +320,81 @@ border: 2px solid  #8d598f;
             padding: 14px;
             font-size: 16px;
             cursor: pointer;
+<<<<<<< HEAD
+=======
+            transition: all 0.3s ease;
+=======
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+   .btn-reserver {
+            background: #8d598f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin: 2rem 0 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-reserver:hover, .btn-reserver:focus {
+         background: transparent;
+border: 2px solid  #8d598f;
+
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            letter-spacing: 1.5px;
+            outline: none;
+        }
+        
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
+<<<<<<< HEAD
+        
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 15px;
+            border: 1px solid #fecaca;
+            margin-bottom: 20px;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+<<<<<<< HEAD
+        
+=======
+
+=======
         
 
 
@@ -191,17 +410,35 @@ border: 2px solid  #8d598f;
             animation: pulse 2s infinite;
         }
         
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.02); }
             100% { transform: scale(1); }
         }
+<<<<<<< HEAD
         
+=======
+<<<<<<< HEAD
+
+=======
+        
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         @media (max-width: 768px) {
             .modal-form {
                 grid-template-columns: 1fr;
             }
+<<<<<<< HEAD
             
+=======
+<<<<<<< HEAD
+
+=======
+            
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             .form-submit {
                 grid-column: span 1;
             }
@@ -210,6 +447,79 @@ border: 2px solid  #8d598f;
 {% endblock %}
 
 {% block body %}
+<<<<<<< HEAD
+<section class="add-salle-section">
+  <div class="add-salle-container">
+    <div class="add-salle-card">
+        <h1 class="add-salle-title">Modifier La Salle</h1>
+        
+        {% for message in app.flashes('error') %}
+=======
+<<<<<<< HEAD
+<section class="gradient-custom-2">
+  <div class="edit-salle-container">
+    <div class="edit-salle-card">
+        <h1 class="edit-salle-title">Modifier la salle</h1>
+
+        {% if form is defined %}
+            {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
+
+                <div class="form-group">
+                    {{ form_label(form.nomSalle) }}
+                    {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.capacite) }}
+                    {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.equipement) }}
+                    {{ form_widget(form.equipement, {'attr': {'class': 'form-control' ~ (form.equipement.vars.errors|length ? ' error' : ''), 'rows': 3}}) }}
+                    {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.locationSalle) }}
+                    {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.qualite) }}
+                    {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group">
+                    {{ form_label(form.prix) }}
+                    {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <div class="form-group" style="grid-column: span 2;">
+                    {{ form_label(form.imageFile) }}
+                    {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' error' : '')}}) }}
+                    {{ form_errors(form.imageFile, {'attr': {'class': 'form-error'}}) }}
+                </div>
+
+                <button type="submit" class="form-submit pulse-animation">
+                    <i class="fas fa-save"></i> Enregistrer les modifications
+                </button>
+
+            {{ form_end(form) }}
+        {% else %}
+>>>>>>> c139a4e (Résolution des conflits)
+            <div class="alert-danger">
+                {{ message }}
+            </div>
+<<<<<<< HEAD
+=======
+        {% endif %}
+=======
 <section class="add-salle-section">
   <div class="add-salle-container">
     <div class="add-salle-card">
@@ -219,6 +529,7 @@ border: 2px solid  #8d598f;
             <div class="alert-danger">
                 {{ message }}
             </div>
+>>>>>>> c139a4e (Résolution des conflits)
         {% endfor %}
         
         {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
@@ -318,14 +629,70 @@ border: 2px solid  #8d598f;
             </button>
             
         {{ form_end(form) }}
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     </div>
   </div>
 </section>
 {% endblock %}
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 {% block javascripts %}
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
+            const form = document.querySelector('form');
+            if (form) {
+                // Validation au submit
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    
+                    form.querySelectorAll('[required]').forEach(field => {
+                        const formGroup = field.closest('.form-group');
+                        const errorDiv = formGroup.querySelector('.form-errors');
+
+                        if (field.value.trim() === '') {
+                            field.classList.add('is-invalid');
+
+                            // Affiche une erreur *uniquement* s'il n'y en a pas déjà une
+                            if (errorDiv && errorDiv.textContent.trim() === '') {
+                                errorDiv.textContent = 'Ce champ est obligatoire';
+                            }
+
+                            isValid = false;
+=======
+<<<<<<< HEAD
+            document.querySelector('form').setAttribute('novalidate', true);
+            const forms = document.querySelectorAll('form');
+            forms.forEach(form => {
+                form.addEventListener('submit', function() {
+                    this.querySelectorAll('.form-control').forEach(input => {
+                        if (input.value.trim() === '' && input.hasAttribute('required')) {
+                            input.classList.add('error');
+>>>>>>> c139a4e (Résolution des conflits)
+                        }
+                    });
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        const firstError = form.querySelector('.is-invalid');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+<<<<<<< HEAD
+=======
+            });
+=======
             const form = document.querySelector('form');
             if (form) {
                 // Validation au submit
@@ -356,6 +723,7 @@ border: 2px solid  #8d598f;
                         }
                     }
                 });
+>>>>>>> c139a4e (Résolution des conflits)
 
                 // Retirer l'erreur quand on commence à taper
                 form.querySelectorAll('[required]').forEach(field => {
@@ -372,6 +740,10 @@ border: 2px solid  #8d598f;
 });
 
             }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         });
     </script>
 {% endblock %}

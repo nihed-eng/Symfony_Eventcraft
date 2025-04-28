@@ -3,19 +3,53 @@
 namespace App\Form;
 
 use App\Entity\Demande;
+<<<<<<< HEAD
 use App\Entity\Offre;
+=======
+<<<<<<< HEAD
+=======
+use App\Entity\Offre;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
+<<<<<<< HEAD
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
+=======
+<<<<<<< HEAD
+=======
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 class DemandeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    {
+        $builder
+            ->add('nom', TextType::class, [
+                'label' => 'Nom',
+                'required' => true,
+                'attr' => ['placeholder' => 'Entrez le nom de la demande'],
+            ])
+            ->add('description', TextareaType::class, [
+                'label' => 'Description',
+                'required' => true,
+                'attr' => ['placeholder' => 'Décrivez votre demande...'],
+            ]);
+    }
+=======
+>>>>>>> c139a4e (Résolution des conflits)
 {
     $builder
         ->add('nom', TextType::class, [
@@ -58,6 +92,10 @@ class DemandeType extends AbstractType
             ]
         ]);
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -66,3 +104,10 @@ class DemandeType extends AbstractType
         ]);
     }
 }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)

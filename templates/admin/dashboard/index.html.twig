@@ -35,7 +35,15 @@
             <div class="stats-card-body">
                 <div class="stats-card-value">
                     {% if reclamations is defined %}
+<<<<<<< HEAD
                         {{ reclamations|filter(r => r.statut == 'pending')|length }}
+=======
+<<<<<<< HEAD
+                        {{ reclamations|filter(r => r.status == 'pending')|length }}
+=======
+                        {{ reclamations|filter(r => r.statut == 'pending')|length }}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                     {% else %}
                         0
                     {% endif %}
@@ -53,12 +61,27 @@
             <div class="stats-card-body">
                 <div class="stats-card-value">
                     {% if reclamations is defined %}
+<<<<<<< HEAD
                         {{ reclamations|filter(r => r.statut == 'resolved')|length }}
+=======
+<<<<<<< HEAD
+                        {{ reclamations|filter(r => r.status == 'resolved')|length }}
+=======
+                        {{ reclamations|filter(r => r.statut == 'resolved')|length }}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                     {% else %}
                         0
                     {% endif %}
                 </div>
                 <div class="stats-card-title">Réclamations résolues</div>
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+                <div class="stats-card-subtitle">Traitées avec succès</div>
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             </div>
             <div class="stats-card-icon">
                 <i class="fas fa-check-circle"></i>
@@ -83,13 +106,45 @@
                             <tr>
                                 <th>Nom</th>
                                 <th>Email</th>
+<<<<<<< HEAD
                                 <th>Statut</th>
+=======
+<<<<<<< HEAD
+                                <th>Rôle</th>
+=======
+                                <th>Statut</th>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                 <th>Actions</th>
                             </tr>
                         </thead>
                         <tbody>
                             {% for user in users|slice(0, 5) %}
                                 <tr>
+<<<<<<< HEAD
+                                    <td>{{ user.prenom }} {{ user.nom }}</td>
+=======
+<<<<<<< HEAD
+                                    <td>{{ user.firstName }} {{ user.lastName }}</td>
+>>>>>>> c139a4e (Résolution des conflits)
+                                    <td>{{ user.email }}</td>
+                                    <td>
+                                        {% if user.statutCompte == 'active' %}
+                                            <span class="badge bg-success">Actif</span>
+                                        {% else %}
+                                            <span class="badge bg-danger">Banni</span>
+                                        {% endif %}
+                                    </td>
+                                    <td>
+                                        {% if user.role != 'ROLE_ADMIN' %}
+                                            {% if user.statutCompte == 'active' %}
+                                                <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#banUserModal{{ user.id }}">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+<<<<<<< HEAD
+=======
+                                            </form>
+=======
                                     <td>{{ user.prenom }} {{ user.nom }}</td>
                                     <td>{{ user.email }}</td>
                                     <td>
@@ -105,11 +160,16 @@
                                                 <button type="button" class="btn btn-warning btn-sm" data-bs-toggle="modal" data-bs-target="#banUserModal{{ user.id }}">
                                                     <i class="fas fa-ban"></i>
                                                 </button>
+>>>>>>> c139a4e (Résolution des conflits)
                                             {% else %}
                                                 <button type="button" class="btn btn-success btn-sm" data-bs-toggle="modal" data-bs-target="#unbanUserModal{{ user.id }}">
                                                     <i class="fas fa-undo"></i>
                                                 </button>
                                             {% endif %}
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                         {% endif %}
                                     </td>
                                 </tr>
@@ -120,7 +180,15 @@
             </div>
         </div>
     </div>
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+    
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     <div class="col-lg-6 mb-4">
         <div class="data-card">
             <div class="data-card-header">
@@ -135,7 +203,15 @@
                         <thead>
                             <tr>
                                 <th>Utilisateur</th>
+<<<<<<< HEAD
                                 <th>Titre</th>
+=======
+<<<<<<< HEAD
+                                <th>Sujet</th>
+=======
+                                <th>Titre</th>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                 <th>Date</th>
                                 <th>Statut</th>
                                 <th>Actions</th>
@@ -145,22 +221,55 @@
                             {% if reclamations is defined and reclamations|length > 0 %}
                                 {% for reclamation in reclamations|slice(0, 5) %}
                                     <tr>
+<<<<<<< HEAD
                                         <td>{{ reclamation.user.prenom }} {{ reclamation.user.nom }}</td>
                                         <td>{{ reclamation.titre }}</td>
                                         <td>{{ reclamation.date|date('d/m/Y H:i') }}</td>
                                         <td>
                                             {% if reclamation.statut == 'pending' %}
+=======
+<<<<<<< HEAD
+                                        <td>{{ reclamation.user.firstName }} {{ reclamation.user.lastName }}</td>
+                                        <td>{{ reclamation.subject }}</td>
+                                        <td>{{ reclamation.createdAt|date('d/m/Y H:i') }}</td>
+                                        <td>
+                                            {% if reclamation.status == 'pending' %}
+=======
+                                        <td>{{ reclamation.user.prenom }} {{ reclamation.user.nom }}</td>
+                                        <td>{{ reclamation.titre }}</td>
+                                        <td>{{ reclamation.date|date('d/m/Y H:i') }}</td>
+                                        <td>
+                                            {% if reclamation.statut == 'pending' %}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                                 <span class="badge bg-warning">En attente</span>
                                             {% else %}
                                                 <span class="badge bg-success">Résolu</span>
                                             {% endif %}
                                         </td>
                                         <td>
+<<<<<<< HEAD
                                             {% if reclamation.statut == 'pending' %}
                                                 <button type="button" class="btn btn-primary btn-sm btn-respond" data-bs-toggle="modal" data-bs-target="#respondModal{{ reclamation.id }}">
                                                     <i class="fas fa-reply"></i> Répondre
                                                 </button>
 
+=======
+<<<<<<< HEAD
+                                            {% if reclamation.status == 'pending' %}
+                                                <button type="button" class="btn btn-primary btn-respond" data-bs-toggle="modal" data-bs-target="#respondModal{{ reclamation.id }}">
+                                                    <i class="fas fa-reply"></i> Répondre
+                                                </button>
+
+                                                <!-- Modal for responding to reclamation -->
+=======
+                                            {% if reclamation.statut == 'pending' %}
+                                                <button type="button" class="btn btn-primary btn-sm btn-respond" data-bs-toggle="modal" data-bs-target="#respondModal{{ reclamation.id }}">
+                                                    <i class="fas fa-reply"></i> Répondre
+                                                </button>
+
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                                 <div class="modal fade" id="respondModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="respondModalLabel{{ reclamation.id }}" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -168,6 +277,25 @@
                                                                 <h5 class="modal-title" id="respondModalLabel{{ reclamation.id }}">Répondre à la réclamation</h5>
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
+<<<<<<< HEAD
+                                                            <form action="{{ path('app_admin_reclamation_respond', {'id': reclamation.id}) }}" method="post">
+=======
+<<<<<<< HEAD
+                                                            <form method="post" action="{{ path('app_admin_reclamation_respond', {'id': reclamation.id}) }}">
+>>>>>>> c139a4e (Résolution des conflits)
+                                                                <div class="modal-body">
+                                                                    <div class="mb-3">
+                                                                        <label for="response{{ reclamation.id }}" class="form-label">Votre réponse</label>
+                                                                        <textarea class="form-control" id="response{{ reclamation.id }}" name="response" rows="3" required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+<<<<<<< HEAD
+                                                                    <button type="submit" class="btn btn-primary">Envoyer</button>
+=======
+                                                                    <button type="submit" class="btn btn-primary">Envoyer la réponse</button>
+=======
                                                             <form action="{{ path('app_admin_reclamation_respond', {'id': reclamation.id}) }}" method="post">
                                                                 <div class="modal-body">
                                                                     <div class="mb-3">
@@ -178,16 +306,33 @@
                                                                 <div class="modal-footer">
                                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
                                                                     <button type="submit" class="btn btn-primary">Envoyer</button>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                                                 </div>
                                                             </form>
                                                         </div>
                                                     </div>
                                                 </div>
                                             {% else %}
+<<<<<<< HEAD
                                                 <button type="button" class="btn btn-success btn-sm btn-respond" data-bs-toggle="modal" data-bs-target="#viewResponseModal{{ reclamation.id }}">
                                                     <i class="fas fa-eye"></i> Voir
                                                 </button>
 
+=======
+<<<<<<< HEAD
+                                                <button type="button" class="btn btn-success btn-respond" data-bs-toggle="modal" data-bs-target="#viewResponseModal{{ reclamation.id }}">
+                                                    <i class="fas fa-eye"></i> Voir la réponse
+                                                </button>
+
+                                                <!-- Modal for viewing response -->
+=======
+                                                <button type="button" class="btn btn-success btn-sm btn-respond" data-bs-toggle="modal" data-bs-target="#viewResponseModal{{ reclamation.id }}">
+                                                    <i class="fas fa-eye"></i> Voir
+                                                </button>
+
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                                 <div class="modal fade" id="viewResponseModal{{ reclamation.id }}" tabindex="-1" aria-labelledby="viewResponseModalLabel{{ reclamation.id }}" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -196,7 +341,22 @@
                                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                                             </div>
                                                             <div class="modal-body">
+<<<<<<< HEAD
                                                                 <p>{{ reclamation.response.contenu }}</p>
+=======
+<<<<<<< HEAD
+                                                                <h6 class="fw-bold">Réclamation:</h6>
+                                                                <p>{{ reclamation.description }}</p>
+                                                                <hr>
+                                                                <h6 class="fw-bold">Réponse:</h6>
+                                                                <p>{{ reclamation.response ? reclamation.response.content : 'Aucune réponse' }}</p>
+                                                                {% if reclamation.response %}
+                                                                    <small class="text-muted">Répondu le {{ reclamation.response.createdAt|date('d/m/Y H:i') }}</small>
+                                                                {% endif %}
+=======
+                                                                <p>{{ reclamation.response.contenu }}</p>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
                                                             </div>
                                                             <div class="modal-footer">
                                                                 <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
@@ -228,7 +388,15 @@
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
             // Add any custom JavaScript here
+=======
+<<<<<<< HEAD
+            // Initialize any dashboard-specific JavaScript here
+=======
+            // Add any custom JavaScript here
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         });
     </script>
 {% endblock %}

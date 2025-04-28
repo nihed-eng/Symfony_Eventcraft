@@ -1,3 +1,63 @@
+<<<<<<< HEAD
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <script>
+            alert("{{ message|e('js') }}");
+        </script>
+=======
+<<<<<<< HEAD
+{{ form_start(form) }}
+    {% for field in form %}
+        <div class="mb-3">
+            {{ form_label(field, null, {'label_attr': {'class': 'form-label'}}) }}
+            {{ form_widget(field, {'attr': {'class': 'form-control'}}) }}
+            {{ form_errors(field) }}
+        </div>
+>>>>>>> c139a4e (Résolution des conflits)
+    {% endfor %}
+{% endfor %}
+
+<div class="form-group">
+    {{ form_label(form.dateDebut) }}
+    {{ form_widget(form.dateDebut, {
+        'attr': {
+            'class': 'form-control' ~ (form.dateDebut.vars.valid ? '' : ' is-invalid'),
+        }
+    }) }}
+    <div class="invalid-feedback">
+        {% if form.dateDebut.vars.errors|length %}
+            {% for error in form.dateDebut.vars.errors %}
+                {{ error.message }}
+            {% endfor %}
+        {% else %}
+            La date de début est obligatoire et doit être dans le futur
+        {% endif %}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.dateFin) }}
+    {{ form_widget(form.dateFin, {
+        'attr': {
+            'class': 'form-control' ~ (form.dateFin.vars.valid ? '' : ' is-invalid'),
+        }
+    }) }}
+    <div class="invalid-feedback">
+        {% if form.dateFin.vars.errors|length %}
+            {% for error in form.dateFin.vars.errors %}
+                {{ error.message }}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary btn-reserver">Réserver</button>
+{{ form_end(form) }}
+<<<<<<< HEAD
+=======
+=======
 {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
 
 {% for label, messages in app.flashes %}
@@ -44,6 +104,7 @@
 
 <button type="submit" class="btn btn-primary btn-reserver">Réserver</button>
 {{ form_end(form) }}
+>>>>>>> c139a4e (Résolution des conflits)
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -85,4 +146,9 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 });
+<<<<<<< HEAD
 </script>
+=======
+</script>
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)

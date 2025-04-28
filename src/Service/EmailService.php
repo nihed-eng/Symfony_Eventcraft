@@ -2,6 +2,65 @@
 
 namespace App\Service;
 
+<<<<<<< HEAD
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
+use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use Psr\Log\LoggerInterface;
+use Symfony\Component\Mime\Address;
+=======
+<<<<<<< HEAD
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\Exception;
+>>>>>>> c139a4e (Résolution des conflits)
+
+class EmailService
+{
+    private string $senderEmail;
+    private string $senderName;
+
+    public function __construct(
+        private MailerInterface $mailer,
+        private ParameterBagInterface $params,
+        private LoggerInterface $logger
+    ) {
+        $this->senderEmail = $this->params->get('app.mail_from_address', 'ayadi.baha35@gmail.com');
+        $this->senderName = $this->params->get('app.mail_from_name', 'EventCraft');
+    }
+
+    /**
+     * Send verification email with a code
+     * 
+     * @param string $toEmail Email address of the recipient
+     * @param string $verificationCode The code to verify
+     * @param \DateTimeInterface|null $expiresAt When the code expires
+     * @return bool Whether the email was sent successfully
+     */
+    public function sendVerificationEmail(string $toEmail, string $verificationCode, ?\DateTimeInterface $expiresAt = null): bool
+    {
+        try {
+            $email = (new Email())
+                ->from(new Address($this->senderEmail, $this->senderName))
+                ->to($toEmail)
+                ->subject('Code de vérification pour réinitialiser votre mot de passe')
+                ->html($this->createVerificationEmailBody($verificationCode, $expiresAt));
+
+            $this->mailer->send($email);
+            
+            $this->logger->info('Verification email sent successfully to: ' . $toEmail);
+            return true;
+        } catch (\Exception $e) {
+            $this->logger->error('Failed to send verification email: ' . $e->getMessage(), [
+                'exception' => get_class($e),
+                'trace' => $e->getTraceAsString()
+            ]);
+            return false;
+        }
+    }
+<<<<<<< HEAD
+=======
+} 
+=======
 use Symfony\Component\Mailer\MailerInterface;
 use Symfony\Component\Mime\Email;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
@@ -51,6 +110,7 @@ class EmailService
             return false;
         }
     }
+>>>>>>> c139a4e (Résolution des conflits)
 
     /**
      * Create the HTML body for the verification email
@@ -114,4 +174,9 @@ class EmailService
             return false;
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)

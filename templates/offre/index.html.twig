@@ -1,3 +1,98 @@
+<<<<<<< HEAD
+{% extends 'basetemp.html.twig' %}
+=======
+<<<<<<< HEAD
+{% extends 'baseoffre.html.twig' %}
+>>>>>>> c139a4e (Résolution des conflits)
+
+{% block title %}Event Craft - Offres{% endblock %}
+
+{% block body %}
+    <!-- Hero Section -->
+    <section class="hero spad">
+        <div class="overlay"></div>
+        
+        <div class="hero__slider owl-carousel">
+            <div class="hero__item" style="background-image: url('/images/slider3.jpg');"></div>
+            <div class="hero__item" style="background-image: url('/images/slider2.jpeg');"></div>
+            <div class="hero__item" style="background-image: url('/images/slider1.jpg');"></div>
+        </div>
+        
+        <div class="container">
+            <div class="hero__text">
+                <h5>WELCOME HIROTO</h5>
+                <h2>Découvrez nos meilleures offres</h2>
+            </div>
+            <form action="#" class="filter__form">
+                <!-- Vos champs de filtre existants... -->
+            </form>
+        </div>
+    </section>
+
+    <!-- Offers Section -->
+    <section class="home-room spad" style="margin-top: 70px;">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="section-title">
+                        <h5>A LA UNE</h5>
+                        <h2>NOS MEILLEURES OFFRES</h2>
+                    </div>
+                </div>
+            </div>
+        </div>           
+
+       <div class="container-fluid">
+        <div class="d-flex justify-content-end mb-4 gap-3">
+            <a href="{{ path('app_offre_new') }}" class="btn" style="background-color: rgb(161, 104, 163); border-color: rgb(161, 104, 163); color: white;">
+                <i class="fas fa-plus"></i> Ajouter une Offre
+            </a>
+        </div>
+        <div class="row">
+            {% for offre in pagination %}
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="home__room__item set-bg" style="background-image: url('/images/offre.jpeg');">
+                        <div class="home__room__title">
+                            <h4>{{ offre.titreOffre }}</h4>
+                            <h2><sup>DT</sup>{{ offre.montant }}<span>/{{ offre.typeOffre }}</span></h2>
+                            <p class="expiry-date">
+                                {% if offre.dateExp < date() %}
+                                    <span class="badge bg-danger">Expirée</span>
+                                {% elseif offre.dateExp < date('+7 days') %}
+                                    <span class="badge bg-warning">Bientôt</span>
+                                {% endif %}
+                                {{ offre.dateExp|date('d/m/Y') }}
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between p-3">
+<a href="{{ path('app_offre_show', {'id': offre.id}) }}" class="btn btn-outline-light">VOIR DÉTAILS</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucune offre disponible pour le moment</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ path('app_demande_index') }}" class="btn btn-primary">
+                            <i class="fas fa-list"></i> Voir les Demandes
+                        </a>
+                        <a href="{{ path('app_offre_new') }}" class="btn btn-success">
+                            <i class="fas fa-plus"></i> Ajouter une Offre
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+
+        <!-- Pagination Navigation -->
+        <div class="d-flex justify-content-center mt-4">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</section>
+<<<<<<< HEAD
+=======
+=======
 {% extends 'basetemp.html.twig' %}
 
 {% block title %}Event Craft - Offres{% endblock %}
@@ -85,6 +180,7 @@
         </div>
     </div>
 </section>
+>>>>>>> c139a4e (Résolution des conflits)
 
 <!-- JavaScript -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
@@ -114,4 +210,8 @@
         }
     });
 </script>
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 {% endblock %}

@@ -14,11 +14,28 @@ class DecorationRepository extends ServiceEntityRepository
         parent::__construct($registry, Decoration::class);
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    /**
+     * Retourne une requête paginable de toutes les décorations
+     */
+>>>>>>> c139a4e (Résolution des conflits)
     public function findAllQuery(): QueryBuilder
     {
         return $this->createQueryBuilder('d')
             ->orderBy('d.nomDecor', 'ASC');
     }
+<<<<<<< HEAD
+=======
+}
+=======
+    public function findAllQuery(): QueryBuilder
+    {
+        return $this->createQueryBuilder('d')
+            ->orderBy('d.nomDecor', 'ASC');
+    }
+>>>>>>> c139a4e (Résolution des conflits)
 
     public function findByType(string $type): array
     {
@@ -67,4 +84,9 @@ class DecorationRepository extends ServiceEntityRepository
             $this->getEntityManager()->flush();
         }
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)

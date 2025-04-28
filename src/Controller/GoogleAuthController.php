@@ -10,9 +10,18 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
+<<<<<<< HEAD
 use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\UtilisateurRepository;
 use Symfony\Component\HttpFoundation\JsonResponse;
+=======
+<<<<<<< HEAD
+=======
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 class GoogleAuthController extends AbstractController
 {
@@ -30,6 +39,15 @@ class GoogleAuthController extends AbstractController
         AppCustomAuthenticator $authenticator
     ): Response {
         try {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            $user = $googleAuthService->handleCallback(
+                $request->query->get('state'),
+                $request->query->get('code')
+            );
+=======
+>>>>>>> c139a4e (Résolution des conflits)
             // Debug the incoming parameters
             $state = $request->query->get('state');
             $code = $request->query->get('code');
@@ -40,6 +58,10 @@ class GoogleAuthController extends AbstractController
             }
             
             $user = $googleAuthService->handleCallback($state, $code);
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
             if (!$user) {
                 $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google.');
@@ -57,11 +79,25 @@ class GoogleAuthController extends AbstractController
             return $this->redirectToRoute('app_home');
 
         } catch (\Exception $e) {
+<<<<<<< HEAD
             // Log the detailed exception
             $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google: ' . $e->getMessage());
             return $this->redirectToRoute('app_login');
         }
     }
+=======
+<<<<<<< HEAD
+            $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google.');
+            return $this->redirectToRoute('app_login');
+        }
+    }
+=======
+            // Log the detailed exception
+            $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google: ' . $e->getMessage());
+            return $this->redirectToRoute('app_login');
+        }
+    }
+>>>>>>> c139a4e (Résolution des conflits)
     
     #[Route('/debug/google/users', name: 'debug_google_users')]
     public function debugGoogleUsers(UtilisateurRepository $utilisateurRepository): Response
@@ -90,4 +126,8 @@ class GoogleAuthController extends AbstractController
             'users' => $userData
         ]);
     }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 }

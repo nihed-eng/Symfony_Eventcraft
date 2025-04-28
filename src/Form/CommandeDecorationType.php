@@ -1,8 +1,35 @@
 <?php
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+// src/Form/CommandeDecorationType.php
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 namespace App\Form;
 
 use App\Entity\CommandeDecoration;
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+use App\Entity\Decoration;
+use App\Entity\Utilisateur; // Importer la classe Utilisateur
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+>>>>>>> c139a4e (Résolution des conflits)
+use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\DateType;
+use Symfony\Component\Form\Extension\Core\Type\MoneyType;
+use Symfony\Component\Form\Extension\Core\Type\IntegerType;
+use Symfony\Component\Form\FormBuilderInterface;
+use Symfony\Component\Form\FormEvent;
+use Symfony\Component\Form\FormEvents;
+use Symfony\Component\OptionsResolver\OptionsResolver;
+<<<<<<< HEAD
+use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
+use Symfony\Component\Form\FormError;
+=======
+=======
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\DateType;
 use Symfony\Component\Form\Extension\Core\Type\MoneyType;
@@ -13,18 +40,54 @@ use Symfony\Component\Form\FormEvents;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\GreaterThanOrEqual;
 use Symfony\Component\Form\FormError;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 class CommandeDecorationType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
+<<<<<<< HEAD
         $builder
             ->add('quantite', IntegerType::class, [
                 
+=======
+<<<<<<< HEAD
+        $user = $options['user']; // Récupérer l'utilisateur passé depuis le contrôleur
+
+        $builder
+            ->add('quantite', NumberType::class)
+            ->add('prix', NumberType::class, [
+                'scale' => 2,  // Définir la précision pour les décimales
+=======
+        $builder
+            ->add('quantite', IntegerType::class, [
+                
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
             ])
             ->add('dateCommande', DateType::class, [
                 'widget' => 'single_text',
                 'required' => false,
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+            ])
+            ->add('decoration', EntityType::class, [
+                'class' => Decoration::class,
+                'choice_label' => 'idDecor',
+                'placeholder' => 'Choisir une décoration',
+            ])
+            ->add('user', EntityType::class, [
+                'class' => Utilisateur::class,
+                'choices' => [$user],  // Ajouter l'utilisateur connecté comme choix unique
+                'choice_label' => 'id', // Afficher l'ID de l'utilisateur, ajuster si nécessaire
+                'data' => $user, // Assigner l'utilisateur connecté comme valeur par défaut
+                'disabled' => true,  // Désactiver le champ pour que l'utilisateur ne puisse pas changer
+            ])
+            ->add('save', SubmitType::class, ['label' => 'Enregistrer']);
+=======
+>>>>>>> c139a4e (Résolution des conflits)
             ]);
 
         $builder->addEventListener(FormEvents::POST_SUBMIT, function (FormEvent $event) {
@@ -50,13 +113,25 @@ class CommandeDecorationType extends AbstractType
             $prixTotal = $quantite * $decoration->getprix();
             $commande->setPrix($prixTotal);
         });
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     }
 
     public function configureOptions(OptionsResolver $resolver): void
     {
         $resolver->setDefaults([
             'data_class' => CommandeDecoration::class,
+<<<<<<< HEAD
             'user' => null, // Si tu veux passer l'user plus tard
+=======
+<<<<<<< HEAD
+            'user' => null, // Ajouter l'option 'user' ici pour qu'elle soit accessible
+=======
+            'user' => null, // Si tu veux passer l'user plus tard
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
         ]);
     }
 }

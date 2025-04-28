@@ -65,7 +65,15 @@
 }
 
 .menu__class li {
+<<<<<<< HEAD
     padding: 9px ; /* Retirer les marges internes */
+=======
+<<<<<<< HEAD
+    padding: 0; /* Retirer les marges internes */
+=======
+    padding: 9px ; /* Retirer les marges internes */
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
     margin: 0; /* Retirer les marges externes */
 }
 
@@ -188,7 +196,18 @@ ol {
 	background-position: top center;
 }
 
+<<<<<<< HEAD
 
+=======
+<<<<<<< HEAD
+.spad {
+	padding-top: 100px;
+	padding-bottom: 100px;
+}
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 
 .text-white h1,
 .text-white h2,
@@ -819,7 +838,16 @@ ol {
     position: absolute;
     left: 0;
     width: 100%;
+<<<<<<< HEAD
 	height: 100%;    background: rgba(0, 0, 0, 0.5);
+=======
+<<<<<<< HEAD
+    height: 78%;
+    background: rgba(0, 0, 0, 0.5);
+=======
+	height: 100%;    background: rgba(0, 0, 0, 0.5);
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 }
 
 /* Masquer le dropdown par défaut */
@@ -885,10 +913,20 @@ ol {
     justify-content: center;
     padding: 20px;
   }
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> c139a4e (Résolution des conflits)
   .spad {
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
   .filter__form__item {
     width: 45%;
     margin-right: 20px;
@@ -916,11 +954,25 @@ ol {
   }
 
   .hero {
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    transform: translateY(-10%);
+    height: auto;
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+=======
+>>>>>>> c139a4e (Résolution des conflits)
 	transform: translateY(-19%);
 	/* height: 55%; */
 	padding-top: 100px;
 	padding-bottom: 100px;
 }
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 }
 
 @media (max-width: 768px) {
@@ -957,8 +1009,21 @@ ol {
     padding-left: 38px;
   }
 
+<<<<<<< HEAD
   
 }
+=======
+<<<<<<< HEAD
+  .hero .overlay {
+    height: 100%;
+  }
+}
+
+=======
+  
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 @media (max-width: 576px) {
   .filter__form__item {
     width: 100%;

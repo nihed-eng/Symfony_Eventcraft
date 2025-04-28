@@ -14,6 +14,12 @@ class SalleRepository extends ServiceEntityRepository
         parent::__construct($registry, Salle::class);
     }
 
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+    // Ajoutez ici vos méthodes personnalisées si nécessaire
+=======
+>>>>>>> c139a4e (Résolution des conflits)
     public function findWithFilters(array $filters)
     {
         $qb = $this->createQueryBuilder('s');
@@ -46,4 +52,8 @@ class SalleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
 }
