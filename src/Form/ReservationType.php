@@ -2,6 +2,10 @@
 namespace App\Form;
 
 use App\Entity\Reservation;
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;

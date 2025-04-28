@@ -4,15 +4,27 @@ namespace App\Entity;
 
 use App\Repository\ResetPasswordRequestRepository;
 use Doctrine\ORM\Mapping as ORM;
+<<<<<<< HEAD
 
 #[ORM\Entity(repositoryClass: ResetPasswordRequestRepository::class)]
 class ResetPasswordRequest
 {
+=======
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestInterface;
+use SymfonyCasts\Bundle\ResetPassword\Model\ResetPasswordRequestTrait;
+
+#[ORM\Entity(repositoryClass: ResetPasswordRequestRepository::class)]
+class ResetPasswordRequest implements ResetPasswordRequestInterface
+{
+    use ResetPasswordRequestTrait;
+
+>>>>>>> 6ab9b1d (Initial commit)
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
 
+<<<<<<< HEAD
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
     private ?Utilisateur $user = null;
@@ -32,6 +44,16 @@ class ResetPasswordRequest
         $this->verificationCode = sprintf('%06d', random_int(0, 999999));
         $this->expiresAt = new \DateTimeImmutable('+30 minutes');
         $this->isVerified = false;
+=======
+    #[ORM\ManyToOne]
+    #[ORM\JoinColumn(name: "user_id", referencedColumnName: "id", nullable: false)]
+    private ?Utilisateur $user = null;
+
+    public function __construct(Utilisateur $user, \DateTimeInterface $expiresAt, string $selector, string $hashedToken)
+    {
+        $this->user = $user;
+        $this->initialize($expiresAt, $selector, $hashedToken);
+>>>>>>> 6ab9b1d (Initial commit)
     }
 
     public function getId(): ?int
@@ -39,6 +61,7 @@ class ResetPasswordRequest
         return $this->id;
     }
 
+<<<<<<< HEAD
     public function getUser(): ?Utilisateur
     {
         return $this->user;
@@ -69,4 +92,10 @@ class ResetPasswordRequest
     {
         return $this->expiresAt <= new \DateTimeImmutable();
     }
+=======
+    public function getUser(): object
+    {
+        return $this->user;
+    }
+>>>>>>> 6ab9b1d (Initial commit)
 }

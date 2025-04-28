@@ -22,7 +22,11 @@ class Salle
         minMessage: "Le nom doit faire au moins {{ limit }} caractères",
         maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
     )]
+<<<<<<< HEAD
     private string $nomSalle;
+=======
+    private ?string $nomSalle = null;
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[ORM\Column(name: 'capacité', type: 'string', length: 255)]
     #[Assert\NotBlank(message: "La capacité est obligatoire")]
@@ -37,11 +41,15 @@ class Salle
     private string $equipement;
 
     #[ORM\Column(name: 'image_salle', type: 'string', length: 255)]
+<<<<<<< HEAD
     #[Assert\Image(
         maxSize: "2M",
         mimeTypes: ["image/jpeg", "image/png", "image/webp"],
         mimeTypesMessage: "Veuillez uploader une image valide (JPEG, PNG ou WEBP)"
     )]
+=======
+    
+>>>>>>> 6ab9b1d (Initial commit)
     private ?string $imageSalle = null;
 
     #[ORM\Column(name: 'location_salle', type: 'string', length: 255)]
@@ -49,9 +57,16 @@ class Salle
     private string $locationSalle;
 
     #[ORM\Column(name: 'qualite', type: 'string', length: 255, nullable: true)]
+<<<<<<< HEAD
     #[Assert\Choice(
         choices: ["standard", "premium", "luxe"],
         message: "Choisissez une qualité valide (standard, premium ou luxe)"
+=======
+    #[Assert\NotBlank(message: "La qualité est obligatoire")]
+    #[Assert\Choice(
+        choices: ["Bien", "Très bien", "Superbe", "Exceptionnelle"],
+        message: "Choisissez une qualité valide"
+>>>>>>> 6ab9b1d (Initial commit)
     )]
     private ?string $qualite;
 
@@ -66,9 +81,17 @@ class Salle
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+<<<<<<< HEAD
     private ?Utilisateur $user;
 
 
+=======
+    #[Assert\NotBlank(message: "L’utilisateur est obligatoire")]
+    private ?Utilisateur $user;
+
+
+
+>>>>>>> 6ab9b1d (Initial commit)
     public function getIdSalle(): int
     {
         return $this->idSalle;

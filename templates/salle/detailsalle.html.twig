@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 {% extends 'baseoffre.html.twig' %}
 
 {% block title %}Liste des Offres{% endblock %}
@@ -21,10 +22,62 @@
             background-size: cover;
             background-position: center center;
             height: 400px;
+=======
+{% extends 'base.html.twig' %}
+
+{% block title %}Détails de la Salle | {{ salle.nomSalle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+    <style>
+        :root {
+            --primary: #8D598F;
+            --secondary: #CBA979;
+            --accent: #F0C8C6;
+            --dark: #2D2D2D;
+            --light: #F8F9FA;
+        }
+.fc .fc-col-header-cell-cushion {
+    color: white;
+    display: inline-block;
+    padding: 2px 4px;
+}
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+            {% if salle.imageSalle %}
+                {% set firstPath = salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+            {% endif %}
+            background-image: url('{% if filename is defined %}/images/{{ filename | url_encode }}{% else %}/images/offre.jpeg{% endif %}');
+            background-size: cover;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-attachment: fixed;
+        }
+
+        /* Hero Section - Parallax Effect */
+        .hero-parallax {
+            top: -125px;
+            height: 70vh;
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+            position: relative;
+>>>>>>> 6ab9b1d (Initial commit)
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
+<<<<<<< HEAD
             text-align: center;
         }
 
@@ -190,6 +243,376 @@ background-color:#98A695; ;
                                 <h2>Disponibilité</h2>
                                 <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
                                 
+=======
+            overflow: hidden;
+        }
+
+        .hero-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            background: rgba(0, 0, 0, 0.4);
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s both;
+        }
+
+        .breadcrumb-custom {
+            background: transparent;
+            justify-content: center;
+            animation: fadeIn 1s both 0.3s;
+        }
+
+        .breadcrumb-custom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .breadcrumb-custom a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .salle-container {
+            margin-top: -309px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .salle-card {
+            background: #ffffffa8;
+            border-radius: 15px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .salle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+        }
+
+      
+
+        .salle-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(203, 169, 121, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .salle-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .salle-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* Info Sections */
+        .info-section {
+            padding: 40px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: white;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border-left: 1px solid var(--primary);
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .info-box h3 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-box h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* FullCalendar Customization */
+        .fc {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .fc-header-toolbar {
+            margin-bottom: 1.5em;
+        }
+
+        .fc-toolbar-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .fc-button {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            transition: all 0.3s;
+            text-transform: capitalize;
+        }
+
+        .fc-button:hover {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .fc-button-active {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .fc-daygrid-day-number {
+            color: var(--dark);
+        }
+
+        .fc-day-today {
+            background-color: rgba(203, 169, 121, 0.1) !important;
+        }
+
+        .fc-event {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .fc-event:hover {
+            opacity: 0.9;
+        }
+
+        .fc-daygrid-event-dot {
+            border-color: white !important;
+        }
+
+        .fc-col-header-cell {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Button Styles */
+        .btn-reserver {
+            background: #8D598F;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(141, 89, 143, 0.3);
+            transition: all 0.3s;
+            display: inline-flex;
+            align-items: center;
+        }
+
+        .btn-reserver:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(141, 89, 143, 0.4);
+            color: white;
+        }
+
+        .btn-reserver i {
+            margin-left: 8px;
+        }
+
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .salle-title {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-parallax {
+                height: 60vh;
+                background-attachment: scroll;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .fc-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .fc-toolbar-title {
+                margin: 10px 0;
+            }
+        }
+
+        @media (max-width: 576px) {
+            .hero-parallax {
+                height: 50vh;
+            }
+
+            .hero-title {
+                font-size: 2rem;
+            }
+
+            .salle-container {
+                margin-top: -50px;
+            }
+
+            .fc-header-toolbar {
+                flex-direction: column;
+            }
+
+            .fc-toolbar-chunk {
+                margin-bottom: 10px;
+            }
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <!-- Hero Parallax Section -->
+    <div class="hero-parallax">
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">{{ salle.nomSalle }}</h1>
+          
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="container salle-container">
+        <div class="salle-card animate__animated animate__fadeInUp">
+            <div class="salle-header">
+                <span class="salle-badge">Capacité: {{ salle.capacite }} personnes</span>
+            </div>
+
+            <div class="info-section">
+                <h2 class="salle-title">Détails de la Salle</h2>
+
+                <div class="info-grid">
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.1s">
+                        <h3><i class="fas fa-map-marker-alt"></i> Localisation</h3>
+                        <p>{{ salle.locationSalle }}</p>
+                        <div class="mt-3">
+                        </div>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.2s">
+                        <h3><i class="fas fa-star"></i> Qualité</h3>
+                        <div class="d-flex align-items-center">
+                            {% for i in 1..5 %}
+                                <i class="fas fa-star {% if i <= salle.qualite %}text-warning{% else %}text-muted{% endif %}"></i>
+                            {% endfor %}
+                            <span class="ms-2">({{ salle.qualite }}/5)</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.3s">
+                        <h3><i class="fas fa-euro-sign"></i> Tarifs</h3>
+                        <p class="display-6 text-primary">{{ salle.prix }} € <small class="text-muted">/ jour</small></p>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.4s">
+                        <h3><i class="fas fa-info-circle"></i> À propos</h3>
+                        <p>{{ salle.description ?? "Cette magnifique salle est parfaite pour vos événements. Espace lumineux et modulable selon vos besoins." }}</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn-reserver animate__animated animate__pulse animate__infinite">
+                        Réserver maintenant <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Calendar Section -->
+                <div class="col-lg-12">
+                    <div class="card shadow-sm mb-4">
+                        <div class="card-body">
+                            <div class="calendar-container">
+                                <h2>Disponibilité</h2>
+                                <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
+
+>>>>>>> 6ab9b1d (Initial commit)
                                 {% if events is not empty %}
                                     <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
                                     <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
@@ -226,5 +649,81 @@ background-color:#98A695; ;
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
     </section>
+=======
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate__animated');
+
+            const animateOnScroll = () => {
+                animatedElements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+
+                    if (elementPosition < windowHeight - 100) {
+                        const animationClass = element.classList.item(1);
+                        element.classList.add(animationClass);
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+
+            // Initialize FullCalendar if events exist
+            {% if events is not empty %}
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale: 'fr',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    events: {{ events|raw }},
+                    eventColor: 'var(--secondary)',
+                    eventTextColor: '#ffffff',
+                    eventBackgroundColor: 'var(--secondary)',
+                    eventBorderColor: 'var(--secondary)',
+                    dayHeaderContent: function(args) {
+                        return args.text.charAt(0).toUpperCase() + args.text.slice(1);
+                    },
+                    buttonText: {
+                        today: "Aujourd'hui",
+                        month: "Mois",
+                        week: "Semaine",
+                        day: "Jour"
+                    },
+                    firstDay: 1,
+                    height: 'auto',
+                    fixedWeekCount: false,
+                    showNonCurrentDates: true,
+                    dayMaxEvents: true,
+                    navLinks: true,
+                    eventDisplay: 'block',
+                    eventTimeFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    eventClick: function(info) {
+                        // Optional: Add click handler for events
+                        console.log('Event clicked:', info.event);
+                    }
+                });
+                calendar.render();
+            {% endif %}
+        });
+    </script>
+>>>>>>> 6ab9b1d (Initial commit)
 {% endblock %}

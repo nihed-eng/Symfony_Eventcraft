@@ -16,10 +16,30 @@ class Reservation
     private int $idReservation;
 
     #[ORM\Column(name: 'date_debut', type: 'datetime')]
+<<<<<<< HEAD
     private \DateTime $dateDebut;
 
     #[ORM\Column(name: 'date_fin', type: 'datetime')]
     private \DateTime $dateFin;
+=======
+    #[Assert\NotBlank(message: "La date de début est obligatoire")]
+    #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date valide")]
+    #[Assert\GreaterThan(
+        value: "today",
+        message: "La date de début doit être dans le futur"
+    )]
+    private ?\DateTimeInterface $dateDebut = null;
+
+    #[ORM\Column(name: 'date_fin', type: 'datetime')]
+    #[Assert\NotBlank(message: "La date de fin est obligatoire")]
+    #[Assert\Type("\DateTimeInterface", message: "Veuillez entrer une date valide")]
+    #[Assert\GreaterThan(
+        propertyPath: "dateDebut",
+        message: "La date de fin doit être après la date de début"
+    )]
+    private ?\DateTimeInterface $dateFin = null;
+
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[ORM\ManyToOne(targetEntity: Salle::class)]
     #[ORM\JoinColumn(name: 'salle', referencedColumnName: 'id_salle')]

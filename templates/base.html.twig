@@ -1,4 +1,7 @@
+<<<<<<< HEAD
 
+=======
+>>>>>>> 6ab9b1d (Initial commit)
 <!DOCTYPE html>
 <html lang="fr">
     <head>
@@ -29,7 +32,88 @@
 
             body {
                 background-color: #ffffff;
+<<<<<<< HEAD
                 min-height: 100vh;
+=======
+                min-height: 100vh;}
+
+
+.navbar-menu {
+    flex: 1;
+    display: flex;
+    justify-content: flex-start; /* Aligne à gauche */
+    align-items: center;
+    padding-left: 0 !important;
+    margin-left: 0 !important;
+}
+
+.navbar-menu .navbar-collapse {
+    padding: 0;
+    margin: 0;
+}
+
+.navbar-menu .navbar-nav {
+    padding-left: 0;
+    margin-left: 0;
+}
+
+
+.navbar-menu .nav-item {
+    margin: 0;
+    padding: 0;
+}
+
+.navbar-menu .nav-link {
+    padding: 0.3rem 0.6rem; /* Réduit le padding interne */
+    font-size: 0.95rem; /* Optionnel : réduit un peu la taille du texte */
+    white-space: nowrap;
+}
+
+
+.navbar-logo {
+    flex: 1; /* Deuxième 1/2 pour le logo */
+    display: flex;
+    justify-content: center; /* Centre le logo */
+}
+
+.navbar-user {
+    flex: 1; /* Dernier 1/3 pour les liens utilisateur */
+    display: flex;
+    justify-content: flex-end; /* Aligne les éléments utilisateur à droite */
+}
+
+.center-logo {
+      max-width: 100px;
+    /* height: auto; */
+    height: auto;
+}
+
+.navbar-nav {
+display: flex
+;
+    list-style: none;
+    padding-left: 43px;
+    margin: 0;}
+
+.nav-item {
+    padding: 0.5rem 1rem; /* Espacement autour des éléments */
+}
+
+.nav-item a {
+    font-weight: 600;
+    font-size: 1.1rem;
+    text-decoration: none;
+    color: #333;
+}
+
+
+
+            .navbar.scrolled {
+background-color: #000 !important;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+>>>>>>> a015ffc99df9188358fa9d511ee6bbd2fc3b0c9b
+>>>>>>> c9effa4 (Initial commit du projet Symfony)
+>>>>>>> 6ab9b1d (Initial commit)
             }
 
             /* Navbar Styles */
@@ -408,9 +492,13 @@
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('decoration_welcom') }}">DÉCORATIONS</a>
                         </li>
+<<<<<<< HEAD
                         <li class="nav-item">
                             <a class="nav-link" href="{{ path('app_reclamation_new') }}">SUBMIT COMPLAINT</a>
                         </li>
+=======
+                     
+>>>>>>> 6ab9b1d (Initial commit)
                     </ul>
                 </div>
             </div>
@@ -429,7 +517,13 @@
                                 <i class="fas fa-user me-1"></i>{{ app.user.firstName|default(app.user.email|split('@')[0])|upper }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end">
+<<<<<<< HEAD
                                 <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Profile</a></li>
+=======
+                                <li><a class="dropdown-item" href="{{ path('decoration_index') }}"><i class="fas fa-user me-2"></i>Profile</a></li>
+                             <li><a class="dropdown-item" href="{{ path('app_reclamation_new') }}">Réclamer</a></li>
+
+>>>>>>> 6ab9b1d (Initial commit)
                                 <li><a class="dropdown-item" href="{{ path('app_settings') }}">Settings</a></li>
                                 {% if is_granted('ROLE_ADMIN') %}
                                     <li><a class="dropdown-item" href="{{ path('app_admin_dashboard') }}">Admin Dashboard</a></li>
@@ -525,6 +619,12 @@
         </div>
         {% endblock %}
         
+<<<<<<< HEAD
+=======
+
+
+        
+>>>>>>> 6ab9b1d (Initial commit)
         {# Bootstrap JS #}
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
         

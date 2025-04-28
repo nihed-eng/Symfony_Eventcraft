@@ -6,6 +6,10 @@ use App\Entity\Reclamation;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+>>>>>>> 6ab9b1d (Initial commit)
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -14,7 +18,11 @@ class ReclamationType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
+<<<<<<< HEAD
             ->add('subject', TextType::class, [
+=======
+            ->add('titre', TextType::class, [
+>>>>>>> 6ab9b1d (Initial commit)
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Enter the subject of your complaint'
@@ -28,6 +36,19 @@ class ReclamationType extends AbstractType
                     'placeholder' => 'Describe your complaint in detail'
                 ],
                 'label' => 'Description'
+<<<<<<< HEAD
+=======
+            ])
+            ->add('type', ChoiceType::class, [
+                'choices' => [
+                    'General' => 'general',
+                    'Technical' => 'technical',
+                    'Service' => 'service',
+                    'Other' => 'other'
+                ],
+                'attr' => ['class' => 'form-control'],
+                'label' => 'Type'
+>>>>>>> 6ab9b1d (Initial commit)
             ]);
     }
 
@@ -35,6 +56,12 @@ class ReclamationType extends AbstractType
     {
         $resolver->setDefaults([
             'data_class' => Reclamation::class,
+<<<<<<< HEAD
+=======
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'reclamation_form',
+>>>>>>> 6ab9b1d (Initial commit)
         ]);
     }
 }

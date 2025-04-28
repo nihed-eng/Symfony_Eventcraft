@@ -3,14 +3,23 @@
 namespace App\Service;
 
 use League\OAuth2\Client\Provider\Google;
+<<<<<<< HEAD
 use App\Repository\UserRepository;
 use Symfony\Component\HttpFoundation\RequestStack;
 use Doctrine\ORM\EntityManagerInterface;
 use App\Entity\User;
+=======
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\HttpFoundation\RequestStack;
+use Doctrine\ORM\EntityManagerInterface;
+use App\Entity\Utilisateur;
+use Psr\Log\LoggerInterface;
+>>>>>>> 6ab9b1d (Initial commit)
 
 class GoogleAuthService
 {
     private $provider;
+<<<<<<< HEAD
     private $userRepository;
     private $entityManager;
     private $session;
@@ -20,6 +29,20 @@ class GoogleAuthService
         EntityManagerInterface $entityManager,
         RequestStack $requestStack
     ) {
+=======
+    private $utilisateurRepository;
+    private $entityManager;
+    private $session;
+    private $logger;
+
+    public function __construct(
+        UtilisateurRepository $utilisateurRepository,
+        EntityManagerInterface $entityManager,
+        RequestStack $requestStack,
+        LoggerInterface $logger = null
+    ) {
+        $this->logger = $logger;
+>>>>>>> 6ab9b1d (Initial commit)
         $clientConfigPath = 'C:\Users\Baha Ayadi\Desktop\client_secret.json';
         
         if (!file_exists($clientConfigPath)) {
@@ -49,11 +72,25 @@ class GoogleAuthService
             'redirectUri'  => 'http://127.0.0.1:8000/connect/google/check',
         ]);
         
+<<<<<<< HEAD
         $this->userRepository = $userRepository;
+=======
+        $this->utilisateurRepository = $utilisateurRepository;
+>>>>>>> 6ab9b1d (Initial commit)
         $this->entityManager = $entityManager;
         $this->session = $requestStack->getSession();
     }
 
+<<<<<<< HEAD
+=======
+    private function log($message, $level = 'info', $context = [])
+    {
+        if ($this->logger) {
+            $this->logger->$level($message, $context);
+        }
+    }
+
+>>>>>>> 6ab9b1d (Initial commit)
     public function getAuthorizationUrl(): string
     {
         $options = [
@@ -69,13 +106,21 @@ class GoogleAuthService
         return $authUrl;
     }
 
+<<<<<<< HEAD
     public function handleCallback(string $state, string $code): ?User
+=======
+    public function handleCallback(string $state, string $code): ?Utilisateur
+>>>>>>> 6ab9b1d (Initial commit)
     {
         try {
             // Verify state
             $savedState = $this->session->get('oauth2state');
             if (!$savedState || $state !== $savedState) {
                 $this->session->remove('oauth2state');
+<<<<<<< HEAD
+=======
+                $this->log('Invalid OAuth state', 'error');
+>>>>>>> 6ab9b1d (Initial commit)
                 throw new \RuntimeException('Invalid state');
             }
 
@@ -86,6 +131,7 @@ class GoogleAuthService
 
             // Get user details
             $googleUser = $this->provider->getResourceOwner($token);
+<<<<<<< HEAD
             
             // Check if user exists
             $user = $this->userRepository->findOneBy(['email' => $googleUser->getEmail()]);
@@ -125,3 +171,90 @@ class GoogleAuthService
         }
     }
 } 
+=======
+            $userData = $googleUser->toArray();
+            
+            // Dump user data for debugging
+            $this->log('Google user data: ' . json_encode($userData));
+
+            // Check if user exists
+            $email = $googleUser->getEmail();
+            if (empty($email)) {
+                throw new \RuntimeException('Email not provided by Google');
+            }
+            
+            $this->log('Looking up user by email: ' . $email);
+            $utilisateur = $this->utilisateurRepository->findOneBy(['email' => $email]);
+            
+            if (!$utilisateur) {
+                $this->log('User not found, creating new user');
+                
+                // Create new user
+                $utilisateur = new Utilisateur();
+                $utilisateur->setEmail($email);
+                
+                // Get first and last name
+                $firstName = $googleUser->getFirstName() ?? 'Google';
+                $lastName = $googleUser->getLastName() ?? 'User';
+                
+                // If first/last name are null, try to extract from full name
+                if (($firstName === 'Google' || $lastName === 'User') && isset($userData['name'])) {
+                    $nameParts = explode(' ', $userData['name'], 2);
+                    if (count($nameParts) > 0) {
+                        $firstName = $nameParts[0];
+                    }
+                    if (count($nameParts) > 1) {
+                        $lastName = $nameParts[1];
+                    }
+                }
+                
+                $this->log('Setting user data: firstName=' . $firstName . ', lastName=' . $lastName);
+                
+                // Set user data - ensure values are not null
+                $utilisateur->setPrenom($firstName);
+                $utilisateur->setNom($lastName);
+                $utilisateur->setPassword(password_hash(bin2hex(random_bytes(16)), PASSWORD_BCRYPT)); 
+                $utilisateur->setRole('ROLE_USER');
+                $utilisateur->setStatutCompte('active');
+                
+                try {
+                    // Manually begin transaction for better error control
+                    $this->entityManager->getConnection()->beginTransaction();
+                    
+                    $this->log('Persisting new user to database');
+                    $this->entityManager->persist($utilisateur);
+                    $this->entityManager->flush();
+                    
+                    // Commit the transaction
+                    $this->entityManager->getConnection()->commit();
+                    
+                    $this->log('User successfully persisted with ID: ' . $utilisateur->getId());
+                } catch (\Exception $e) {
+                    // Roll back the failed transaction
+                    if ($this->entityManager->getConnection()->isTransactionActive()) {
+                        $this->entityManager->getConnection()->rollBack();
+                    }
+                    
+                    $this->log('Database error: ' . $e->getMessage(), 'error', [
+                        'exception' => get_class($e),
+                        'message' => $e->getMessage(),
+                        'trace' => $e->getTraceAsString()
+                    ]);
+                    throw $e;
+                }
+            } else {
+                $this->log('User already exists with ID: ' . $utilisateur->getId());
+            }
+            
+            return $utilisateur;
+        } catch (\Exception $e) {
+            $this->log('Google callback error: ' . $e->getMessage(), 'error', [
+                'exception' => get_class($e),
+                'message' => $e->getMessage(),
+                'trace' => $e->getTraceAsString()
+            ]);
+            throw new \RuntimeException('Failed to handle Google callback: ' . $e->getMessage(), 0, $e);
+        }
+    }
+}
+>>>>>>> 6ab9b1d (Initial commit)

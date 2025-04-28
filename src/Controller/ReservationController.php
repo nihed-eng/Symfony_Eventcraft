@@ -7,6 +7,10 @@ use App\Entity\Reservation;
 use App\Entity\Salle;
 use App\Entity\Utilisateur;
 use App\Form\ReservationType;
+<<<<<<< HEAD
+=======
+use App\Service\PdfGenerator;
+>>>>>>> 6ab9b1d (Initial commit)
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -57,6 +61,7 @@ final class ReservationController extends AbstractController
     
     
     #[Route('/new/{idSalle}', name: 'app_reservation_new', methods: ['GET', 'POST'])]
+<<<<<<< HEAD
     public function new(Request $request, Salle $salle): Response
     {
         $reservation = new Reservation();
@@ -76,11 +81,68 @@ final class ReservationController extends AbstractController
             return $this->redirectToRoute('app_reservation_index');
         }
 
+=======
+    public function new(Request $request, Salle $salle, EntityManagerInterface $entityManager): Response
+    {
+        $reservation = new Reservation();
+        $reservation->setSalle($salle);
+    
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted()) {
+            // Validation manuelle supplémentaire
+            $errors = [];
+            $now = new \DateTime();
+    
+            if ($reservation->getDateDebut() < $now) {
+                $errors[] = 'La date de début doit être dans le futur';
+            }
+    
+            if ($reservation->getDateFin() <= $reservation->getDateDebut()) {
+                $errors[] = 'La date de fin doit être supérieure à la date de début';
+            }
+    
+            // Vérification de conflit de réservation
+            $conflictingReservations = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.salle = :salle')
+            ->andWhere('r.dateFin > :start AND r.dateDebut < :end')
+            ->setParameter('salle', $salle)
+            ->setParameter('start', $reservation->getDateDebut())
+            ->setParameter('end', $reservation->getDateFin())
+            ->getQuery()
+            ->getResult();
+        
+    
+            if (!empty($conflictingReservations)) {
+                $errors[] = 'La salle est déjà réservée pour la période sélectionnée.';
+            }
+    
+            if (empty($errors)) {
+                $reservation->setUser($this->getUser());
+                $entityManager->persist($reservation);
+                $entityManager->flush();
+    
+                $this->addFlash('success', 'Réservation créée avec succès');
+                return $this->redirectToRoute('app_reservation_index');
+            }
+    
+            foreach ($errors as $error) {
+                $this->addFlash('error', $error);
+            }
+        }
+    
+>>>>>>> 6ab9b1d (Initial commit)
         return $this->render('reservation/new.html.twig', [
             'form' => $form->createView(),
             'salle' => $salle,
         ]);
     }
+<<<<<<< HEAD
+=======
+    
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[Route('/{idReservation}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -91,6 +153,7 @@ final class ReservationController extends AbstractController
     }
 
     #[Route('/{idReservation}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
+<<<<<<< HEAD
     public function edit(Request $request, Reservation $reservation): Response
     {
         $form = $this->createForm(ReservationType::class, $reservation);
@@ -107,6 +170,74 @@ final class ReservationController extends AbstractController
             'form' => $form,
         ]);
     }
+=======
+    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
+    {
+        // Sauvegarde des dates originales pour la vérification de conflit
+        $originalDateDebut = $reservation->getDateDebut();
+        $originalDateFin = $reservation->getDateFin();
+        
+        $form = $this->createForm(ReservationType::class, $reservation);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted()) {
+            $errors = [];
+            $now = new \DateTime();
+            $today = new \DateTime('today');
+    
+            // Vérification que la date de début n'est pas dans le passé
+            if ($reservation->getDateDebut() < $today) {
+                $errors[] = 'Vous ne pouvez pas réserver pour une date passée.';
+            }
+    
+            // Vérification que la date de début n'est pas aujourd'hui
+            if ($reservation->getDateDebut()->format('Y-m-d') === $today->format('Y-m-d')) {
+                $errors[] = 'Les réservations doivent être faites au moins 24h à l\'avance.';
+            }
+    
+            // Vérification que la date de fin est égale ou postérieure à la date de début
+            if ($reservation->getDateFin() < $reservation->getDateDebut()) {
+                $errors[] = 'La date de fin doit être égale ou postérieure à la date de début.';
+            }
+    
+            // Vérification de conflit seulement si les dates ont changé
+            if ($reservation->getDateDebut() != $originalDateDebut || $reservation->getDateFin() != $originalDateFin) {
+                $conflictingReservations = $entityManager->getRepository(Reservation::class)
+                    ->createQueryBuilder('r')
+                    ->where('r.salle = :salle')
+                    ->andWhere('r.idReservation != :currentReservation')
+                    ->andWhere('r.dateFin > :start AND r.dateDebut < :end')
+                    ->setParameter('salle', $reservation->getSalle())
+                    ->setParameter('currentReservation', $reservation->getIdReservation())
+                    ->setParameter('start', $reservation->getDateDebut())
+                    ->setParameter('end', $reservation->getDateFin())
+                    ->getQuery()
+                    ->getResult();
+    
+                if (!empty($conflictingReservations)) {
+                    $errors[] = 'La salle est déjà réservée pour cette période. Veuillez choisir d\'autres dates.';
+                }
+            }
+    
+            if (empty($errors)) {
+                $entityManager->flush();
+                $this->addFlash('success', 'La réservation a été modifiée avec succès.');
+                return $this->redirectToRoute('app_reservation_index');
+            }
+    
+            foreach ($errors as $error) {
+                $this->addFlash('error', $error);
+            }
+        }
+    
+        return $this->render('reservation/edit.html.twig', [
+            'reservation' => $reservation,
+            'form' => $form->createView(),
+        ]);
+    }
+    
+
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[Route('/{idReservation}', name: 'app_reservation_delete', methods: ['POST'])]
     public function delete(Request $request, Reservation $reservation): Response
@@ -119,6 +250,7 @@ final class ReservationController extends AbstractController
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
+<<<<<<< HEAD
     #[Route('/ajax/reservations', name: 'ajax_reservations', methods: ['GET'])]
     public function ajaxReservations(): JsonResponse
     {
@@ -144,6 +276,9 @@ final class ReservationController extends AbstractController
 
         return new JsonResponse($data);
     }
+=======
+   
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[Route('/admin/reservations', name: 'app_admin_reservations')]
     public function listAll(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response
@@ -183,4 +318,35 @@ final class ReservationController extends AbstractController
             'reservations' => $reservations
         ]);
     }
+<<<<<<< HEAD
+=======
+
+
+
+
+    #[Route('/reservation/{idReservation}/pdf', name: 'app_reservation_pdf')]
+    public function generatePdf(Reservation $reservation, PdfGenerator $pdfService): Response
+    {
+        try {
+            $pdf = $pdfService->generateFromTemplate(
+                'reservation/pdf.html.twig',
+                ['reservation' => $reservation],
+                'reservation-'.$reservation->getIdReservation().'.pdf'
+            );
+    
+            return new Response(
+                $pdf,
+                200,
+                [
+                    'Content-Type' => 'application/pdf',
+                    'Content-Disposition' => 'attachment; filename="reservation-'.$reservation->getIdReservation().'.pdf"'
+                ]
+            );
+        } catch (\Exception $e) {
+            throw new \RuntimeException('PDF generation failed: '.$e->getMessage());
+        }
+    }
+    
+
+>>>>>>> 6ab9b1d (Initial commit)
 }

@@ -9,6 +9,95 @@
     <style>
 
 
+<<<<<<< HEAD
+=======
+/* Style minimaliste avec fond violet clair */
+.pagination {
+    display: flex;
+    justify-content: center;
+    padding-left: 0;
+    list-style: none;
+    gap: 8px; /* Espacement entre les éléments */
+    margin: 20px 0;
+}
+
+.pagination li {
+    margin: 0;
+}
+
+/* Style des numéros */
+.pagination a, 
+.pagination span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    border-radius: 8px;
+    background-color: rgba(161, 104, 163, 0.25);
+    color:rgb(102, 44, 218);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.5s ease;
+}
+
+/* Effet hover */
+.pagination a:hover {
+    background-color: rgba(161, 104, 163, 0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+}
+
+/* Page active */
+.pagination .active span {
+    background-color: rgb(161, 104, 163);
+    color: white;
+    border-color: rgb(161, 104, 163);
+}
+
+/* Flèches de navigation */
+.pagination .page-item:first-child a,
+.pagination .page-item:first-child span,
+.pagination .page-item:last-child a,
+.pagination .page-item:last-child span {
+    width: auto;
+    padding: 0 12px;
+}
+
+/* État désactivé */
+.pagination .disabled span {
+    background-color: rgba(161, 104, 163, 0.05);
+    color: #d3c2e2;
+    border-color: rgba(161, 104, 163, 0.05);
+}
+
+/* Version mobile */
+@media (max-width: 640px) {
+    .pagination {
+        flex-wrap: wrap;
+        gap: 5px;
+    }
+    
+    .pagination li {
+        display: none;
+    }
+    
+    .pagination li.active,
+    .pagination li:first-child,
+    .pagination li:last-child,
+    .pagination li:nth-child(2),
+    .pagination li:nth-last-child(2) {
+        display: block;
+    }
+    
+    .pagination a, 
+    .pagination span {
+        width: 35px;
+        height: 35px;
+        font-size: 14px;
+    }
+}
+>>>>>>> 6ab9b1d (Initial commit)
 .btn-primary {
    
     --bs-btn-active-bg: #8D598F !important;}
@@ -85,7 +174,10 @@ border: none;
 	bottom: 0;
 	height: 2px;
 	width: 100%;
+<<<<<<< HEAD
 	background: #E9AD28;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
 	content: "";
 }
 
@@ -412,6 +504,11 @@ background-color: #000;
                     <li><a class="dropdown-item" href="{{ path('app_profilsalle') }}">Salle</a></li>
                     <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Offre</a></li>
                     <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Décorations</a></li>
+<<<<<<< HEAD
+=======
+                     <li><a class="dropdown-item" href="{{ path('app_reclamation_index') }}">MES RECLAMATIONS</a></li>
+
+>>>>>>> 6ab9b1d (Initial commit)
                 </ul>
             </div>
             <a href="{{ path('app_reservation_index') }}" class="btn btn-primary me-2">MES RÉSERVATIONS</a>

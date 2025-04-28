@@ -11,26 +11,96 @@
             --light-gray: #f8f9fa;
             --dark-gray: #343a40;
         }
+<<<<<<< HEAD
         
         .add-salle-container {
             max-width: 1000px;
             margin: 30px auto;
+=======
+        select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 2.5em;
+    cursor: pointer;
+}
+   body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/salle1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            opacity: 0.9;
+            filter: brightness(0.8);
+        }
+
+select.form-control:focus {
+    border-color: #8D598F;
+    box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+}
+            
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .form-errors {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+>>>>>>> 6ab9b1d (Initial commit)
             padding: 0 20px;
             font-family: 'Segoe UI', Roboto, sans-serif;
         }
         
         .add-salle-card {
             background: white;
+<<<<<<< HEAD
+=======
+            background: rgb(255 255 255 / 66%);
+
+>>>>>>> 6ab9b1d (Initial commit)
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e0e0e0;
             padding: 40px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
         
+<<<<<<< HEAD
         .add-salle-card:hover {
             box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         }
         
+=======
+>>>>>>> 6ab9b1d (Initial commit)
         .add-salle-title {
             text-align: center;
             font-size: 32px;
@@ -61,7 +131,10 @@
         
         .form-group {
             margin-bottom: 25px;
+<<<<<<< HEAD
             position: relative;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         .form-group label {
@@ -70,7 +143,10 @@
             font-size: 14px;
             color: #555;
             font-weight: 500;
+<<<<<<< HEAD
             transition: all 0.3s ease;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         .form-control {
@@ -79,12 +155,16 @@
             border: 1px solid #ddd;
             font-size: 14px;
             background: #f9f9f9;
+<<<<<<< HEAD
             transition: all 0.3s ease;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         .form-control:focus {
             border-color: var(--primary-color);
             outline: none;
+<<<<<<< HEAD
             background: rgba(141, 89, 143, 0.05);
             box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
         }
@@ -98,11 +178,51 @@
             font-size: 16px;
             cursor: pointer;
             transition: all 0.3s ease;
+=======
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+   .btn-reserver {
+            background: #8d598f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin: 2rem 0 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-reserver:hover, .btn-reserver:focus {
+         background: transparent;
+border: 2px solid  #8d598f;
+
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            letter-spacing: 1.5px;
+            outline: none;
+        }
+        
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+>>>>>>> 6ab9b1d (Initial commit)
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
         
+<<<<<<< HEAD
         .form-submit:hover {
             background: #6d4470;
         }
@@ -117,6 +237,16 @@
         
         .form-control.error {
             border-color: #dc3545;
+=======
+
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 15px;
+            border: 1px solid #fecaca;
+            margin-bottom: 20px;
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         .pulse-animation {
@@ -147,51 +277,146 @@
     <div class="add-salle-card">
         <h1 class="add-salle-title">Ajouter une nouvelle salle</h1>
         
+<<<<<<< HEAD
+=======
+        {% for message in app.flashes('error') %}
+            <div class="alert-danger">
+                {{ message }}
+            </div>
+        {% endfor %}
+        
+>>>>>>> 6ab9b1d (Initial commit)
         {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
             
             <div class="form-group">
                 {{ form_label(form.nomSalle) }}
+<<<<<<< HEAD
                 {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.nomSalle, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.nomSalle) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group">
                 {{ form_label(form.capacite) }}
+<<<<<<< HEAD
                 {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.capacite, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.capacite) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group">
                 {{ form_label(form.equipement) }}
+<<<<<<< HEAD
                 {{ form_widget(form.equipement, {'attr': {'class': 'form-control', 'rows': 3 ~ (form.equipement.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.equipement, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.equipement.vars.errors|length ? ' is-invalid' : ''),
+                        'rows': 3,
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.equipement) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group">
                 {{ form_label(form.locationSalle) }}
+<<<<<<< HEAD
                 {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.locationSalle, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.locationSalle) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group">
                 {{ form_label(form.qualite) }}
+<<<<<<< HEAD
                 {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.qualite, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.qualite) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group">
                 {{ form_label(form.prix) }}
+<<<<<<< HEAD
                 {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
+=======
+                {{ form_widget(form.prix, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.prix.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.prix) }}
+                </div>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
             
             <div class="form-group" style="grid-column: span 2;">
                 {{ form_label(form.imageFile) }}
+<<<<<<< HEAD
                 {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.imageFile, {'attr': {'class': 'form-error'}}) }}
             </div>
             
             <button type="submit" class="form-submit pulse-animation">
+=======
+                {{ form_widget(form.imageFile, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.imageFile) }}
+                </div>
+            </div>
+            
+            <button type="submit" class="form-submit btn-reserver pulse-animation">
+>>>>>>> 6ab9b1d (Initial commit)
                 <i class="fas fa-plus-circle"></i> Créer la salle
             </button>
             
@@ -205,6 +430,7 @@
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
+<<<<<<< HEAD
             // Désactive la validation HTML5 native
             document.querySelector('form').setAttribute('novalidate', true);
             
@@ -219,6 +445,47 @@
                     });
                 });
             });
+=======
+            const form = document.querySelector('form');
+            if (form) {
+                // Validation au submit
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    
+                    form.querySelectorAll('[required]').forEach(field => {
+                        if (field.value.trim() === '') {
+                            field.classList.add('is-invalid');
+                            const errorDiv = field.closest('.form-group').querySelector('.form-errors');
+                            if (errorDiv) {
+                                errorDiv.textContent = 'Ce champ est obligatoire';
+                            }
+                            isValid = false;
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        const firstError = form.querySelector('.is-invalid');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+                
+                // Retirer l'erreur quand on commence à taper
+                form.querySelectorAll('.form-control').forEach(input => {
+                    input.addEventListener('input', function() {
+                        if (this.value.trim() !== '') {
+                            this.classList.remove('is-invalid');
+                            const errorDiv = this.closest('.form-group').querySelector('.form-errors');
+                            if (errorDiv) {
+                                errorDiv.textContent = '';
+                            }
+                        }
+                    });
+                });
+            }
+>>>>>>> 6ab9b1d (Initial commit)
         });
     </script>
 {% endblock %}

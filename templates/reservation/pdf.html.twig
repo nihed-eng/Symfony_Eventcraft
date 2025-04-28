@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation #{{ reservation.idReservation }}</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        h1 { color: #8D598F; border-bottom: 2px solid #CBA979; padding-bottom: 5px; }
+        .info-box { margin-bottom: 20px; }
+        .info-item { margin-bottom: 8px; }
+        strong { display: inline-block; width: 120px; }
+        .header { text-align: center; margin-bottom: 30px; }
+        .footer { text-align: center; margin-top: 30px; font-size: 0.8em; color: #666; }
+        .room-image { max-width: 100%; height: auto; margin-bottom: 15px; }
+        .info-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 20px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Réservation #{{ reservation.idReservation }}</h1>
+        <p>Salle: {{ reservation.salle.nomSalle }}</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <h3>Informations Salle</h3>
+            
+            {% if reservation.salle.imageSalle %}
+                {% set firstImage = reservation.salle.imageSalle|split(',')|first %}
+                {% set imagePath = absolute_url(asset('images/' ~ firstImage|split('/')|last|split('\\')|last)) %}
+                <img src="{{ imagePath }}" class="room-image" alt="Image de la salle">
+            {% endif %}
+            
+            <div class="info-item">
+                <strong>Nom:</strong>
+                <span>{{ reservation.salle.nomSalle }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Lieu:</strong>
+                <span>{{ reservation.salle.locationSalle }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Capacité:</strong>
+                <span>{{ reservation.salle.capacite }} personnes</span>
+            </div>
+            <div class="info-item">
+                <strong>Prix:</strong>
+                <span>{{ reservation.salle.prix }} €</span>
+            </div>
+        </div>
+        
+        
+        <div class="info-box">
+            <h3>Dates</h3>
+            <div class="info-item">
+                <strong>Début:</strong>
+                <span>{{ reservation.dateDebut|date('d/m/Y H:i') }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Fin:</strong>
+                <span>{{ reservation.dateFin|date('d/m/Y H:i') }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Durée:</strong>
+                <span>{{ reservation.dateDebut.diff(reservation.dateFin).format('%d jours %h heures') }}</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>Client</h3>
+            {% if reservation.user %}
+                <div class="info-item">
+                    <strong>Nom:</strong>
+                    <span>{{ reservation.user.nom }} {{ reservation.user.prenom }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Email:</strong>
+                    <span>{{ reservation.user.email }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Téléphone:</strong>
+                    <span>{{ reservation.user.telephone ?? 'Non renseigné' }}</span>
+                </div>
+            {% else %}
+                <div>Aucun utilisateur associé</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="footer">
+        Généré le {{ "now"|date("d/m/Y H:i") }} - © Votre Société
+    </div>
+</body>
+</html>

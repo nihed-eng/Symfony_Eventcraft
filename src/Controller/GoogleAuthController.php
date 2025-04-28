@@ -10,6 +10,12 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Http\Authentication\UserAuthenticatorInterface;
 use Symfony\Component\Security\Http\Authenticator\FormLoginAuthenticator;
+<<<<<<< HEAD
+=======
+use Doctrine\ORM\EntityManagerInterface;
+use App\Repository\UtilisateurRepository;
+use Symfony\Component\HttpFoundation\JsonResponse;
+>>>>>>> 6ab9b1d (Initial commit)
 
 class GoogleAuthController extends AbstractController
 {
@@ -27,10 +33,23 @@ class GoogleAuthController extends AbstractController
         AppCustomAuthenticator $authenticator
     ): Response {
         try {
+<<<<<<< HEAD
             $user = $googleAuthService->handleCallback(
                 $request->query->get('state'),
                 $request->query->get('code')
             );
+=======
+            // Debug the incoming parameters
+            $state = $request->query->get('state');
+            $code = $request->query->get('code');
+            
+            if (!$state || !$code) {
+                $this->addFlash('error', 'Paramètres de connexion Google manquants.');
+                return $this->redirectToRoute('app_login');
+            }
+            
+            $user = $googleAuthService->handleCallback($state, $code);
+>>>>>>> 6ab9b1d (Initial commit)
 
             if (!$user) {
                 $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google.');
@@ -48,8 +67,44 @@ class GoogleAuthController extends AbstractController
             return $this->redirectToRoute('app_home');
 
         } catch (\Exception $e) {
+<<<<<<< HEAD
             $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google.');
             return $this->redirectToRoute('app_login');
         }
     }
+=======
+            // Log the detailed exception
+            $this->addFlash('error', 'Une erreur est survenue lors de la connexion avec Google: ' . $e->getMessage());
+            return $this->redirectToRoute('app_login');
+        }
+    }
+    
+    #[Route('/debug/google/users', name: 'debug_google_users')]
+    public function debugGoogleUsers(UtilisateurRepository $utilisateurRepository): Response
+    {
+        // This route is for debugging only and should be removed in production
+        if ($this->getParameter('kernel.environment') !== 'dev') {
+            throw $this->createAccessDeniedException();
+        }
+        
+        $users = $utilisateurRepository->findAll();
+        $userData = [];
+        
+        foreach ($users as $user) {
+            $userData[] = [
+                'id' => $user->getId(),
+                'email' => $user->getEmail(),
+                'nom' => $user->getNom(),
+                'prenom' => $user->getPrenom(),
+                'role' => $user->getRole(),
+                'statut' => $user->getStatutCompte(),
+            ];
+        }
+        
+        return new JsonResponse([
+            'user_count' => count($users),
+            'users' => $userData
+        ]);
+    }
+>>>>>>> 6ab9b1d (Initial commit)
 }

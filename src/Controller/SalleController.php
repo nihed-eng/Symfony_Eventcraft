@@ -4,21 +4,38 @@
 
 namespace App\Controller;
 
+<<<<<<< HEAD
+=======
+
+
+>>>>>>> 6ab9b1d (Initial commit)
 use App\Entity\Utilisateur;
 use App\Entity\Salle;
 use App\Entity\Reservation;
 
 use GuzzleHttp\Client;
+<<<<<<< HEAD
 
 use App\Form\SalleType;
 use App\Form\ReservationType;
 
+=======
+use App\Repository\SalleRepository;
+use App\Repository\ReservationRepository;
+use App\Form\SalleType;
+use App\Form\ReservationType;
+>>>>>>> 6ab9b1d (Initial commit)
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Knp\Component\Pager\PaginatorInterface;
+<<<<<<< HEAD
+=======
+use Symfony\Component\String\Slugger\SluggerInterface;
+
+>>>>>>> 6ab9b1d (Initial commit)
 use Symfony\Component\HttpFoundation\JsonResponse;
 
 #[Route('/salle')]
@@ -53,7 +70,10 @@ final class SalleController extends AbstractController
         ]);
     }
 
+<<<<<<< HEAD
    
+=======
+>>>>>>> 6ab9b1d (Initial commit)
     #[Route('/new', name: 'app_salle_new', methods: ['GET', 'POST'])]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -62,7 +82,11 @@ final class SalleController extends AbstractController
         
         if (!$user) {
             $this->addFlash('error', 'Vous devez être connecté pour ajouter une salle.');
+<<<<<<< HEAD
             return $this->redirectToRoute('app_login');
+=======
+            return $this->redirectToRoute('app_login'); 
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         $salle->setUser($user);
@@ -71,6 +95,7 @@ final class SalleController extends AbstractController
         
         if ($form->isSubmitted()) {
             if (!$form->isValid()) {
+<<<<<<< HEAD
                 // Les erreurs seront automatiquement passées au template
             }
             
@@ -78,6 +103,35 @@ final class SalleController extends AbstractController
                 // ... traitement du formulaire valide ...
                 $this->addFlash('success', 'La salle a été créée avec succès!');
                 return $this->redirectToRoute('app_profilsalle');
+=======
+                foreach ($form->getErrors(true) as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            } else {
+                $imageFile = $form->get('imageFile')->getData();
+                
+                if ($imageFile) {
+                    $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                        $salle->setImageSalle($newFilename);
+                    } catch (FileException $e) {
+                        $this->addFlash('error', 'Erreur lors de l\'upload de l\'image');
+                    }
+                }
+            
+                try {
+                    $entityManager->persist($salle);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'La salle a été créée avec succès!');
+                    return $this->redirectToRoute('app_profilsalle');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur base de données : '.$e->getMessage());
+                }
+>>>>>>> 6ab9b1d (Initial commit)
             }
         }
         
@@ -85,8 +139,12 @@ final class SalleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
+<<<<<<< HEAD
     
     
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[Route('/salle/{idSalle}', name: 'app_salle_show')]
     public function show(Salle $salle): Response
@@ -95,20 +153,43 @@ final class SalleController extends AbstractController
             'salle' => $salle,
         ]);
     }
+<<<<<<< HEAD
     #[Route('/salle/profil/{id}', name: 'app_salle_profil')]
     public function profil(SalleRepository $salleRepository, Request $request, EntityManagerInterface $entityManager, int $id): Response
     {
         $salle = $salleRepository->find($id);
+=======
+    #[Route('/salle/profil/{idSalle}', name: 'app_salle_profil')]
+    public function profil(
+        SalleRepository $salleRepository, 
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        int $idSalle
+    ): Response {
+        // Récupère TOUTES les salles de l'utilisateur connecté
+        $salles = $salleRepository->findBy(['user' => $this->getUser()]);
+        
+        // Récupère la salle spécifique pour l'édition
+        $salle = $salleRepository->find($idSalle);
+        
+>>>>>>> 6ab9b1d (Initial commit)
         if (!$salle) {
             throw $this->createNotFoundException('Salle non trouvée');
         }
     
+<<<<<<< HEAD
         // Créez le formulaire d'édition
+=======
+>>>>>>> 6ab9b1d (Initial commit)
         $editForm = $this->createForm(SalleType::class, $salle);
         $editForm->handleRequest($request);
     
         if ($editForm->isSubmitted() && $editForm->isValid()) {
+<<<<<<< HEAD
             // Gestion de l'upload de fichier
+=======
+            // Gestion de l'upload
+>>>>>>> 6ab9b1d (Initial commit)
             $imageFile = $editForm->get('imageFile')->getData();
             if ($imageFile) {
                 $newFilename = md5(uniqid()).'.'.$imageFile->guessExtension();
@@ -120,6 +201,7 @@ final class SalleController extends AbstractController
             }
     
             $entityManager->flush();
+<<<<<<< HEAD
             return $this->redirectToRoute('app_salle_profil', ['id' => $id]);
         }
     
@@ -133,10 +215,36 @@ final class SalleController extends AbstractController
     #[Route('/edit/{idSalle}', name: 'app_salle_edit', methods: ['GET', 'POST'])]
     public function edit(Request $request, Salle $salle, EntityManagerInterface $entityManager): Response
     {
+=======
+            return $this->redirectToRoute('app_salle_profil', ['idSalle' => $idSalle]);
+        }
+    
+        return $this->render('profilesalle/profilsalle.html.twig', [
+            'salles' => $salles, // Toutes les salles
+            'current_salle' => $salle, // Salle en cours d'édition
+            'edit_form' => $editForm->createView(),
+        ]);
+    }
+
+    #[Route('/edit/{idSalle}', name: 'app_salle_edit', methods: ['GET', 'POST'])]
+    public function edit(
+        Request $request,
+        Salle $salle,
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger
+    ): Response { {
+        $user = $this->getUser();
+        if (!$user || $user !== $salle->getUser()) {
+            $this->addFlash('error', 'Vous n\'avez pas les permissions nécessaires pour modifier cette salle.');
+            return $this->redirectToRoute('app_profilsalle');
+        }
+    
+>>>>>>> 6ab9b1d (Initial commit)
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
     
         if ($form->isSubmitted()) {
+<<<<<<< HEAD
             if ($form->isValid()) {
                 $imageFile = $form->get('imageFile')->getData();
                 
@@ -162,13 +270,76 @@ final class SalleController extends AbstractController
                 return $this->redirectToRoute('app_profilsalle');
             }
             
+=======
+            if (!$form->isValid()) {
+                foreach ($form->getErrors(true) as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            } else {
+                $imageFiles = $form->get('imageFile')->getData();
+    
+                if ($imageFiles && is_array($imageFiles)) {
+                    $uploadedImages = [];
+    
+                    foreach ($imageFiles as $imageFile) {
+                        if ($imageFile) {
+                            $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                            $safeFilename = $slugger->slug($originalFilename);
+                            $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+    
+                            try {
+                                $imageFile->move(
+                                    $this->getParameter('salles_directory'),
+                                    $newFilename
+                                );
+                                $uploadedImages[] = $newFilename;
+                            } catch (FileException $e) {
+                                $this->addFlash('error', 'Erreur lors de l\'upload d\'une image : '.$e->getMessage());
+                            }
+                        }
+                    }
+    
+                    if (!empty($uploadedImages)) {
+                        // Supprimer les anciennes images
+                        if ($salle->getImageSalle()) {
+                            $oldImages = explode(',', $salle->getImageSalle());
+                            foreach ($oldImages as $oldImage) {
+                                $oldImagePath = $this->getParameter('salles_directory') . '/' . $oldImage;
+                                if (file_exists($oldImagePath)) {
+                                    unlink($oldImagePath);
+                                }
+                            }
+                        }
+    
+                        $salle->setImageSalle(implode(',', $uploadedImages));
+                    }
+                }
+    
+                try {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'La salle a été modifiée avec succès !');
+                    return $this->redirectToRoute('app_profilsalle');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur base de données : '.$e->getMessage());
+                }
+            }
+>>>>>>> 6ab9b1d (Initial commit)
         }
     
         return $this->render('salle/edit_salle_modal.html.twig', [
             'form' => $form->createView(),
             'salle' => $salle
         ]);
+<<<<<<< HEAD
     }
+=======
+    } }
+    
+
+
+
+
+>>>>>>> 6ab9b1d (Initial commit)
 
     #[Route('/{idSalle}', name: 'app_salle_delete', methods: ['POST'])]
     public function delete(Request $request, Salle $salle): Response
@@ -180,6 +351,7 @@ final class SalleController extends AbstractController
 
         return $this->redirectToRoute('app_profilsalle', [], Response::HTTP_SEE_OTHER);
     }
+<<<<<<< HEAD
  
     #[Route('/detailsalle/{idSalle}', name: 'details_salle')]
 public function detailsSalle(Salle $salle, EntityManagerInterface $entityManager): Response
@@ -210,6 +382,58 @@ public function detailsSalle(Salle $salle, EntityManagerInterface $entityManager
         'dateReservation' => $reservations ? $reservations[0]->getDateDebut() : null // Assurer que dateReservation existe
     ]);
 }
+=======
+
+
+
+    
+ 
+    #[Route('/detailsalle/{idSalle}', name: 'details_salle')]
+    public function detailsSalle(Salle $salle, EntityManagerInterface $entityManager): Response
+    {
+        $reservations = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->leftJoin('r.user', 'u')
+            ->where('r.salle = :salle')
+            ->setParameter('salle', $salle)
+            ->orderBy('r.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    
+        $events = [];
+        foreach ($reservations as $reservation) {
+            $events[] = [
+                'title' => 'Réservé par ' . $reservation->getUser()->getNom() . ' ' . $reservation->getUser()->getPrenom(),
+                'start' => $reservation->getDateDebut()->format('Y-m-d\TH:i:s'),
+                'end' => $reservation->getDateFin()->format('Y-m-d\TH:i:s'),
+                'color' => '#ff0000',
+                'extendedProps' => [
+                    'reservationId' => $reservation->getIdReservation(),
+                    'userEmail' => $reservation->getUser()->getEmail(),
+                ]
+            ];
+        }
+    
+        $stats = [
+            'totalReservations' => count($reservations),
+            'reservationsThisMonth' => count(array_filter($reservations, function($r) {
+                return $r->getDateDebut() >= new \DateTime('first day of this month');
+            })),
+            'upcomingReservations' => count(array_filter($reservations, function($r) {
+                return $r->getDateDebut() >= new \DateTime();
+            }))
+        ];
+    
+        return $this->render('salle/detailsalle.html.twig', [
+            'salle' => $salle,
+            'events' => json_encode($events),
+            'reservations' => $reservations,
+            'stats' => $stats,
+            'currentDate' => new \DateTime()
+        ]);
+    }
+    
+>>>>>>> 6ab9b1d (Initial commit)
 
     private function getCoordinatesFromAddress(string $adresse): array
     {
@@ -265,5 +489,70 @@ public function showReservation(Reservation $reservation = null): Response
 }
 
 
+<<<<<<< HEAD
+=======
+
+
+
+#[Route('/salles/search', name: 'app_salle_search', methods: ['GET'])]
+public function search(Request $request, SalleRepository $salleRepository, ReservationRepository $reservationRepository, PaginatorInterface $paginator): Response
+{
+    // Créer la requête de base
+    $query = $salleRepository->createQueryBuilder('s');
+
+    // Filtre par localisation
+    if ($location = $request->query->get('location')) {
+        $query->andWhere('s.locationSalle LIKE :location')
+             ->setParameter('location', '%'.$location.'%');
+    }
+
+    // Filtre par date de début (vérification des réservations)
+    if ($dateStart = $request->query->get('date_start')) {
+        $dateStartObj = new \DateTime($dateStart);
+        
+        // Sous-requête pour trouver les salles non réservées à cette date
+        $subQuery = $reservationRepository->createQueryBuilder('r')
+            ->select('IDENTITY(r.salle)')
+            ->where(':date BETWEEN r.dateDebut AND r.dateFin')
+            ->getDQL();
+
+        $query->andWhere($query->expr()->notIn('s.idSalle', $subQuery))
+             ->setParameter('date', $dateStartObj);
+    }
+
+    // Filtre par capacité
+    if ($capacity = $request->query->get('capacity')) {
+        $query->andWhere('s.capacite >= :capacity')
+             ->setParameter('capacity', $capacity);
+    }
+
+    // Filtre par prix maximum
+    if ($maxPrice = $request->query->get('max_price')) {
+        $query->andWhere('s.prix <= :maxPrice')
+             ->setParameter('maxPrice', $maxPrice);
+    }
+
+    // Exécuter la requête
+    $query = $query->getQuery();
+    
+    $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1),
+        4
+    );
+
+    // Gestion de la réponse AJAX
+    if ($request->isXmlHttpRequest()) {
+        return $this->render('salle/_search_results.html.twig', [
+            'pagination' => $pagination,
+        ]);
+    }
+
+    return $this->render('salle/sallehome.html.twig', [
+        'pagination' => $pagination,
+    ]);
+}
+
+>>>>>>> 6ab9b1d (Initial commit)
 }
     

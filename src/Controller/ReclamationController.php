@@ -20,7 +20,11 @@ class ReclamationController extends AbstractController
     {
         $reclamations = $entityManager
             ->getRepository(Reclamation::class)
+<<<<<<< HEAD
             ->findBy(['user' => $this->getUser()], ['createdAt' => 'DESC']);
+=======
+            ->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
+>>>>>>> 6ab9b1d (Initial commit)
 
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamations,
@@ -32,16 +36,32 @@ class ReclamationController extends AbstractController
     {
         $reclamation = new Reclamation();
         $reclamation->setUser($this->getUser());
+<<<<<<< HEAD
+=======
+        $reclamation->setDate(new \DateTime());
+        $reclamation->setStatut('pending');
+>>>>>>> 6ab9b1d (Initial commit)
         
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+<<<<<<< HEAD
             $entityManager->persist($reclamation);
             $entityManager->flush();
 
             $this->addFlash('success', 'Your complaint has been submitted successfully.');
             return $this->redirectToRoute('app_reclamation_index');
+=======
+            try {
+                $entityManager->persist($reclamation);
+                $entityManager->flush();
+                $this->addFlash('success', 'Your complaint has been submitted successfully.');
+                return $this->redirectToRoute('app_reclamation_index');
+            } catch (\Exception $e) {
+                $this->addFlash('error', 'An error occurred: ' . $e->getMessage());
+            }
+>>>>>>> 6ab9b1d (Initial commit)
         }
 
         return $this->render('reclamation/new.html.twig', [

@@ -2,6 +2,10 @@
 
 namespace App\Form;
 
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
 use App\Entity\Salle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -9,6 +13,11 @@ use Symfony\Component\Form\Extension\Core\Type\IntegerType;
 use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
+<<<<<<< HEAD
+=======
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+>>>>>>> 6ab9b1d (Initial commit)
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -43,17 +52,40 @@ class SalleType extends AbstractType
                 'mapped' => false,
                 'required' => false,
                 'attr' => ['class' => 'form-control'],
+<<<<<<< HEAD
               
+=======
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                    ])
+                ],
+>>>>>>> 6ab9b1d (Initial commit)
             ])
             ->add('locationSalle', TextType::class, [
                 'label' => 'Localisation',
                 'attr' => ['class' => 'form-control'],
              
             ])
+<<<<<<< HEAD
             ->add('qualite', TextType::class, [
                 'label' => 'Qualité',
                 'attr' => ['class' => 'form-control'],
                 'required' => false
+=======
+            ->add('qualite', ChoiceType::class, [
+                'label' => 'Qualité',
+                'choices' => [
+                    'Bien' => 'Bien', 
+                    'Très bien' => 'Très bien',
+                    'Superbe' => 'Superbe',
+                    'Exceptionnelle' => 'Exceptionnelle'
+                ],
+                'attr' => ['class' => 'form-control'],
+                'required' => false,
+                'placeholder' => 'Sélectionnez une qualité...'
+>>>>>>> 6ab9b1d (Initial commit)
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix (€)',
@@ -70,4 +102,8 @@ class SalleType extends AbstractType
             'data_class' => Salle::class,
         ]);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)

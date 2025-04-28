@@ -5,6 +5,13 @@
 {% block stylesheets %}
     {{ parent() }}
     <style>
+<<<<<<< HEAD
+=======
+
+
+
+    
+>>>>>>> 6ab9b1d (Initial commit)
         :root {
             --primary-color: #8D598F;
             --secondary-color: #CBA979;
@@ -13,8 +20,19 @@
         }
         
         body {
+<<<<<<< HEAD
             background-color: #f5f7fa;
             font-family: 'Segoe UI', Roboto, sans-serif;
+=======
+            background-image: url('/images/offre.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
         .hero-cover {
@@ -70,8 +88,12 @@
         }
         
         .reservation-card {
+<<<<<<< HEAD
             background: white;
             border-radius: 12px;
+=======
+            background: #ffffff94;
+>>>>>>> 6ab9b1d (Initial commit)
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
             overflow: hidden;
             margin-bottom: 2rem;
@@ -151,6 +173,7 @@
         }
         
         .btn-edit {
+<<<<<<< HEAD
                border-radius: 0;
     width: 100%;
     background: var(--secondary-color);
@@ -161,6 +184,22 @@
         .btn-edit:hover {
             background: #b8935a;
             color: white;
+=======
+                margin: 31px;
+          width: 100%;
+            border-color: #8D598F;
+            color: #8D598F;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s;
+        }
+        
+        .btn-edit:hover {
+               color: #FFF;
+            background-color: #6d4470;
+            border-color: #6d4470;
+>>>>>>> 6ab9b1d (Initial commit)
         }
         
      
@@ -234,20 +273,46 @@
             .action-buttons, .hero-cover {
                 display: none;
             }
+<<<<<<< HEAD
         }
 
+=======
+
+        }
+
+        .btn-pdf {
+    background: #e74c3c;
+    color: white;
+    margin-left: 15px;
+}
+
+.btn-pdf:hover {
+    background: #c0392b;
+    color: white;
+}
+
+>>>>>>> 6ab9b1d (Initial commit)
     </style>
 {% endblock %}
 
 {% block body %}
 <div class="hero-cover">
     {% if reservation.salle.imageSalle %}
+<<<<<<< HEAD
         {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
         {% set filename = firstPath | split('/') | last | split('\\') | last %}
         <img src="{{ asset('/images/' ~ filename) }}" class="hero-image" alt="{{ reservation.salle.nomSalle }}">
     {% else %}
         <img src="{{ asset('images/default-salle.jpg') }}" class="hero-image" alt="Salle par défaut">
     {% endif %}
+=======
+            <div class="room-image-container">
+                {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                <div class="room-image-bg" style="background-image: url('/images/{{ filename | url_encode }}');"></div>
+            </div>
+        {% endif %}
+>>>>>>> 6ab9b1d (Initial commit)
     
     <div class="hero-overlay">
         <div>
@@ -257,6 +322,12 @@
                 <button onclick="window.print()" class="btn btn-print">
                     <i class="fas fa-print"></i> Imprimer
                 </button>
+<<<<<<< HEAD
+=======
+                  <a href="{{ path('app_reservation_pdf', {'idReservation': reservation.idReservation}) }}" class="btn btn-pdf">
+        <i class="fas fa-file-pdf"></i> Télécharger PDF
+    </a>
+>>>>>>> 6ab9b1d (Initial commit)
             </div>
         </div>
     </div>
@@ -328,12 +399,19 @@
                 </div>
             </div>
         </div>
+<<<<<<< HEAD
     </div>
 
     <div class="action-buttons">
         <a href="{{ path('app_all_reservations') }}" class="btn btn-back">
             <i class="fas fa-arrow-left"></i> Retour
         </a>
+=======
+   
+
+    <div class="action-buttons">
+       
+>>>>>>> 6ab9b1d (Initial commit)
         <a href="{{ path('app_reservation_edit', {'idReservation': reservation.idReservation}) }}" 
            class="btn btn-edit">
             <i class="fas fa-edit"></i> Modifier
@@ -344,5 +422,9 @@
            
         </form>
     </div>
+<<<<<<< HEAD
+=======
+     </div>
+>>>>>>> 6ab9b1d (Initial commit)
 </div>
 {% endblock %}
