@@ -1,0 +1,365 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Détails de la salle {{ salle.nomSalle }} | Admin{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+<style>
+    /* Styles personnalisés pour le calendrier */
+    .calendar-container {
+        background: white;
+        border-radius: 8px;
+        box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        padding: 20px;
+        margin-bottom: 20px;
+    }
+    
+    #calendar {
+        margin-top: 15px;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        min-height: 500px; /* Hauteur minimum garantie */
+    }
+    
+    .fc-header-toolbar {
+        margin-bottom: 1em;
+    }
+    
+    .fc-event {
+        cursor: pointer;
+        font-size: 0.85em;
+        padding: 2px 5px;
+    }
+    
+    .fc-daygrid-event-dot {
+        display: none;
+    }
+    
+    .no-reservation {
+        text-align: center;
+        padding: 40px;
+        color: #6c757d;
+        font-style: italic;
+    }
+    
+    .stats-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 15px;
+    }
+    
+    .stat-item {
+        background: #f8f9fa;
+        border-radius: 8px;
+        padding: 15px;
+        text-align: center;
+    }
+    
+    .stat-value {
+        font-size: 24px;
+        font-weight: bold;
+        color: #3498db;
+    }
+    
+    .stat-label {
+        color: #6c757d;
+        font-size: 14px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="admin-title mb-0">Détails de la salle : {{ salle.nomSalle }}</h1>
+        <small class="text-muted">Gestion des réservations et disponibilités</small>
+    </div>
+    <a href="{{ path('app_admin_salles_full') }}" class="btn btn-outline-secondary">
+        <i class="fas fa-arrow-left me-2"></i>Retour à la liste
+    </a>
+</div>
+
+<div class="row">
+    <!-- Section Informations de base -->
+    <div class="col-lg-4">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-primary text-white">
+                <h5 class="mb-0"><i class="fas fa-info-circle me-2"></i>Informations générales</h5>
+            </div>
+            <div class="card-body">
+                       {% set firstPath = salle.imageSalle | split(',') | first %}
+
+        {# Garde seulement le nom du fichier, enlève tout le chemin #}
+        {% set filename = firstPath | split('/') | last | split('\\') | last %}
+
+        {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
+        <div class="hero-wrap" style="background-image: url('/images/{{ filename | url_encode }}');">
+
+                </div>
+                
+                <ul class="list-group list-group-flush">
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span><i class="fas fa-users me-2 text-muted"></i> <strong>Capacité</strong></span>
+                        <span class="badge bg-primary rounded-pill">{{ salle.capacite }} personnes</span>
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-map-marker-alt me-2 text-muted"></i> 
+                        <strong>Localisation :</strong> {{ salle.locationSalle }}
+                    </li>
+                    <li class="list-group-item">
+                        <i class="fas fa-tools me-2 text-muted"></i>
+                        <strong>Équipements :</strong> {{ salle.equipement }}
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="fas fa-star me-2 text-muted"></i>
+                            <strong>Qualité</strong>
+                        </span>
+                        <span class="badge bg-{{ salle.qualite == 'luxe' ? 'purple' : (salle.qualite == 'premium' ? 'primary' : 'secondary') }} rounded-pill">
+                            {{ salle.qualite|capitalize }}
+                        </span>
+                    </li>
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                        <span>
+                            <i class="fas fa-tag me-2 text-muted"></i>
+                            <strong>Prix</strong>
+                        </span>
+                        <span class="text-success fw-bold">{{ salle.prix }} DT</span>
+                    </li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Statistiques -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-info text-white">
+                <h5 class="mb-0"><i class="fas fa-chart-bar me-2"></i>Statistiques</h5>
+            </div>
+            <div class="card-body">
+                <div class="stats-grid">
+                    <div class="stat-item shadow-sm">
+                        <div class="stat-value">{{ stats.totalReservations }}</div>
+                        <div class="stat-label">Total réservations</div>
+                    </div>
+                    <div class="stat-item shadow-sm">
+                        <div class="stat-value">{{ stats.reservationsThisMonth }}</div>
+                        <div class="stat-label">Ce mois-ci</div>
+                    </div>
+                    <div class="stat-item shadow-sm">
+                        <div class="stat-value">{{ stats.upcomingReservations }}</div>
+                        <div class="stat-label">À venir</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Section Calendrier et Réservations -->
+    <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+            <div class="card-header bg-success text-white">
+                <h5 class="mb-0"><i class="fas fa-calendar-alt me-2"></i>Calendrier des réservations</h5>
+            </div>
+            <div class="card-body">
+                <div class="calendar-container">
+                   <div class="calendar-container">
+                                    <h2>Disponibilité</h2>
+                                    <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
+                                    
+                                    {% if events is not empty %}
+                                        <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+                                        <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+
+                                        <script>
+                                        document.addEventListener('DOMContentLoaded', function() {
+                                            var calendarEl = document.getElementById('calendar');
+                                            var calendar = new FullCalendar.Calendar(calendarEl, {
+                                                initialView: 'dayGridMonth',
+                                                locale: 'fr',
+                                                headerToolbar: {
+                                                    left: 'prev,next today',
+                                                    center: 'title',
+                                                    right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                                                },
+                                                events: {{ events|raw }},
+                                                selectable: true,
+                                                select: function(info) {
+                                                    // Optional: add select handler
+                                                }
+                                            });
+                                            calendar.render();
+                                        });
+                                        </script>
+                                    {% else %}
+                                        <div class="no-reservation">
+                                            <p>Aucune réservation n'a encore été effectuée pour cette salle.</p>
+                                        </div>
+                                    {% endif %}
+                                </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Liste des réservations -->
+        <div class="card shadow-sm">
+            <div class="card-header bg-warning text-dark">
+                <div class="d-flex justify-content-between align-items-center">
+                    <h5 class="mb-0"><i class="fas fa-list me-2"></i>Dernières réservations</h5>
+                    <a href="#" class="btn btn-sm btn-outline-dark">
+                        <i class="fas fa-expand me-1"></i> Voir toutes
+                    </a>
+                </div>
+            </div>
+            <div class="card-body p-0">
+                <div class="table-responsive">
+                    <table class="table table-hover mb-0">
+                        <thead class="table-light">
+                            <tr>
+                                <th><i class="fas fa-user me-1"></i> Client</th>
+                                <th><i class="fas fa-calendar-day me-1"></i> Date</th>
+                                <th><i class="fas fa-clock me-1"></i> Heure</th>
+                                <th class="text-end">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for reservation in reservations|slice(0, 5) %}
+                            <tr>
+                                <td>
+                                    <div class="d-flex align-items-center">
+                                        <div class="avatar me-2">
+                                            <span class="bg-primary rounded-circle text-white d-flex align-items-center justify-content-center" style="width: 32px; height: 32px;">
+                                                {{ reservation.user.nom|first|upper }}{{ reservation.user.prenom|first|upper }}
+                                            </span>
+                                        </div>
+                                        <div>
+                                            {{ reservation.user.nom }} {{ reservation.user.prenom }}
+                                            <div class="text-muted small">{{ reservation.user.email }}</div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td>{{ reservation.dateDebut|date('d/m/Y') }}</td>
+                                <td>
+                                    <span class="badge bg-light text-dark">
+                                        {{ reservation.dateDebut|date('H:i') }} - {{ reservation.dateFin|date('H:i') }}
+                                    </span>
+                                </td>
+                                <td class="text-end">
+                                    <button class="btn btn-sm btn-outline-primary" data-bs-toggle="tooltip" title="Voir détails">
+                                        <i class="fas fa-eye"></i>
+                                    </button>
+                                </td>
+                            </tr>
+                            {% else %}
+                            <tr>
+                                <td colspan="4" class="text-center py-4 text-muted">
+                                    <i class="far fa-calendar-times fa-2x mb-2"></i>
+                                    <p class="mb-0">Aucune réservation trouvée</p>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Modal pour les détails de réservation -->
+<div class="modal fade" id="reservationModal" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header bg-primary text-white">
+                <h5 class="modal-title" id="modalTitle">Détails de la réservation</h5>
+                <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body" id="modalBody">
+                <!-- Contenu dynamique -->
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Fermer</button>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+{% if events is not empty %}
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+<script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    console.log("Initialisation du calendrier...");
+    console.log("Événements à afficher :", {{ events|raw }});
+
+    var calendarEl = document.getElementById('calendar');
+    if (!calendarEl) {
+        console.error("L'élément #calendar n'existe pas dans le DOM");
+        return;
+    }
+
+    try {
+        var calendar = new FullCalendar.Calendar(calendarEl, {
+            initialView: 'dayGridMonth',
+            locale: 'fr',
+            headerToolbar: {
+                left: 'prev,next today',
+                center: 'title',
+                right: 'dayGridMonth,timeGridWeek,timeGridDay'
+            },
+            events: {{ events|raw }},
+            eventColor: '#dc3545',
+            eventDisplay: 'block',
+            eventTimeFormat: {
+                hour: '2-digit',
+                minute: '2-digit',
+                hour12: false
+            },
+            eventDidMount: function(info) {
+                // Ajout d'un tooltip sur les événements
+                new bootstrap.Tooltip(info.el, {
+                    title: info.event.title,
+                    placement: 'top',
+                    trigger: 'hover',
+                    container: 'body'
+                });
+            },
+            eventClick: function(info) {
+                // Affichage des détails dans une modal
+                const modal = new bootstrap.Modal(document.getElementById('reservationModal'));
+                document.getElementById('modalTitle').innerText = info.event.title;
+                document.getElementById('modalBody').innerHTML = `
+                    <p><strong>Date:</strong> ${info.event.start.toLocaleDateString('fr-FR')}</p>
+                    <p><strong>Heure:</strong> ${info.event.start.toLocaleTimeString('fr-FR')} - ${info.event.end.toLocaleTimeString('fr-FR')}</p>
+                    <p><strong>Email:</strong> ${info.event.extendedProps.userEmail}</p>
+                    <p><strong>ID Réservation:</strong> ${info.event.extendedProps.reservationId}</p>
+                `;
+                modal.show();
+                
+                // Empêche le comportement par défaut
+                info.jsEvent.preventDefault();
+            },
+            height: 'auto',
+            navLinks: true,
+            nowIndicator: true,
+            editable: false
+        });
+        
+        calendar.render();
+        console.log("Calendrier rendu avec succès");
+    } catch (error) {
+        console.error("Erreur lors de l'initialisation du calendrier:", error);
+    }
+
+    // Initialisation des tooltips Bootstrap
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+});
+</script>
+{% endif %}
+{% endblock %}

@@ -1,0 +1,177 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Connexion Admin - EventCraft{% endblock %}
+
+{% block navbar %}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        body {
+            background: linear-gradient(135deg, #1a1c2c 0%, #2c3e50 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-auth-container {
+            width: 100%;
+            padding: 15px;
+        }
+
+        .login-container {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 2.5rem;
+            border-radius: 15px;
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(10px);
+            margin-top: 0;
+        }
+
+        .admin-logo {
+            text-align: center;
+            margin-bottom: 2rem;
+        }
+
+        .admin-logo i {
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 1rem;
+        }
+
+        .admin-title {
+            color: #1a1c2c;
+            font-weight: 700;
+            margin-bottom: 0.5rem;
+        }
+
+        .admin-subtitle {
+            color: #6b7280;
+            font-size: 0.95rem;
+            margin-bottom: 2rem;
+        }
+
+        .form-floating {
+            margin-bottom: 1.5rem;
+        }
+
+        .form-control {
+            border: 2px solid #e5e7eb;
+            padding: 0.75rem 1rem;
+            height: 3.5rem;
+            font-size: 1rem;
+            border-radius: 10px;
+            transition: all 0.3s ease;
+        }
+
+        .form-control:focus {
+            border-color: #3b82f6;
+            box-shadow: 0 0 0 4px rgba(59, 130, 246, 0.1);
+        }
+
+        .form-floating > label {
+            padding: 1rem;
+        }
+
+        .btn-admin-primary {
+            background: linear-gradient(135deg, #3b82f6 0%, #8b5cf6 100%);
+            border: none;
+            color: white;
+            padding: 1rem;
+            font-weight: 600;
+            border-radius: 10px;
+            width: 100%;
+            font-size: 1rem;
+            transition: all 0.3s ease;
+        }
+
+        .btn-admin-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(59, 130, 246, 0.3);
+        }
+
+        .alert {
+            border: none;
+            border-radius: 10px;
+            padding: 1rem;
+            margin-bottom: 2rem;
+        }
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #991b1b;
+        }
+
+        .admin-footer {
+            text-align: center;
+            margin-top: 2rem;
+        }
+
+        .admin-footer a {
+            color: #3b82f6;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s ease;
+        }
+
+        .admin-footer a:hover {
+            color: #8b5cf6;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="admin-auth-container">
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-6 col-lg-5">
+                <div class="login-container">
+                    <div class="admin-logo">
+                        <i class="fas fa-shield-alt"></i>
+                    </div>
+                    
+                    <div class="text-center">
+                        <h1 class="admin-title">Administration EventCraft</h1>
+                        <p class="admin-subtitle">Connectez-vous pour accéder au tableau de bord</p>
+                    </div>
+
+                    <form method="post">
+                        {% if error %}
+                            <div class="alert alert-danger">
+                                <i class="fas fa-exclamation-circle me-2"></i>
+                                {{ error.messageKey|trans(error.messageData, 'security') }}
+                            </div>
+                        {% endif %}
+
+                        <div class="form-floating">
+                            <input type="email" value="{{ last_username }}" name="email" id="inputEmail" class="form-control" placeholder="Email" required autofocus>
+                            <label for="inputEmail"><i class="fas fa-envelope me-2"></i>Email</label>
+                        </div>
+
+                        <div class="form-floating">
+                            <input type="password" name="password" id="inputPassword" class="form-control" placeholder="Mot de passe" required>
+                            <label for="inputPassword"><i class="fas fa-lock me-2"></i>Mot de passe</label>
+                        </div>
+
+                        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
+
+                        <button class="btn btn-admin-primary" type="submit">
+                            <i class="fas fa-sign-in-alt me-2"></i>Se connecter
+                        </button>
+                    </form>
+
+                    <div class="admin-footer">
+                        <p>Vous n'avez pas de compte administrateur ?</p>
+                        <a href="{{ path('app_admin_register') }}">
+                            <i class="fas fa-user-plus me-1"></i>
+                            Créer un compte administrateur
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

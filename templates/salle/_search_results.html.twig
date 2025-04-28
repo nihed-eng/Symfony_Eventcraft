@@ -1,0 +1,44 @@
+<section class="home-room spad" style="margin-top: 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>A LA UNE</h5>
+                    <h2>EXPLORER NOS SALLES</h2>
+                </div>
+            </div>
+        </div>
+    </div>           
+
+    <div class="container-fluid">
+        <div class="d-flex justify-content-end mb-4 gap-3">
+            <a href="{{ path('app_salle_new') }}" class="btn" style="background-color: rgb(161, 104, 163); border-color: rgb(161, 104, 163); color: white;">
+                 Ajouter une Salle
+            </a>
+        </div>
+   <div class="row">
+    {% for salle in pagination %}
+        <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+            {% if salle.imageSalle %}
+                {% set firstPath = salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                <div class="home__room__item set-bg" style="background-image: url('/images/{{ filename | url_encode }}');">
+            {% else %}
+                <div class="home__room__item">
+                    <p>Aucune image disponible</p>
+            {% endif %}
+                <div class="home__room__title">
+                    <h4>{{ salle.nomSalle }}</h4>
+                    <h2><sup>DT</sup>{{ salle.prix }}<span>/jour</span></h2>
+                </div>
+                <a href="{{ path('details_salle', {'idSalle': salle.idSalle}) }}" class="btn btn-outline-light">CONSULTER MAINTENANT</a>
+            </div>
+        </div>
+    {% endfor %}
+</div>
+
+<!-- Pagination -->
+<div class="d-flex justify-content-center mt-4">
+    {{ knp_pagination_render(pagination) }}
+</div>
+</section>
