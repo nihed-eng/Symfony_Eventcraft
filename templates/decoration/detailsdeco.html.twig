@@ -1,0 +1,136 @@
+{% extends 'baseoffre.html.twig' %}
+
+{% block title %}Détails de la Décoration{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <style>
+        body {
+            font-family: 'Roboto', sans-serif;
+            background: #f8f9fa;
+        }
+
+        .p-4 {
+            margin-bottom: -35px;
+        }
+
+        .hero-wrap {
+            background-size: cover;
+            background-position: center center;
+            height: 400px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-align: center;
+        }
+
+        .hero-wrap .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 58%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .hero-wrap h1 {
+            font-size: 3rem;
+            font-weight: 700;
+        }
+
+        .breadcrumbs a {
+            color: white;
+        }
+
+        .ftco-section {
+            padding: 50px 0;
+        }
+
+        .btn-primary {
+            --bs-btn-color: #fff;
+            --bs-btn-bg: #CBA979;
+            border-radius: 0;
+            border: 1px;
+        }
+
+        .btn-primary:hover {
+            --bs-btn-color: #fff;
+            background-color: #98A695;
+            border-radius: 0;
+            color: #FFF;
+        }
+
+        .btn-custom, .btn-delete {
+            padding: 5px 10px;
+            text-decoration: none;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            margin: 4px;
+            justify-content: center;
+            background-color: rgb(161, 104, 163);
+        }
+
+        .btn-custom:hover, .btn-delete:hover {
+            background-color: #F0C8C6;
+        }
+
+        .sidebar-box {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        a {
+            color: #6c757d;
+            text-decoration: none;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    {% if decoration.imagedeco %}
+        {% set filename = decoration.imagedeco | split('/') | last | split('\\') | last %}
+        <div class="hero-wrap" style="background-image: url('/images/{{ filename | url_encode }}');">
+    {% else %}
+        <div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
+    {% endif %}
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+                <div class="col-md-12 ftco-animate text-center mb-5">
+                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Décorations <i class="ion-ios-arrow-forward"></i></a></span> <span>Détails</span></p>
+                    <h1 class="mb-3 bread">Détails de la Décoration</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="container">
+        <section class="ftco-section bg-light">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-9 pr-lg-4">
+                        <div class="details-section">
+                            <div class="info-box">
+                                <h2>{{ decoration.nomDecor }}</h2>
+                                <p><strong>Type :</strong> {{ decoration.typeDecor }}</p>
+                                <p><strong>Description :</strong> {{ decoration.descriptionDecor }}</p>
+                                <p><strong>Stock disponible :</strong> {{ decoration.stock }}</p>
+                                <p><strong>Prix :</strong> {{ decoration.prix }} DT</p>
+
+<a href="{{ path('app_commande_decoration_new', { idDecoration: decoration.idDecor }) }}">Commander</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </div>
+{% endblock %}

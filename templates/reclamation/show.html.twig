@@ -1,0 +1,164 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Complaint Details{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        .reclamation-details {
+            background: #ffffff;
+            border-radius: var(--border-radius);
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            padding: 2rem;
+        }
+
+        .status-badge {
+            padding: 0.35rem 0.75rem;
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 500;
+        }
+
+        .status-pending {
+            background-color: var(--primary-subtle);
+            color: var(--primary);
+        }
+
+        .status-resolved {
+            background-color: #dcfce7;
+            color: #16a34a;
+        }
+
+        .btn-back {
+            color: #6c757d;
+            transition: var(--transition);
+        }
+
+        .btn-back:hover {
+            color: var(--primary);
+            transform: translateY(-2px);
+        }
+
+        .description-box {
+            background-color: #f8f9fa;
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1rem;
+        }
+
+        .response-card {
+            background-color: var(--primary-subtle);
+            border-left: 4px solid var(--primary);
+            border-radius: var(--border-radius);
+            padding: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .response-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1rem;
+            padding-bottom: 0.75rem;
+            border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .admin-info {
+            display: flex;
+            align-items: center;
+        }
+
+        .admin-avatar {
+            width: 32px;
+            height: 32px;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            margin-right: 0.75rem;
+        }
+
+        .response-content {
+            color: var(--primary);
+            line-height: 1.6;
+        }
+
+        .text-muted {
+            color: #6c757d !important;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-8">
+                <div class="d-flex align-items-center mb-4">
+                    <a href="{{ path('app_reclamation_index') }}" class="btn btn-link btn-back me-3">
+                        <i class="fas fa-arrow-left me-2"></i>Back to Complaints
+                    </a>
+                    <h1 class="h2 mb-0">Complaint Details</h1>
+                </div>
+
+                <div class="reclamation-details">
+                    <div class="d-flex justify-content-between align-items-start mb-4">
+                        <div>
+                            <h3 class="h4 mb-2">{{ reclamation.titre }}</h3>
+                            <p class="text-muted mb-0">
+                                <i class="far fa-clock me-2"></i>
+                                Soumis le {{ reclamation.date|date('d/m/Y H:i') }}
+                            </p>
+                        </div>
+                        <span class="status-badge {% if reclamation.statut == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
+                            {% if reclamation.statut == 'resolved' %}
+                                Résolu
+                            {% else %}
+                                En attente
+                            {% endif %}
+                        </span>
+                    </div>
+
+                    <div class="mb-4">
+                        <h4 class="h5 mb-3">Description</h4>
+                        <div class="description-box">
+                            {{ reclamation.description|nl2br }}
+                        </div>
+                    </div>
+
+                    {% if reclamation.response %}
+                        <div class="response-section">
+                            <h4 class="h5 mb-3">Réponse de l'administrateur</h4>
+                            <div class="admin-response">
+                                <div class="response-header">
+                                    <div class="admin-info">
+                                        <span class="admin-avatar">
+                                            <i class="fas fa-user-shield"></i>
+                                        </span>
+                                        <div class="admin-details">
+                                            <h6 class="mb-0">Réponse de l'administrateur</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="response-content">
+                                    {{ reclamation.response.contenu|nl2br }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif reclamation.statut == 'resolved' %}
+                        <div class="alert alert-success">
+                            <i class="fas fa-check-circle me-2"></i>
+                            Cette réclamation a été résolue. Merci de votre patience !
+                        </div>
+                    {% else %}
+                        <div class="alert alert-info">
+                            <i class="fas fa-info-circle me-2"></i>
+                            Votre réclamation est en cours d'examen. Nous vous tiendrons informé dès qu'elle sera résolue.
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

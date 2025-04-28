@@ -1,0 +1,4 @@
+<form action="{{ path('app_demande_delete', {'idDemande': demande.idDemande}) }}" method="POST">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ demande.idDemande) }}">
+    <button type="submit" class="btn btn-danger">Delete</button>
+</form>

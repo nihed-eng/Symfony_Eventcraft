@@ -1,0 +1,121 @@
+{% extends 'basetemp.html.twig' %}
+
+{% block title %}Event Craft - Demandes{% endblock %}
+
+{% block body %}
+<style>
+    .btn-purple-custom {
+        background-color: rgb(161, 104, 163);
+        border-color: rgb(161, 104, 163);
+        color: white;
+    }
+    
+    .btn-purple-custom:hover {
+        background-color: rgb(140, 90, 142);
+        border-color: rgb(140, 90, 142);
+        color: white;
+    }
+</style>
+<!-- Hero Section -->
+<section class="hero spad">
+    <div class="overlay"></div>
+    <div class="hero__slider owl-carousel">
+        <div class="hero__item" style="background-image: url('/images/slider3.jpg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider2.jpeg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider1.jpg');"></div>
+    </div>
+    <div class="container">
+        <div class="hero__text">
+            <h5>WELCOME HIROTO</h5>
+            <h2>Gestion des demandes</h2>
+        </div>
+    </div>
+</section>
+
+<!-- Demandes Section -->
+<section class="home-room spad" style="margin-top: 70px;">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>LISTE</h5>
+                    <h2>VOS DEMANDES</h2>
+                </div>
+            </div>
+        </div>
+    </div>           
+
+    <div class="container-fluid">
+        <!-- Boutons d'action -->
+        <div class="d-flex justify-content-end mb-4 gap-3">
+            <a href="{{ path('app_offre_index') }}" class="btn btn-purple-custom">
+                <i class="fas fa-arrow-left"></i> Retour aux offres
+            </a>
+            {# Removed generic Nouvelle Demande button because it requires offreId #}
+        </div>
+
+        <div class="row">
+            {% for demande in demandes %}
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    <div class="home__room__item set-bg" style="background-image: url('/images/mariage.jpeg');">
+                        <div class="home__room__title">
+                            <h4>{{ demande.nom }}</h4>
+                            <p>{{ demande.description|length > 50 ? demande.description|slice(0, 50) ~ '...' : demande.description }}</p>
+                            <p class="expiry-date">
+                                <span class="badge 
+                                    {% if demande.statutDemande == 'En attente' %}bg-warning
+                                    {% elseif demande.statutDemande == 'Acceptée' %}bg-success
+                                    {% else %}bg-danger{% endif %}">
+                                    {{ demande.statutDemande }}
+                                </span>
+                                {{ demande.dateDemande|date('d/m/Y') }}
+                            </p>
+                        </div>
+                        <div class="d-flex justify-content-between p-3">
+                            <a href="{{ path('app_demande_show', {'idDemande': demande.idDemande}) }}" class="btn btn-outline-light">DÉTAILS</a>
+                        </div>
+                    </div>
+                </div>
+            {% else %}
+                <div class="col-12 text-center py-5">
+                    <p class="text-muted">Aucune demande disponible pour le moment</p>
+                    <div class="d-flex justify-content-center gap-3">
+                        <a href="{{ path('app_offre_index') }}" class="btn btn-purple-custom">
+                            <i class="fas fa-arrow-left"></i> Retour aux offres
+                        </a>
+                    </div>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+</section>
+
+<!-- JavaScript -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/owl.carousel.min.js"></script>
+<script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+<script>
+    $(document).ready(function() {
+        $(".hero__slider").owlCarousel({
+            loop: true,
+            margin: 0,
+            nav: false,
+            dots: true,
+            items: 1,
+            autoplay: true,
+            autoplayTimeout: 3000,
+            autoplayHoverPause: true,
+            smartSpeed: 1000
+        });
+    });
+
+    window.addEventListener('scroll', function () {
+        const header = document.querySelector('.header__content');
+        if (window.scrollY > 50) {
+            header.style.backgroundColor = 'black';
+        } else {
+            header.style.backgroundColor = 'transparent';
+        }
+    });
+</script>
+{% endblock %}

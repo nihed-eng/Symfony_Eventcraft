@@ -1,0 +1,272 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Administration - Liste des Commentaires{% endblock %}
+
+{% block content %}
+    <div class="admin-header d-flex justify-content-between align-items-center">
+        <h1 class="admin-title">Gestion des Commentaires</h1>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#filterModal">
+            <i class="fas fa-filter me-2"></i> Filtrer
+        </button>
+    </div>
+
+    <div class="row mb-4">
+        <div class="col-md-3">
+            <div class="stats-card bg-white">
+                <div class="stats-card-body">
+                    
+                    <p class="stats-card-title">Total Commentaires</p>
+                </div>
+                <div class="stats-card-icon">
+                    <i class="fas fa-comments"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-white">
+                <div class="stats-card-body">
+                  
+                    <p class="stats-card-title">Commentaires Approuvés</p>
+                </div>
+                <div class="stats-card-icon">
+                    <i class="fas fa-check-circle"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-white">
+                <div class="stats-card-body">
+                    
+                    <p class="stats-card-title">En Attente</p>
+                </div>
+                <div class="stats-card-icon">
+                    <i class="fas fa-clock"></i>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card bg-white">
+                <div class="stats-card-body">
+                   
+                </div>
+                <div class="stats-card-icon">
+                    <i class="fas fa-calendar-day"></i>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="data-card">
+        <div class="data-card-header">
+            <h2 class="data-card-title">Liste des Commentaires</h2>
+            <div class="d-flex">
+                <form class="d-flex me-2">
+                    <input type="text" class="form-control me-2" placeholder="Rechercher...">
+                    <button type="submit" class="btn btn-outline-primary">
+                        <i class="fas fa-search"></i>
+                    </button>
+                </form>
+                <a href="{{ path('app_commentaire_new') }}" class="btn btn-primary">
+                    <i class="fas fa-plus me-2"></i> Ajouter
+                </a>
+            </div>
+        </div>
+        <div class="data-card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead>
+                        <tr>
+                            <th>#ID</th>
+                            <th>Forum</th>
+                            <th>Contenu</th>
+                            <th>Auteur</th>
+                            <th>Date</th>
+                            <th>Statut</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for commentaire in commentaires %}
+                            <tr>
+                                <td>{{ commentaire.id }}</td>
+                                <td>
+                                    <a href="{{ path('app_forum_show', {'id': commentaire.forum.id}) }}" class="text-decoration-none">
+                                        {{ commentaire.forum.titreForum|length > 25 ? commentaire.forum.titreForum|slice(0, 25) ~ '...' : commentaire.forum.titreForum }}
+                                    </a>
+                                </td>
+                                <td>{{ commentaire.contenu|length > 40 ? commentaire.contenu|slice(0, 40) ~ '...' : commentaire.contenu }}</td>
+                                <td>
+                                    {% if commentaire.user is defined and commentaire.user %}
+                                        {{ commentaire.user.username ?? 'Utilisateur' }}
+                                    {% else %}
+                                        Anonyme
+                                    {% endif %}
+                                </td>
+                                <td>{{ commentaire.datePub ? commentaire.datePub|date('d/m/Y H:i') : '' }}</td>
+                                <td>
+                                    {% if commentaire.isApproved is defined and commentaire.isApproved %}
+                                        <span class="badge bg-success">Approuvé</span>
+                                    {% else %}
+                                        <span class="badge bg-warning text-dark">En attente</span>
+                                    {% endif %}
+                                </td>
+                                <td>
+                                    <div class="btn-group">
+                                        <a href="{{ path('app_commentaire_show', {'id': commentaire.id}) }}" class="btn btn-sm btn-info">
+                                            <i class="fas fa-eye"></i>
+                                        </a>
+                                        <a href="{{ path('app_commentaire_edit', {'id': commentaire.id}) }}" class="btn btn-sm btn-warning">
+                                            <i class="fas fa-edit"></i>
+                                        </a>
+                                        <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteModal{{ commentaire.id }}">
+                                            <i class="fas fa-trash-alt"></i>
+                                        </button>
+                                        
+                                        {% if commentaire.isApproved is defined %}
+                                            {% if not commentaire.isApproved %}
+                                                <form method="post" action="{{ path('app_commentaire_approve', {'id': commentaire.id}) }}" class="d-inline">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('approve' ~ commentaire.id) }}">
+                                                    <button type="submit" class="btn btn-sm btn-success">
+                                                        <i class="fas fa-check"></i>
+                                                    </button>
+                                                </form>
+                                            {% else %}
+                                                <form method="post" action="{{ path('app_commentaire_unapprove', {'id': commentaire.id}) }}" class="d-inline">
+                                                    <input type="hidden" name="_token" value="{{ csrf_token('unapprove' ~ commentaire.id) }}">
+                                                    <button type="submit" class="btn btn-sm btn-secondary">
+                                                        <i class="fas fa-ban"></i>
+                                                    </button>
+                                                </form>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                    
+                                    <!-- Modal de suppression -->
+                                    <div class="modal fade" id="deleteModal{{ commentaire.id }}" tabindex="-1" aria-labelledby="deleteModalLabel{{ commentaire.id }}" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="deleteModalLabel{{ commentaire.id }}">Confirmation de suppression</h5>
+                                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                                </div>
+                                                <div class="modal-body">
+                                                    <p>Êtes-vous sûr de vouloir supprimer ce commentaire ?</p>
+                                                    <p class="text-muted">Cette action est irréversible.</p>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                                                    <form method="post" action="{{ path('app_commentaire_delete', {'id': commentaire.id}) }}">
+                                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ commentaire.id) }}">
+                                                        <button type="submit" class="btn btn-danger">Confirmer la suppression</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% else %}
+                            <tr>
+                                <td colspan="7" class="text-center py-5">
+                                    <div class="d-flex flex-column align-items-center">
+                                        <i class="fas fa-comments fa-3x text-muted mb-3"></i>
+                                        <p class="mb-3">Aucun commentaire trouvé</p>
+                                        <a href="{{ path('app_commentaire_new') }}" class="btn btn-primary">
+                                            <i class="fas fa-plus me-2"></i> Ajouter un commentaire
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+            
+            <!-- Pagination -->
+            <nav aria-label="Pagination des commentaires" class="mt-4">
+                <ul class="pagination justify-content-center">
+                    <li class="page-item disabled">
+                        <a class="page-link" href="#" tabindex="-1" aria-disabled="true">Précédent</a>
+                    </li>
+                    <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                    <li class="page-item"><a class="page-link" href="#">2</a></li>
+                    <li class="page-item"><a class="page-link" href="#">3</a></li>
+                    <li class="page-item">
+                        <a class="page-link" href="#">Suivant</a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+    </div>
+
+    <!-- Modal pour les filtres -->
+    <div class="modal fade" id="filterModal" tabindex="-1" aria-labelledby="filterModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="filterModalLabel">Filtrer les commentaires</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    <form>
+                        <div class="mb-3">
+                            <label for="forumFilter" class="form-label">Forum</label>
+                            <select class="form-select" id="forumFilter">
+                                <option value="">Tous les forums</option>
+                                <!-- Liste des forums -->
+                            </select>
+                        </div>
+                        <div class="mb-3">
+                            <label for="dateRange" class="form-label">Période</label>
+                            <select class="form-select" id="dateRange">
+                                <option value="all">Toutes les dates</option>
+                                <option value="today">Aujourd'hui</option>
+                                <option value="week">Cette semaine</option>
+                                <option value="month">Ce mois</option>
+                                <option value="custom">Personnalisé</option>
+                            </select>
+                        </div>
+                        <div class="mb-3" id="customDateRange" style="display: none;">
+                            <div class="row">
+                                <div class="col">
+                                    <label for="startDate" class="form-label">Date de début</label>
+                                    <input type="date" class="form-control" id="startDate">
+                                </div>
+                                <div class="col">
+                                    <label for="endDate" class="form-label">Date de fin</label>
+                                    <input type="date" class="form-control" id="endDate">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label for="statusFilter" class="form-label">Statut</label>
+                            <select class="form-select" id="statusFilter">
+                                <option value="">Tous les statuts</option>
+                                <option value="approved">Approuvé</option>
+                                <option value="pending">En attente</option>
+                            </select>
+                        </div>
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Annuler</button>
+                    <button type="button" class="btn btn-primary">Appliquer les filtres</button>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script>
+        document.getElementById('dateRange').addEventListener('change', function() {
+            var customDateRange = document.getElementById('customDateRange');
+            if (this.value === 'custom') {
+                customDateRange.style.display = 'block';
+            } else {
+                customDateRange.style.display = 'none';
+            }
+        });
+    </script>
+{% endblock %}

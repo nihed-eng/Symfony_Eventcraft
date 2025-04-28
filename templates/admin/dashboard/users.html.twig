@@ -1,0 +1,91 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des Utilisateurs - Admin EventCraft{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1 class="admin-title">Gestion des Utilisateurs</h1>
+</div>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<div class="data-card">
+    <div class="data-card-header">
+        <h2 class="data-card-title">Liste des Utilisateurs</h2>
+    </div>
+    <div class="data-card-body">
+        <div class="table-responsive">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Nom</th>
+                        <th>Email</th>
+                        <th>Rôle</th>
+                        <th>Statut</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for user in users %}
+                        <tr>
+                            <td>{{ user.id }}</td>
+                            <td>{{ user.prenom }} {{ user.nom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.role == 'ROLE_ADMIN' %}
+                                    <span class="badge bg-primary">Admin</span>
+                                {% else %}
+                                    <span class="badge bg-secondary">User</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if user.statutCompte == 'active' %}
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+                                    <span class="badge bg-danger">Banni</span>
+                                {% endif %}
+                            </td>
+                            <td>
+                                {% if app.user != user %}
+                                    {% if user.role != 'ROLE_ADMIN' %}
+                                        {% if user.statutCompte == 'active' %}
+                                            <form method="post" action="{{ path('app_admin_user_ban', {'id': user.id}) }}" style="display: inline-block">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('ban-user-' ~ user.id) }}">
+                                                <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir bannir cet utilisateur ?');">
+                                                    <i class="fas fa-ban"></i>
+                                                </button>
+                                            </form>
+                                        {% else %}
+                                            <form method="post" action="{{ path('app_admin_user_unban', {'id': user.id}) }}" style="display: inline-block">
+                                                <input type="hidden" name="_token" value="{{ csrf_token('unban-user-' ~ user.id) }}">
+                                                <button type="submit" class="btn btn-success btn-sm" onclick="return confirm('Êtes-vous sûr de vouloir débannir cet utilisateur ?');">
+                                                    <i class="fas fa-undo"></i>
+                                                </button>
+                                            </form>
+                                        {% endif %}
+                                    {% endif %}
+                                    <form method="post" action="{{ path('app_admin_user_delete', {'id': user.id}) }}" style="display: inline-block; margin-left: 5px;"
+                                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cet utilisateur ?');">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete-user-' ~ user.id) }}">
+                                        <button type="submit" class="btn btn-danger btn-sm">
+                                            <i class="fas fa-trash"></i>
+                                        </button>
+                                    </form>
+                                {% endif %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+{% endblock %}

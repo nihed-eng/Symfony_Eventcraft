@@ -1,0 +1,396 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modifier Réservation - {{ reservation.salle.nomSalle }}{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        /* Styles pour l'image de fond */
+        body {
+            background-image: url('/images/offre.jpeg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        /* Overlay semi-transparent pour améliorer la lisibilité */
+        body::before {
+            content: "";
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+background-color: rgba(0, 0, 0, 0.30);
+            z-index: -1;
+        }
+
+        .reservation-container {
+            max-width: 1200px;
+            margin: 110px auto;
+            padding: 20px;
+background-color: rgba(255, 255, 255, 0.75);
+            border-radius: 0px;
+            box-shadow: 0 0 15px rgba(0,0,0,0.1);
+        }
+
+        .reservation-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .reservation-card {
+            display: flex;
+            gap: 30px;
+            margin-bottom: 30px;
+        }
+
+        .room-image-container {
+            flex: 1;
+            max-width: 500px;
+            height: 250px;
+            border-radius: 0px;
+            overflow: hidden;
+            position: relative;
+        }
+
+        .room-image-bg {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            background-position: center;
+            transition: transform 0.5s;
+        }
+
+        .room-image-container:hover .room-image-bg {
+            transform: scale(1.05);
+        }
+
+        .reservation-details {
+            flex: 2;
+        }
+
+        .reservation-form {
+            background: #f9f9f9;
+            padding: 25px;
+            border-radius: 8px;
+        }
+
+        .form-actions {
+            text-align: center;
+            margin-top: 20px;
+        }
+
+        .btn-save {
+            width: 100%;
+            border-color: #8D598F;
+            color: #8D598F;
+            padding: 10px 25px;
+            font-size: 16px;
+            border-radius: 0;
+            transition: all 0.3s;
+        }
+
+        .btn-save:hover {
+            color: #FFF;
+            background-color: #6d4470;
+            border-color: #6d4470;
+        }
+
+        .back-link {
+            color: #6c757d;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-link:hover {
+            color: #5a6268;
+        }
+
+        .form-label {
+            font-weight: 500;
+            margin-bottom: 8px;
+        }
+
+        .form-control {
+            border-radius: 4px;
+            padding: 10px 15px;
+        }
+
+        /* Alert styles */
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .animated.fadeInDown {
+            animation: fadeInDown 0.5s ease-out both;
+            margin-bottom: 20px;
+            padding: 15px 20px;
+            border-radius: 6px;
+        }
+
+        .alert {
+            font-weight: 500;
+            font-size: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+        }
+
+        .alert-danger {
+            background-color: #f8d7da;
+            color: #842029;
+            border: 1px solid #f5c2c7;
+        }
+
+        .alert-success {
+            background-color: #d1e7dd;
+            color: #0f5132;
+            border: 1px solid #badbcc;
+        }
+
+        .alert i {
+            margin-right: 8px;
+        }
+
+        /* Error message styles */
+        .error-message {
+            color: #dc3545;
+            font-size: 0.875em;
+            margin-top: 0.25rem;
+            display: flex;
+            align-items: center;
+        }
+
+        .error-message i {
+            margin-right: 5px;
+        }
+
+        .is-invalid {
+            border-color: #dc3545;
+        }
+
+        .invalid-feedback {
+            width: 100%;
+            margin-top: 0.25rem;
+            font-size: 0.875em;
+            color: #dc3545;
+        }
+
+        /* Global form errors */
+        .form-global-errors {
+            background-color: #f8d7da;
+            color: #842029;
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 20px;
+            border: 1px solid #f5c2c7;
+        }
+
+        .form-global-errors ul {
+            margin-bottom: 0;
+            padding-left: 20px;
+        }
+
+        .form-global-errors li {
+            list-style-type: none;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .form-global-errors li:before {
+            content: "•";
+            color: #dc3545;
+            font-size: 1.5em;
+            position: absolute;
+            left: 0;
+            top: -3px;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+<div class="reservation-container">
+    <div class="reservation-header">
+        <h1 style="color: #8d598f;">Modifier Réservation</h1>
+        <a href="{{ path('app_reservation_index') }}" class="back-link">
+            <i class="fas fa-arrow-left"></i> Retour à la liste
+        </a>
+    </div>
+
+    <div class="reservation-card">
+        {% if reservation.salle.imageSalle %}
+            <div class="room-image-container">
+                {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                <div class="room-image-bg" style="background-image: url('/images/{{ filename | url_encode }}');"></div>
+            </div>
+        {% endif %}
+
+        <div class="reservation-details">
+            <h2>{{ reservation.salle.nomSalle }}</h2>
+            <p><strong>Lieu:</strong> {{ reservation.salle.locationSalle }}</p>
+            <p><strong>Capacité:</strong> {{ reservation.salle.capacite }} personnes</p>
+            <p><strong>Prix:</strong> {{ reservation.salle.prix }} €</p>
+
+            <div class="reservation-period">
+                <h4>Période de réservation actuelle</h4>
+                <p><strong>Du:</strong> {{ reservation.dateDebut|date('d/m/Y H:i') }}</p>
+                <p><strong>Au:</strong> {{ reservation.dateFin|date('d/m/Y H:i') }}</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Affichage des erreurs globales du formulaire -->
+    {% if form.vars.errors|length > 0 %}
+        <div class="form-global-errors animated fadeInDown">
+            <ul>
+                {% for error in form.vars.errors %}
+                    <li>{{ error.message }}</li>
+                {% endfor %}
+            </ul>
+        </div>
+    {% endif %}
+
+    <!-- Flash messages -->
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            <div class="alert alert-{{ label }} animated fadeInDown" role="alert">
+                <i class="fas fa-{{ label == 'error' ? 'exclamation-circle' : 'check-circle' }}"></i> {{ message }}
+            </div>
+        {% endfor %}
+    {% endfor %}
+
+    <div class="reservation-form">
+        {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+        <div class="mb-4">
+            <div class="form-group mb-3">
+                {{ form_label(form.dateDebut, 'Nouvelle date de début', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateDebut, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.dateDebut.vars.valid ? '' : ' is-invalid'),
+                    }
+                }) }}
+                <div class="invalid-feedback">
+                    {% if form.dateDebut.vars.errors|length %}
+                        {% for error in form.dateDebut.vars.errors %}
+                            <p class="error-message">
+                                <i class="fas fa-exclamation-circle"></i> {{ error.message }}
+                            </p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> La date de début doit être dans le futur
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+
+            <div class="form-group mb-3">
+                {{ form_label(form.dateFin, 'Nouvelle date de fin', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.dateFin, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.dateFin.vars.valid ? '' : ' is-invalid'),
+                    }
+                }) }}
+                <div class="invalid-feedback">
+                    {% if form.dateFin.vars.errors|length %}
+                        {% for error in form.dateFin.vars.errors %}
+                            <p class="error-message">
+                                <i class="fas fa-exclamation-circle"></i> {{ error.message }}
+                            </p>
+                        {% endfor %}
+                    {% else %}
+                        <p class="error-message">
+                            <i class="fas fa-exclamation-circle"></i> La date de fin doit être postérieure à la date de début
+                        </p>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="submit" class="btn btn-save">
+                <i class="fas fa-save"></i> Mettre à jour la réservation
+            </button>
+        </div>
+
+        {{ form_end(form) }}
+    </div>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
+    }, false);
+    
+    // Validation en temps réel améliorée
+    const dateInputs = document.querySelectorAll('.form-control');
+    dateInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+            const feedbackElement = this.closest('.form-group').querySelector('.invalid-feedback');
+            
+            if (this.id.includes('dateDebut')) {
+                const dateDebut = new Date(this.value);
+                const today = new Date();
+                
+                if (dateDebut <= today) {
+                    this.classList.add('is-invalid');
+                    if (feedbackElement) {
+                        feedbackElement.style.display = 'block';
+                    }
+                } else {
+                    if (feedbackElement) {
+                        feedbackElement.style.display = 'none';
+                    }
+                }
+            }
+            
+            if (this.id.includes('dateFin')) {
+                const dateFin = new Date(this.value);
+                const dateDebut = new Date(document.getElementById('{{ form.dateDebut.vars.id }}').value);
+                
+                if (dateFin <= dateDebut) {
+                    this.classList.add('is-invalid');
+                    if (feedbackElement) {
+                        feedbackElement.style.display = 'block';
+                    }
+                } else {
+                    if (feedbackElement) {
+                        feedbackElement.style.display = 'none';
+                    }
+                }
+            }
+        });
+    });
+
+    // Afficher les erreurs existantes au chargement
+    document.querySelectorAll('.is-invalid').forEach(function(element) {
+        const feedbackElement = element.nextElementSibling;
+        if (feedbackElement && feedbackElement.classList.contains('invalid-feedback')) {
+            feedbackElement.style.display = 'block';
+        }
+    });
+});
+</script>
+
+{% endblock %}

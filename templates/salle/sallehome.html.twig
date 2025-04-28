@@ -1,0 +1,1306 @@
+{% extends 'basetemp.html.twig' %}
+
+{% block title %}Event Craft-Salle{% endblock %}
+
+{% block body %}
+    <!-- Hero Section Begin -->
+<section class="hero spad">
+    <div class="overlay"></div>
+    
+    <div class="hero__slider owl-carousel">
+        <div class="hero__item" style="background-image: url('/images/slider3.jpg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider2.jpeg');"></div>
+        <div class="hero__item" style="background-image: url('/images/slider1.jpg');"></div>
+    </div>
+    
+    <div class="container">
+        <div class="hero__text">
+            <h5>WELCOME HIROTO</h5>
+            <h2>Experience the greatest for your holidays.</h2>
+        </div>
+        <form id="searchForm" class="filter__form" data-search-url="{{ path('app_salle_search') }}">
+    <div class="filter__form__item filter__form__item--search">
+        <p>Localisation</p>
+        <div class="filter__form__input">
+            <input type="text" id="location" name="location" placeholder="Search Location" 
+                   class="search-input" value="{{ app.request.query.get('location') }}">
+            <span class="icon_search"></span>
+        </div>
+    </div>
+    <div class="filter__form__item">
+        <p>DATE A RESERVER </p>
+        <div class="filter__form__datepicker">
+            <span class="icon_calendar"></span>
+            <input type="date" id="date_start" name="date_start" 
+                   class="datepicker_pop check__in search-input" 
+                   value="{{ app.request.query.get('date_start') }}">
+            <i class="arrow_carrot-down"></i>
+        </div>
+    </div>
+     <div class="filter__form__item filter__form__item--select">
+        <p>PRIX MAX</p>
+        <div class="filter__form__select">
+            <span class="icon_tags"></span>
+            <select name="max_price" class="search-input">
+                <option value="">Tous prix</option>
+                <option value="1000" {{ app.request.query.get('max_price') == '1000' ? 'selected' }}>1000 DT max</option>
+                <option value="2000" {{ app.request.query.get('max_price') == '2000' ? 'selected' }}>2000 DT max</option>
+                <option value="5000" {{ app.request.query.get('max_price') == '5000' ? 'selected' }}>5000 DT max</option>
+            </select>
+        </div>
+    </div>
+    <div class="filter__form__item filter__form__item--select">
+        <p>CAPACITÉ</p>
+        <div class="filter__form__select">
+            <span class="icon_group"></span>
+            <select name="capacity" class="search-input">
+                <option value="">Toutes capacités</option>
+                <option value="100" {{ app.request.query.get('capacity') == '100' ? 'selected' }}>100 personnes max</option>
+                <option value="500" {{ app.request.query.get('capacity') == '500' ? 'selected' }}>100-500 personnes</option>
+                <option value="501" {{ app.request.query.get('capacity') == '501' ? 'selected' }}>500+ personnes</option>
+            </select>
+        </div>
+    </div>
+   
+    <button type="submit" class="btn btn-primary">TROUVER</button>
+ </form>
+    </div>
+</section>
+
+<!-- Section pour afficher les résultats -->
+<section class="home-room spad" id="searchResults">
+    <div class="container">
+        <div class="row">
+                {% if pagination is defined %}
+                    {% include 'salle/_search_results.html.twig' with {'pagination': pagination} %}
+                {% else %}
+                    <div class="text-center py-5">
+                        <h4>Utilisez le formulaire de recherche pour trouver des salles</h4>
+                    </div>
+                {% endif %}
+        </div>
+    </div>
+</section>
+    
+
+    <script>
+document.addEventListener('DOMContentLoaded', function() {
+    const searchForm = document.getElementById('searchForm');
+    const searchResults = document.getElementById('searchResults');
+    
+    if (searchForm) {
+        // Gestion de la soumission du formulaire
+        searchForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            performSearch();
+        });
+        
+        // Recherche dynamique lors du changement des champs (optionnel)
+        const searchInputs = document.querySelectorAll('.search-input');
+        searchInputs.forEach(input => {
+            input.addEventListener('change', function() {
+                performSearch();
+            });
+        });
+    }
+    
+    function performSearch() {
+        const formData = new FormData(searchForm);
+        const searchParams = new URLSearchParams();
+        
+        // Ajouter les paramètres de recherche
+        for (const [key, value] of formData.entries()) {
+            if (value) {
+                searchParams.append(key, value);
+            }
+        }
+        
+        // URL de la recherche
+        const searchUrl = searchForm.dataset.searchUrl + '?' + searchParams.toString();
+        
+        // Effectuer la requête AJAX
+        fetch(searchUrl, {
+            headers: {
+                'X-Requested-With': 'XMLHttpRequest'
+            }
+        })
+        .then(response => response.text())
+        .then(html => {
+            searchResults.innerHTML = html;
+            // Initialiser les composants JS si nécessaire (carousel, etc.)
+            initComponents();
+        })
+        .catch(error => {
+            console.error('Error:', error);
+        });
+    }
+    
+    function initComponents() {
+        // Réinitialiser les composants JS si nécessaire
+    }
+});
+</script>
+
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>MILLEURS SELECTION</h5>
+                    <h2>MIEUX RESERVEES</h2>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-lg-3 p-0 order-lg-1 col-md-6 order-md-1">
+                <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-1.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-2 col-md-6 order-md-2">
+                <div class="latest__blog__text">
+                    <div class="label">Hotel</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 19th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-3 col-md-6 order-md-4">
+                <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-2.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-4 col-md-6 order-md-3">
+                <div class="latest__blog__text">
+                    <div class="label">Restaurant</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 22th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-6 col-md-6 order-md-5">
+                <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                    style="background-image: url('{{asset('assets/img/latest-blog/lb-3.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-5 col-md-6 order-md-6">
+                <div class="latest__blog__text">
+                    <div class="label">Travel</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 25th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-8 col-md-6 order-md-8">
+                <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                    style="background-image: url('{{asset('assets/img/latest-blog/lb-4.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-7 col-md-6 order-md-7">
+                <div class="latest__blog__text">
+                    <div class="label">Booking</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 29th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="testimonial spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-7">
+                <div class="testimonial__text">
+                    <div class="section-title">
+                        <h5>Testimonials</h5>
+                        <h2>What do customers say about us?</h2>
+                    </div>
+                    <div class="testimonial__slider owl-carousel">
+                        <div class="testimonial__item">
+                            <h5>Detailed Review:</h5>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p>This is a review of the product. The quality is great!</p>
+                            <div class="testimonial__author">
+                                <h5>John Doe</h5>
+                                <span>CEO of Example Corp</span>
+                            </div>
+                        </div>
+                        <div class="testimonial__item">
+                            <h5>Detailed Review:</h5>
+                            <div class="rating">
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star"></i>
+                                <i class="fa fa-star-o"></i>
+                            </div>
+                            <p>Excellent service, and the product exceeded my expectations!</p>
+                            <div class="testimonial__author">
+                                <h5>Jane Smith</h5>
+                                <span>Marketing Director</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+
+    <style>
+        .pagination {
+            display: flex;
+            justify-content: center;
+            padding-left: 0;
+            list-style: none;
+            gap: 8px;
+            margin: 20px 0;
+        }
+
+        .pagination li {
+            margin: 0;
+        }
+
+        .pagination a, 
+        .pagination span {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 40px;
+            height: 40px;
+            border-radius: 8px;
+            background-color: rgba(161, 104, 163, 0.25);
+            color:rgb(102, 44, 218);
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.5s ease;
+        }
+
+        .pagination a:hover {
+            background-color: rgba(161, 104, 163, 0.25);
+            transform: translateY(-2px);
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+
+        .pagination .active span {
+            background-color: rgb(161, 104, 163);
+            color: white;
+            border-color: rgb(161, 104, 163);
+        }
+
+        .pagination .page-item:first-child a,
+        .pagination .page-item:first-child span,
+        .pagination .page-item:last-child a,
+        .pagination .page-item:last-child span {
+            width: auto;
+            padding: 0 12px;
+        }
+
+        .pagination .disabled span {
+            background-color: rgba(161, 104, 163, 0.05);
+            color: #d3c2e2;
+            border-color: rgba(161, 104, 163, 0.05);
+        }
+
+        @media (max-width: 640px) {
+            .pagination {
+                flex-wrap: wrap;
+                gap: 5px;
+            }
+            
+            .pagination li {
+                display: none;
+            }
+            
+            .pagination li.active,
+            .pagination li:first-child,
+            .pagination li:last-child,
+            .pagination li:nth-child(2),
+            .pagination li:nth-last-child(2) {
+                display: block;
+            }
+            
+            .pagination a, 
+            .pagination span {
+                width: 35px;
+                height: 35px;
+                font-size: 14px;
+            }
+        }
+
+        .btn-primary {
+            --bs-btn-active-bg: #8D598F !important;
+        }
+
+        .dropdown-menu {
+            --bs-dropdown-link-hover-color: var(--bs-body-color);
+            --bs-dropdown-link-hover-bg: #B19BB2 !important;
+            --bs-dropdown-link-active-color: #fff;
+            --bs-dropdown-link-active-bg: #B19BB2 !important;
+        }
+
+        .card {
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            margin-bottom: 1.5rem;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 20px rgba(0, 0, 0, 0.2);
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+            width: 100%;
+        }
+
+        .card-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 1.5rem;
+        }
+
+        .card-title {
+            font-size: 1.25rem;
+            font-weight: 600;
+            margin-bottom: 0.75rem;
+            text-align: center;
+        }
+
+        .card-text {
+            margin-bottom: 0.5rem;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+
+        .btn-container {
+            margin-top: auto;
+            padding-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        /* Chat Bubble Styles */
+        .chat-bubble {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            width: 60px;
+            height: 60px;
+            background-color: #CBA979;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 24px;
+            cursor: pointer;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            transition: all 0.3s ease;
+            opacity: 0;
+            transform: translateY(20px);
+        }
+
+        .chat-bubble.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Chat Box Styles */
+        .chat-box {
+            position: fixed;
+            bottom: 100px;
+            right: 30px;
+            width: 350px;
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+            z-index: 1001;
+            display: none;
+            flex-direction: column;
+            overflow: hidden;
+        }
+
+        .chat-box.active {
+            display: flex;
+        }
+
+        .chat-header {
+            background-color: rgb(161, 104, 163);
+            color: white;
+            padding: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .chat-header h5 {
+            margin: 0;
+            font-size: 16px;
+        }
+
+        .close-chat {
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .chat-messages {
+            padding: 15px;
+            height: 300px;
+            overflow-y: auto;
+            background-color: #f9f9f9;
+        }
+
+        .message {
+            margin-bottom: 10px;
+            padding: 8px 12px;
+            border-radius: 18px;
+            max-width: 80%;
+            word-wrap: break-word;
+        }
+
+        .message.received {
+            background-color: #e5e5ea;
+            color: #000;
+            align-self: flex-start;
+        }
+
+        .message.received p {
+            line-height: 1.5;
+            margin-bottom: 5px;
+        }
+
+        .message.sent {
+            background-color: rgb(161, 104, 163);
+            color: white;
+            align-self: flex-end;
+            margin-left: auto;
+        }
+
+        .message.sent p {
+            color: white;
+        }
+
+        .chat-input {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #eee;
+            background-color: white;
+        }
+
+        .chat-input input {
+            flex: 1;
+            padding: 10px;
+            border: 1px solid #ddd;
+            border-radius: 20px;
+            outline: none;
+        }
+
+        .chat-input button {
+            background: none;
+            border: none;
+            color: rgb(161, 104, 163);
+            font-size: 18px;
+            margin-left: 10px;
+            cursor: pointer;
+        }
+
+        /* Suggestion buttons */
+        .suggestions {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .suggestion-btn {
+            background-color: #e5e5ea;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .suggestion-btn:hover {
+            background-color: #d1d1d6;
+        }
+
+        /* Loading indicator */
+        .typing-indicator {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #e5e5ea;
+            border-radius: 18px;
+        }
+
+        .typing-indicator span {
+            height: 8px;
+            width: 8px;
+            background-color: #666;
+            border-radius: 50%;
+            display: inline-block;
+            margin: 0 2px;
+            opacity: 0.4;
+        }
+
+        .typing-indicator span:nth-child(1) {
+            animation: typing 1s infinite;
+        }
+
+        .typing-indicator span:nth-child(2) {
+            animation: typing 1s infinite 0.2s;
+        }
+
+        .typing-indicator span:nth-child(3) {
+            animation: typing 1s infinite 0.4s;
+        }
+
+        @keyframes typing {
+            0% { opacity: 0.4; }
+            50% { opacity: 1; }
+            100% { opacity: 0.4; }
+        }
+
+        /* Search results in chat */
+        .search-results {
+            font-size: 14px;
+        }
+
+        .search-results h4 {
+            margin-bottom: 10px;
+            color: rgb(161, 104, 163);
+        }
+
+        .search-results p {
+            margin: 5px 0;
+            font-weight: bold;
+        }
+
+        .results-list {
+            margin-top: 10px;
+        }
+
+        .salle-card {
+            background: white;
+            padding: 10px;
+            border-radius: 8px;
+            margin-bottom: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            transition: all 0.3s ease;
+        }
+
+        .salle-card:hover {
+            background-color: #f5f5f5;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.15);
+        }
+
+        .salle-name {
+            font-weight: bold;
+            margin-bottom: 5px;
+            color: #8D598F;
+        }
+
+        .salle-details {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin: 3px 0;
+        }
+
+        .salle-details span {
+            padding: 2px 5px;
+            border-radius: 3px;
+            background-color: rgba(0,0,0,0.05);
+        }
+
+        .more-options {
+            font-style: italic;
+            text-align: center;
+            margin-top: 10px;
+            color: rgb(161, 104, 163);
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 5px;
+            transition: background-color 0.3s;
+        }
+
+        .more-options:hover {
+            background-color: rgba(161, 104, 163, 0.1);
+        }
+
+        .salle-link {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .salle-link:hover {
+            text-decoration: none;
+        }
+
+        /* Nouveaux styles pour l'amélioration */
+        .intelligent-response {
+            background-color: #f0f4f8;
+            border-left: 3px solid #8D598F;
+            padding: 10px;
+            border-radius: 0 8px 8px 0;
+            margin: 5px 0;
+        }
+
+        .summary-card {
+            background: white;
+            border-radius: 8px;
+            padding: 10px;
+            margin: 10px 0;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+        }
+
+        .summary-title {
+            font-weight: bold;
+            color: #8D598F;
+            margin-bottom: 5px;
+        }
+
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin: 3px 0;
+            font-size: 0.9em;
+        }
+
+        .highlight {
+            background-color: #f0e6ff;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+
+        .quick-filters {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 5px;
+            margin-top: 10px;
+        }
+
+        .quick-filter {
+            background-color: #e5e5ea;
+            border: none;
+            border-radius: 15px;
+            padding: 5px 10px;
+            font-size: 12px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .quick-filter:hover {
+            background-color: #d1d1d6;
+        }
+
+        .quick-filter.active {
+            background-color: #8D598F;
+            color: white;
+        }
+
+        .emoji {
+            font-size: 1.2em;
+            margin-right: 5px;
+        }
+
+        .additional-results {
+            margin-top: 10px;
+            padding-top: 10px;
+            border-top: 1px dashed #ddd;
+        }
+
+        .additional-results h4 {
+            color: #8D598F;
+            font-size: 0.9em;
+            margin-bottom: 8px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Chat Bubble -->
+    <div id="chat-bubble" class="chat-bubble">
+        <i class="fa fa-comments"></i>
+    </div>
+
+    <!-- Chat Box (hidden by default) -->
+    <div id="chat-box" class="chat-box">
+        <div class="chat-header">
+            <h5>Assistant de Recherche de Salles</h5>
+            <span class="close-chat">&times;</span>
+        </div>
+        <div class="chat-messages" id="chat-messages">
+            <div class="message received">
+                <p>Bonjour ! 👋 Je suis votre assistant intelligent pour trouver la salle parfaite. Dites-moi simplement ce dont vous avez besoin, par exemple :</p>
+                <div class="suggestions">
+                    <button class="suggestion-btn">Je cherche une salle à Tunis</button>
+                    <button class="suggestion-btn">Salle pour 100 personnes</button>
+                    <button class="suggestion-btn">Avec projecteur et parking</button>
+                    <button class="suggestion-btn">Budget 2000 DT max</button>
+                </div>
+            </div>
+        </div>
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Décrivez votre salle idéale...">
+            <button id="send-btn"><i class="fa fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <!-- Include the necessary scripts -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
+
+    <script>
+        // Définir les routes de l'application si elles ne sont pas déjà définies
+        window.appRoutes = window.appRoutes || {
+            details_salle: '/details-salle/__id__'
+        };
+
+        $(document).ready(function() {
+            // Initialize Owl Carousels
+            $(".testimonial__slider").owlCarousel({
+                loop: true,
+                margin: 10,
+                nav: true,
+                dots: true,
+                items: 1,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                smartSpeed: 1000,
+            });
+
+            $(".hero__slider").owlCarousel({
+                loop: true,
+                margin: 0,
+                nav: false,
+                dots: true,
+                items: 1,
+                autoplay: true,
+                autoplayTimeout: 3000,
+                autoplayHoverPause: true,
+                smartSpeed: 1000
+            });
+
+            // Sample salle data
+            const salles = [
+                {id: 1, nom: "Salle des Fêtes D", capacite: 777, equipement: "projecteur, sono, cuisine, parking, climatisation", location: "Tunis", qualite: "Exceptionnelle", prix: 7895.00},
+                {id: 63, nom: "Espace Bouraoui", capacite: 600, equipement: "projecteur, sono, parking", location: "Carthage", qualite: "Exceptionnel", prix: 1000.00},
+                {id: 69, nom: "Palais des Congrès", capacite: 500, equipement: "projecteur, sono, cuisine, wifi", location: "Carthage", qualite: "Très bien", prix: 12000.00},
+                {id: 70, nom: "Salle Azerty", capacite: 900, equipement: "projecteur, sono, parking", location: "Ariana", qualite: "Moyenne", prix: 15000.00},
+                {id: 71, nom: "Dar Jebal", capacite: 250, equipement: "sono, cuisine", location: "Bizerte", qualite: "Superbe", prix: 1000.00},
+                {id: 72, nom: "Mawazin Events", capacite: 500, equipement: "projecteur, sono, climatisation", location: "Hammamet", qualite: "Excellent", prix: 2500.00},
+                {id: 73, nom: "Espace Ennejma", capacite: 500, equipement: "projecteur, sono, parking", location: "Hammamet", qualite: "Super", prix: 2500.00},
+                {id: 74, nom: "Salle Mawazin", capacite: 500, equipement: "projecteur, sono", location: "Sousse", qualite: "Super", prix: 2500.00},
+                {id: 75, nom: "Dar Jebal Premium", capacite: 132, equipement: "projecteur, sono, cuisine", location: "Hammamet", qualite: "Très bien", prix: 2500.00},
+                {id: 76, nom: "Dar Mhenna", capacite: 23, equipement: "sono", location: "Hammamet", qualite: "Très bien", prix: 2500.00},
+                {id: 77, nom: "Espace Dar Mhenna", capacite: 23, equipement: "projecteur, sono", location: "Hammamet", qualite: "Très bien", prix: 2500.00},
+                {id: 79, nom: "Salle Hiba", capacite: 55, equipement: "projecteur", location: "Hammamet", qualite: "Très bien", prix: 2500.00},
+                {id: 80, nom: "Dar Mhenna VIP", capacite: 5005, equipement: "projecteur, sono, cuisine, parking, climatisation", location: "Hammamet", qualite: "Superbe", prix: 444.00},
+                {id: 81, nom: "Espace Zénith", capacite: 5005, equipement: "projecteur, sono, parking", location: "Hammamet", qualite: "Très bien", prix: 444.00},
+                {id: 82, nom: "Dar Jebal Elite", capacite: 5005, equipement: "projecteur, sono, cuisine", location: "Hammamet", qualite: "Bien", prix: 2500.00}
+            ];
+
+            // Chat elements
+            const chatBubble = document.getElementById('chat-bubble');
+            const chatBox = document.getElementById('chat-box');
+            const closeChat = document.querySelector('.close-chat');
+            const chatMessages = document.getElementById('chat-messages');
+            const userInput = document.getElementById('user-input');
+            const sendBtn = document.getElementById('send-btn');
+            
+            // Current search criteria
+            let currentSearch = {
+                location: null,
+                capacity: null,
+                equipement: null,
+                maxPrice: null
+            };
+
+            // Show chat bubble on scroll
+            window.addEventListener('scroll', function() {
+                if (window.scrollY > 300) {
+                    chatBubble.classList.add('visible');
+                } else {
+                    chatBubble.classList.remove('visible');
+                }
+            });
+
+            // Toggle chat box
+            chatBubble.addEventListener('click', function() {
+                chatBox.classList.toggle('active');
+            });
+
+            // Close chat box
+            closeChat.addEventListener('click', function() {
+                chatBox.classList.remove('active');
+            });
+
+            // Send message when button is clicked
+            sendBtn.addEventListener('click', sendMessage);
+            
+            // Send message when Enter key is pressed
+            userInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    sendMessage();
+                }
+            });
+
+            // Function to send a message
+            function sendMessage() {
+                const message = userInput.value.trim();
+                if (message === '') return;
+                
+                // Add user message to chat
+                addMessage(message, 'sent');
+                userInput.value = '';
+                
+                // Show typing indicator
+                showTypingIndicator();
+                
+                // Process the message after a short delay
+                setTimeout(() => {
+                    processUserMessage(message);
+                }, 1000);
+            }
+            
+            // Function to add a message to the chat
+            function addMessage(text, type) {
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', type);
+                messageDiv.innerHTML = `<p>${text}</p>`;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to show typing indicator
+            function showTypingIndicator() {
+                const typingDiv = document.createElement('div');
+                typingDiv.classList.add('typing-indicator');
+                typingDiv.id = 'typing-indicator';
+                typingDiv.innerHTML = '<span></span><span></span><span></span>';
+                chatMessages.appendChild(typingDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Function to hide typing indicator
+            function hideTypingIndicator() {
+                const typingDiv = document.getElementById('typing-indicator');
+                if (typingDiv) {
+                    typingDiv.remove();
+                }
+            }
+            
+            // Function to process user message and generate response
+            function processUserMessage(message) {
+                const lowerMessage = message.toLowerCase();
+                
+                // Détection intelligente des critères
+                const locationMatch = lowerMessage.match(/(tunis|sousse|hammamet|bizerte|ariana|carthage)/i);
+                const capacityMatch = lowerMessage.match(/(\d+)\s*(personnes|pers|invités|participants|pax|personne|people)/i) || 
+                                    lowerMessage.match(/(pour|capacité|environ)\s*(\d+)/i);
+                const equipmentMatch = lowerMessage.match(/(projecteur|sono|cuisine|parking|climatisation|wifi|écran|table|chaises)/i);
+                const priceMatch = lowerMessage.match(/(moins de|jusqu'à|maximum|environ|budget)\s*(\d+)\s*(dt|dinars|tnd|dinar)/i);
+                
+                // Mise à jour des critères avec confirmation intelligente
+                let confirmationMessage = "";
+                
+                if (locationMatch) {
+                    currentSearch.location = locationMatch[0].toLowerCase();
+                    confirmationMessage += `<div class="summary-item"><span class="emoji">📍</span> <strong>Localisation</strong> : <span class="highlight">${currentSearch.location}</span></div>`;
+                }
+                
+                if (capacityMatch) {
+                    currentSearch.capacity = parseInt(capacityMatch[1] || capacityMatch[2]);
+                    confirmationMessage += `<div class="summary-item"><span class="emoji">👥</span> <strong>Capacité</strong> : <span class="highlight">${currentSearch.capacity}+ personnes</span></div>`;
+                }
+                
+                if (equipmentMatch) {
+                    currentSearch.equipement = equipmentMatch[0].toLowerCase();
+                    confirmationMessage += `<div class="summary-item"><span class="emoji">🎛️</span> <strong>Équipement</strong> : <span class="highlight">${currentSearch.equipement}</span></div>`;
+                }
+                
+                if (priceMatch) {
+                    currentSearch.maxPrice = parseInt(priceMatch[2]);
+                    confirmationMessage += `<div class="summary-item"><span class="emoji">💰</span> <strong>Budget</strong> : <span class="highlight">moins de ${currentSearch.maxPrice} DT</span></div>`;
+                }
+                
+                // Perform search with current criteria
+                const results = searchSalles(currentSearch);
+                
+                // Affichage intelligent des résultats
+                if (results.length > 0) {
+                    showIntelligentResults(results, currentSearch, confirmationMessage);
+                } else {
+                    showSmartNoResults(currentSearch, confirmationMessage);
+                }
+            }
+            
+            function searchSalles(criteria) {
+                return salles.filter(salle => {
+                    return (!criteria.location || salle.location.toLowerCase().includes(criteria.location)) &&
+                           (!criteria.capacity || salle.capacite >= criteria.capacity) &&
+                           (!criteria.equipement || salle.equipement.toLowerCase().includes(criteria.equipement)) &&
+                           (!criteria.maxPrice || salle.prix <= criteria.maxPrice);
+                });
+            }
+            
+            function showIntelligentResults(results, criteria, confirmation) {
+                hideTypingIndicator();
+                
+                // Message de confirmation des critères
+                let response = `<div class="intelligent-response">`;
+                response += `<p>J'ai bien noté vos critères :</p>`;
+                response += `<div class="summary-card">`;
+                
+                if (confirmation) {
+                    response += confirmation;
+                } else {
+                    response += `<p>Vous n'avez pas spécifié de critères, voici nos suggestions :</p>`;
+                }
+                
+                response += `</div>`;
+                
+                // Analyse intelligente des résultats
+                const top3 = results.slice(0, 3);
+                const priceRange = {
+                    min: Math.min(...results.map(r => r.prix)),
+                    max: Math.max(...results.map(r => r.prix))
+                };
+                const capacityRange = {
+                    min: Math.min(...results.map(r => r.capacite)),
+                    max: Math.max(...results.map(r => r.capacite))
+                };
+                
+                response += `<div class="summary-card">`;
+                response += `<div class="summary-title"><span class="emoji">🔍</span> Analyse des résultats (${results.length} salles trouvées)</div>`;
+                response += `<div class="summary-item"><span>Fourchette de prix :</span> <span>${priceRange.min} DT - ${priceRange.max} DT</span></div>`;
+                response += `<div class="summary-item"><span>Capacité moyenne :</span> <span>${capacityRange.min} - ${capacityRange.max} personnes</span></div>`;
+                response += `</div>`;
+                
+                // Filtres rapides
+                response += `<p><span class="emoji">⚙️</span> Filtres rapides :</p>`;
+                response += `<div class="quick-filters">`;
+                response += `<button class="quick-filter" onclick="filterResults('price', 'asc')">Prix croissant</button>`;
+                response += `<button class="quick-filter" onclick="filterResults('price', 'desc')">Prix décroissant</button>`;
+                response += `<button class="quick-filter" onclick="filterResults('capacity', 'desc')">Plus grandes</button>`;
+                response += `</div>`;
+                
+                // Meilleures suggestions
+                response += `<p><span class="emoji">🏆</span> Voici mes meilleures suggestions :</p>`;
+                response += `<div class="results-list">`;
+                
+                top3.forEach(salle => {
+                    response += `
+                    <a href="${window.appRoutes.details_salle.replace('__id__', salle.id)}" class="salle-link">
+                        <div class="salle-card">
+                            <div class="salle-name">${salle.nom}</div>
+                            <div class="salle-details">
+                                <span><i class="fas fa-users"></i> ${salle.capacite} personnes</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ${salle.prix} DT</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${salle.location}</span>
+                            </div>
+                            <div class="salle-details">
+                                <span><i class="fas fa-cogs"></i> ${salle.equipement.split(',').slice(0,2).join(', ')}</span>
+                                <span><i class="fas fa-star"></i> ${salle.qualite}</span>
+                            </div>
+                        </div>
+                    </a>`;
+                });
+                
+                if (results.length > 3) {
+                    response += `<p class="more-options" onclick="showAdditionalResults(${JSON.stringify(results)})">
+                        <i class="fas fa-chevron-down"></i> Voir les ${results.length - 3} autres salles disponibles
+                    </p>`;
+                }
+                
+                response += `</div></div>`;
+                
+                addMessage(response, 'received');
+                
+                // Suggestions contextuelles
+                showContextualSuggestions(results, criteria);
+            }
+            
+            // Fonction pour afficher les résultats supplémentaires
+            window.showAdditionalResults = function(results) {
+                hideTypingIndicator();
+                
+                let response = `<div class="additional-results">`;
+                response += `<h4><i class="fas fa-ellipsis-h"></i> Salles supplémentaires (${results.length - 3})</h4>`;
+                response += `<div class="results-list">`;
+                
+                // Afficher uniquement les résultats supplémentaires (à partir de l'index 3)
+                results.slice(3).forEach(salle => {
+                    response += `
+                    <a href="${window.appRoutes.details_salle.replace('__id__', salle.id)}" class="salle-link">
+                        <div class="salle-card">
+                            <div class="salle-name">${salle.nom}</div>
+                            <div class="salle-details">
+                                <span><i class="fas fa-users"></i> ${salle.capacite} personnes</span>
+                                <span><i class="fas fa-money-bill-wave"></i> ${salle.prix} DT</span>
+                                <span><i class="fas fa-map-marker-alt"></i> ${salle.location}</span>
+                            </div>
+                            <div class="salle-details">
+                                <span><i class="fas fa-cogs"></i> ${salle.equipement.split(',').slice(0,2).join(', ')}</span>
+                                <span><i class="fas fa-star"></i> ${salle.qualite}</span>
+                            </div>
+                        </div>
+                    </a>`;
+                });
+                
+                response += `</div></div>`;
+                
+                // Ajouter les résultats supplémentaires à la fin du chat
+                const additionalDiv = document.createElement('div');
+                additionalDiv.classList.add('message', 'received');
+                additionalDiv.innerHTML = response;
+                chatMessages.appendChild(additionalDiv);
+                
+                // Masquer le lien "Voir plus"
+                const moreOptions = document.querySelector('.more-options');
+                if (moreOptions) moreOptions.style.display = 'none';
+                
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            };
+            
+            function showContextualSuggestions(results, criteria) {
+                const suggestions = [];
+                
+                // Suggestions basées sur les données
+                const locations = [...new Set(results.map(r => r.location))];
+                if (locations.length > 1 && !criteria.location) {
+                    locations.slice(0, 3).forEach(loc => {
+                        suggestions.push(`Salles à ${loc}`);
+                    });
+                }
+                
+                const equipments = [...new Set(results.flatMap(r => r.equipement.split(',')))];
+                if (equipments.length > 1 && !criteria.equipement) {
+                    equipments.slice(0, 3).forEach(eq => {
+                        if (eq.trim()) suggestions.push(`Avec ${eq.trim()}`);
+                    });
+                }
+                
+                // Suggestions intelligentes
+                const avgPrice = results.reduce((sum, r) => sum + r.prix, 0) / results.length;
+                if (!criteria.maxPrice) {
+                    suggestions.push(`Moins de ${Math.round(avgPrice/1000)*1000} DT`);
+                }
+                
+                const avgCapacity = results.reduce((sum, r) => sum + r.capacite, 0) / results.length;
+                if (!criteria.capacity) {
+                    suggestions.push(`Environ ${Math.round(avgCapacity/50)*50} personnes`);
+                }
+                
+                if (suggestions.length > 0) {
+                    showSuggestions(suggestions.slice(0, 6));
+                }
+            }
+            
+            function showSmartNoResults(criteria, confirmation) {
+                hideTypingIndicator();
+                
+                let response = `<div class="intelligent-response">`;
+                
+                if (confirmation) {
+                    response += `<p><span class="emoji">😕</span> Malheureusement, je n'ai trouvé aucune salle correspondant à :</p>`;
+                    response += `<div class="summary-card">${confirmation}</div>`;
+                } else {
+                    response += `<p><span class="emoji">😕</span> Je n'ai pas trouvé de salles correspondant à votre demande.</p>`;
+                }
+                
+                // Analyse des raisons possibles
+                response += `<p><span class="emoji">🔎</span> Voici pourquoi :</p>`;
+                response += `<div class="summary-card">`;
+                
+                if (criteria.location) {
+                    response += `<div class="summary-item"><span class="emoji">📍</span> <strong>Aucune salle à ${criteria.location}</strong> dans notre base</div>`;
+                }
+                if (criteria.capacity) {
+                    response += `<div class="summary-item"><span class="emoji">👥</span> <strong>Capacité ${criteria.capacity}+</strong> trop élevée</div>`;
+                }
+                if (criteria.maxPrice) {
+                    response += `<div class="summary-item"><span class="emoji">💰</span> <strong>Budget ${criteria.maxPrice} DT</strong> trop bas</div>`;
+                }
+                
+                response += `</div>`;
+                
+                // Solutions alternatives
+                response += `<p><span class="emoji">💡</span> Solutions :</p>`;
+                response += `<div class="summary-card">`;
+                
+                if (criteria.location) {
+                    response += `<div class="summary-item"><span class="emoji">➡️</span> Essayez une autre ville proche</div>`;
+                }
+                if (criteria.capacity) {
+                    response += `<div class="summary-item"><span class="emoji">➡️</span> Réduisez légèrement la capacité</div>`;
+                }
+                if (criteria.maxPrice) {
+                    response += `<div class="summary-item"><span class="emoji">➡️</span> Augmentez un peu le budget</div>`;
+                }
+                
+                response += `<div class="summary-item"><span class="emoji">➡️</span> Ou élargissez la recherche</div>`;
+                response += `</div></div>`;
+                
+                addMessage(response, 'received');
+                
+                // Suggestions alternatives
+                const alternatives = [];
+                
+                if (criteria.location) {
+                    alternatives.push("Villes proches", "Autre localisation");
+                }
+                if (criteria.capacity) {
+                    alternatives.push("Moins de participants", "Capacité réduite");
+                }
+                if (criteria.maxPrice) {
+                    alternatives.push("Budget plus élevé", "Autre fourchette de prix");
+                }
+                
+                alternatives.push("Voir toutes les salles", "Réinitialiser la recherche");
+                
+                showSuggestions(alternatives);
+            }
+            
+            // Fonction de filtrage rapide
+            window.filterResults = function(type, order) {
+                const results = searchSalles(currentSearch);
+                let sorted = [...results];
+                
+                if (type === 'price') {
+                    sorted.sort((a, b) => order === 'asc' ? a.prix - b.prix : b.prix - a.prix);
+                } else if (type === 'capacity') {
+                    sorted.sort((a, b) => order === 'asc' ? a.capacite - b.capacite : b.capacite - a.capacite);
+                }
+                
+                showIntelligentResults(sorted, currentSearch, "");
+            };
+
+            function showSuggestions(suggestions) {
+                const suggestionsDiv = document.createElement('div');
+                suggestionsDiv.classList.add('suggestions');
+                
+                suggestions.forEach(suggestion => {
+                    const button = document.createElement('button');
+                    button.classList.add('suggestion-btn');
+                    button.textContent = suggestion;
+                    button.addEventListener('click', () => {
+                        userInput.value = suggestion;
+                        sendMessage();
+                    });
+                    suggestionsDiv.appendChild(button);
+                });
+                
+                const messageDiv = document.createElement('div');
+                messageDiv.classList.add('message', 'received');
+                messageDiv.appendChild(suggestionsDiv);
+                
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+
+            // Gestion des clics sur les boutons de suggestion dans le message initial
+            document.addEventListener('click', function(e) {
+                if (e.target.classList.contains('suggestion-btn') && e.target.closest('.message.received')) {
+                    e.preventDefault();
+                    userInput.value = e.target.textContent;
+                    sendMessage();
+                }
+            });
+        });
+    </script>
+
+
+
+
+
+
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Sélectionnez tous les champs de recherche
+    const searchInputs = document.querySelectorAll('.search-input');
+    const searchForm = document.getElementById('searchForm');
+    let timer;
+
+    // Fonction pour effectuer la recherche
+    function performSearch() {
+        clearTimeout(timer);
+        
+        // Délai pour éviter des requêtes trop fréquentes (500ms après la dernière saisie)
+        timer = setTimeout(() => {
+            const formData = new FormData(searchForm);
+            const params = new URLSearchParams();
+            
+            // Ajoutez tous les paramètres du formulaire
+            formData.forEach((value, key) => {
+                if (value) params.append(key, value);
+            });
+
+            fetch(`{{ path('app_salle_search') }}?${params.toString()}`)
+                .then(response => response.text())
+                .then(html => {
+                    // Met à jour uniquement la section des résultats
+                    const parser = new DOMParser();
+                    const doc = parser.parseFromString(html, 'text/html');
+                    const newContent = doc.querySelector('.container-fluid').innerHTML;
+                    document.querySelector('.container-fluid').innerHTML = newContent;
+                })
+                .catch(error => console.error('Error:', error));
+        }, 500);
+    }
+
+    // Écouteurs d'événements pour tous les champs
+    searchInputs.forEach(input => {
+        input.addEventListener('input', performSearch);
+        input.addEventListener('change', performSearch);
+    });
+});
+</script>
+
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+    const dropdownToggle = document.getElementById('navbarDropdown');
+    const dropdownMenu = dropdownToggle.nextElementSibling;
+
+    // Masquer le menu dropdown par défaut
+    dropdownMenu.classList.remove('show');
+
+    // Toggle l'affichage du dropdown au clic
+    dropdownToggle.addEventListener('click', function (event) {
+        event.preventDefault(); // Empêche le lien de recharger la page
+        dropdownMenu.classList.toggle('show');
+    });
+
+    // Fermer le dropdown si on clique ailleurs dans la page
+    document.addEventListener('click', function (event) {
+        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
+            dropdownMenu.classList.remove('show');
+        }
+    });
+});
+
+
+
+</script>
+
+{% endblock %}  

@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>Réservation #{{ reservation.idReservation }}</title>
+    <style>
+        body { 
+            font-family: 'Arial', sans-serif; 
+            line-height: 1.6;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+    
+        h1 { 
+            color: #8D598F; 
+            border-bottom: 2px solid #CBA979; 
+            padding-bottom: 5px;
+            margin-top: 0;
+        }
+        .info-box { 
+            padding: 15px;
+            background: #f9f9f9;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+        }
+        .info-item { 
+            margin-bottom: 0px; 
+            display: flex;
+        }
+        .info-item strong { 
+            width: 120px; 
+            font-weight: 600;
+        }
+        .header { 
+            text-align: center; 
+            margin-bottom: 15px;
+        }
+        .footer { 
+            text-align: center; 
+            margin-top: 30px; 
+            font-size: 0.8em; 
+            color: #666;
+            border-top: 1px solid #ddd;
+            padding-top: 10px;
+        }
+        .room-image { 
+            max-width: 100%; 
+            height: auto; 
+            margin: 10px 0;
+            border-radius: 4px;
+        }
+        .info-grid { 
+            display: grid; 
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 20px;
+        }
+        .total-box {
+            background: #8D598F;
+            color: white;
+            padding: 15px;
+            border-radius: 5px;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="logo-container">
+        <img src="{{ absolute_url(asset('images/logo1.png')) }}" alt="EventCraft" class="logo-img">
+    </div>
+
+    <div class="header">
+        <h1>Réservation #{{ reservation.idReservation }}</h1>
+        <p>Salle: {{ reservation.salle.nomSalle }}</p>
+    </div>
+
+    <div class="info-grid">
+        <div class="info-box">
+            <h3>Informations Salle</h3>
+            
+            {% if reservation.salle.imageSalle %}
+                {% set firstImage = reservation.salle.imageSalle|split(',')|first %}
+                <img src="{{ absolute_url(asset('images/' ~ firstImage|split('/')|last|split('\\')|last)) }}" class="room-image" alt="Image de la salle">
+            {% endif %}
+            
+            <div class="info-item">
+                <strong>Nom:</strong>
+                <span>{{ reservation.salle.nomSalle }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Lieu:</strong>
+                <span>{{ reservation.salle.locationSalle }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Capacité:</strong>
+                <span>{{ reservation.salle.capacite }} personnes</span>
+            </div>
+            <div class="info-item">
+                <strong>Prix:</strong>
+                <span>{{ reservation.salle.prix }} €</span>
+            </div>
+          
+          
+        </div>
+        
+        <div class="info-box">
+            <h3>Dates</h3>
+            <div class="info-item">
+                <strong>Début:</strong>
+                <span>{{ reservation.dateDebut|date('d/m/Y H:i') }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Fin:</strong>
+                <span>{{ reservation.dateFin|date('d/m/Y H:i') }}</span>
+            </div>
+            <div class="info-item">
+                <strong>Durée:</strong>
+                <span>{{ reservation.dateDebut.diff(reservation.dateFin).format('%d jours %h heures') }}</span>
+            </div>
+        </div>
+        
+        <div class="info-box">
+            <h3>Client</h3>
+            {% if reservation.user %}
+                <div class="info-item">
+                    <strong>Nom:</strong>
+                    <span>{{ reservation.user.nom }} {{ reservation.user.prenom }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Email:</strong>
+                    <span>{{ reservation.user.email }}</span>
+                </div>
+                <div class="info-item">
+                    <strong>Téléphone:</strong>
+                    <span>{{ reservation.user.telephone ?? 'Non renseigné' }}</span>
+                </div>
+            {% else %}
+                <div class="info-item">Aucun utilisateur associé</div>
+            {% endif %}
+        </div>
+    </div>
+
+    <div class="total-box">
+        <div class="info-item">
+            <strong>Total à payer:</strong>
+            <span>{{ reservation.salle.prix }} €</span>
+        </div>
+       
+       
+    </div>
+
+    <div class="footer">
+        Document généré le {{ "now"|date("d/m/Y H:i") }}<br>
+        © {{ "now"|date("Y") }} EventCraft - Tous droits réservés<br>
+        Contact : contact@eventcraft.com - Tél : +33 1 23 45 67 89
+    </div>
+</body>
+</html>
