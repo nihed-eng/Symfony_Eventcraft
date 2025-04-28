@@ -16,8 +16,19 @@ return [
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+    Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
     SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
     Knp\Bundle\SnappyBundle\KnpSnappyBundle::class => ['all' => true],
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 ];

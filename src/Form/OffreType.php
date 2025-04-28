@@ -38,6 +38,15 @@ class OffreType extends AbstractType
                 'label' => "Date d'expiration",
                 'widget' => 'single_text',
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                'required' => true, // s'assurer que le champ est obligatoire
+                'attr' => ['placeholder' => 'Choisissez une date'],
+            ])
+            
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             ])
 =======
                 'required' => true, // s'assurer que le champ est obligatoire
@@ -45,6 +54,10 @@ class OffreType extends AbstractType
             ])
             
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
        ;
     }
 

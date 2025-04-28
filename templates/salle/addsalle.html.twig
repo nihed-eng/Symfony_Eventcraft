@@ -12,6 +12,70 @@
             --dark-gray: #343a40;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 2.5em;
+    cursor: pointer;
+}
+   body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/salle1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            opacity: 0.9;
+            filter: brightness(0.8);
+        }
+
+select.form-control:focus {
+    border-color: #8D598F;
+    box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+}
+            
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .form-errors {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
         
         .add-salle-container {
             max-width: 1000px;
@@ -77,6 +141,10 @@ select.form-control:focus {
             max-width: 1000px;
             margin: 110px auto;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             padding: 0 20px;
             font-family: 'Segoe UI', Roboto, sans-serif;
         }
@@ -84,10 +152,21 @@ select.form-control:focus {
         .add-salle-card {
             background: white;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            background: rgb(255 255 255 / 66%);
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
             background: rgb(255 255 255 / 66%);
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e0e0e0;
             padding: 40px;
@@ -95,12 +174,21 @@ select.form-control:focus {
         }
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
         .add-salle-card:hover {
             box-shadow: 0 5px 25px rgba(0,0,0,0.1);
         }
         
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .add-salle-title {
             text-align: center;
             font-size: 32px;
@@ -132,9 +220,18 @@ select.form-control:focus {
         .form-group {
             margin-bottom: 25px;
 <<<<<<< HEAD
+<<<<<<< HEAD
             position: relative;
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+            position: relative;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         }
         
         .form-group label {
@@ -144,9 +241,18 @@ select.form-control:focus {
             color: #555;
             font-weight: 500;
 <<<<<<< HEAD
+<<<<<<< HEAD
             transition: all 0.3s ease;
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+            transition: all 0.3s ease;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         }
         
         .form-control {
@@ -156,14 +262,24 @@ select.form-control:focus {
             font-size: 14px;
             background: #f9f9f9;
 <<<<<<< HEAD
+<<<<<<< HEAD
             transition: all 0.3s ease;
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+            transition: all 0.3s ease;
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         }
         
         .form-control:focus {
             border-color: var(--primary-color);
             outline: none;
+<<<<<<< HEAD
 <<<<<<< HEAD
             background: rgba(141, 89, 143, 0.05);
             box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
@@ -177,6 +293,51 @@ select.form-control:focus {
             padding: 14px;
             font-size: 16px;
             cursor: pointer;
+=======
+=======
+<<<<<<< HEAD
+            background: rgba(141, 89, 143, 0.05);
+>>>>>>> c139a4e (Résolution des conflits)
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+   .btn-reserver {
+            background: #8d598f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin: 2rem 0 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-reserver:hover, .btn-reserver:focus {
+         background: transparent;
+border: 2px solid  #8d598f;
+
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            letter-spacing: 1.5px;
+            outline: none;
+        }
+        
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
             transition: all 0.3s ease;
 =======
             box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
@@ -217,12 +378,21 @@ border: 2px solid  #8d598f;
             font-size: 16px;
             cursor: pointer;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
         
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
         .form-submit:hover {
             background: #6d4470;
         }
@@ -238,6 +408,10 @@ border: 2px solid  #8d598f;
         .form-control.error {
             border-color: #dc3545;
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 
         .alert-danger {
@@ -246,7 +420,14 @@ border: 2px solid  #8d598f;
             padding: 15px;
             border: 1px solid #fecaca;
             margin-bottom: 20px;
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         }
         
         .pulse-animation {
@@ -279,21 +460,43 @@ border: 2px solid  #8d598f;
         
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         {% for message in app.flashes('error') %}
             <div class="alert-danger">
                 {{ message }}
             </div>
         {% endfor %}
         
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
             
             <div class="form-group">
                 {{ form_label(form.nomSalle) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.nomSalle, {'attr': {'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.nomSalle, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.nomSalle, {
                     'attr': {
                         'class': 'form-control' ~ (form.nomSalle.vars.errors|length ? ' is-invalid' : ''),
@@ -303,15 +506,31 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.nomSalle) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group">
                 {{ form_label(form.capacite) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.capacite, {'attr': {'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.capacite, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.capacite, {
                     'attr': {
                         'class': 'form-control' ~ (form.capacite.vars.errors|length ? ' is-invalid' : ''),
@@ -321,15 +540,31 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.capacite) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group">
                 {{ form_label(form.equipement) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.equipement, {'attr': {'class': 'form-control', 'rows': 3 ~ (form.equipement.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.equipement, {'attr': {'class': 'form-control', 'rows': 3 ~ (form.equipement.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.equipement, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.equipement, {
                     'attr': {
                         'class': 'form-control' ~ (form.equipement.vars.errors|length ? ' is-invalid' : ''),
@@ -340,15 +575,31 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.equipement) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group">
                 {{ form_label(form.locationSalle) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.locationSalle, {'attr': {'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.locationSalle, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.locationSalle, {
                     'attr': {
                         'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' is-invalid' : ''),
@@ -358,15 +609,31 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.locationSalle) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group">
                 {{ form_label(form.qualite) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.qualite, {'attr': {'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.qualite, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.qualite, {
                     'attr': {
                         'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' is-invalid' : '')
@@ -375,15 +642,31 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.qualite) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group">
                 {{ form_label(form.prix) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
                 {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
 =======
+=======
+=======
+<<<<<<< HEAD
+                {{ form_widget(form.prix, {'attr': {'class': 'form-control' ~ (form.prix.vars.errors|length ? ' error' : '')}}) }}
+                {{ form_errors(form.prix, {'attr': {'class': 'form-error'}}) }}
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 {{ form_widget(form.prix, {
                     'attr': {
                         'class': 'form-control' ~ (form.prix.vars.errors|length ? ' is-invalid' : ''),
@@ -393,12 +676,35 @@ border: 2px solid  #8d598f;
                 <div class="form-errors">
                     {{ form_errors(form.prix) }}
                 </div>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             </div>
             
             <div class="form-group" style="grid-column: span 2;">
                 {{ form_label(form.imageFile) }}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                {{ form_widget(form.imageFile, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.imageFile) }}
+                </div>
+            </div>
+            
+            <button type="submit" class="form-submit btn-reserver pulse-animation">
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
                 {{ form_widget(form.imageFile, {'attr': {'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' error' : '')}}) }}
                 {{ form_errors(form.imageFile, {'attr': {'class': 'form-error'}}) }}
             </div>
@@ -417,6 +723,10 @@ border: 2px solid  #8d598f;
             
             <button type="submit" class="form-submit btn-reserver pulse-animation">
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 <i class="fas fa-plus-circle"></i> Créer la salle
             </button>
             
@@ -431,6 +741,50 @@ border: 2px solid  #8d598f;
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            const form = document.querySelector('form');
+            if (form) {
+                // Validation au submit
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    
+                    form.querySelectorAll('[required]').forEach(field => {
+                        if (field.value.trim() === '') {
+                            field.classList.add('is-invalid');
+                            const errorDiv = field.closest('.form-group').querySelector('.form-errors');
+                            if (errorDiv) {
+                                errorDiv.textContent = 'Ce champ est obligatoire';
+                            }
+                            isValid = false;
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        e.preventDefault();
+                        const firstError = form.querySelector('.is-invalid');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+                
+                // Retirer l'erreur quand on commence à taper
+                form.querySelectorAll('.form-control').forEach(input => {
+                    input.addEventListener('input', function() {
+                        if (this.value.trim() !== '') {
+                            this.classList.remove('is-invalid');
+                            const errorDiv = this.closest('.form-group').querySelector('.form-errors');
+                            if (errorDiv) {
+                                errorDiv.textContent = '';
+                            }
+                        }
+                    });
+                });
+            }
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             // Désactive la validation HTML5 native
             document.querySelector('form').setAttribute('novalidate', true);
             
@@ -486,6 +840,10 @@ border: 2px solid  #8d598f;
                 });
             }
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         });
     </script>
 {% endblock %}

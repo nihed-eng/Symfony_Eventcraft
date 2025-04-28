@@ -106,12 +106,29 @@
                     <div class="d-flex justify-content-between align-items-start mb-4">
                         <div>
 <<<<<<< HEAD
+<<<<<<< HEAD
                             <h3 class="h4 mb-2">{{ reclamation.subject }}</h3>
                             <p class="text-muted mb-0">
                                 <i class="far fa-clock me-2"></i>
                                 Soumis le {{ reclamation.createdAt|date('d/m/Y H:i') }}
                             </p>
                         </div>
+=======
+                            <h3 class="h4 mb-2">{{ reclamation.titre }}</h3>
+=======
+<<<<<<< HEAD
+                            <h3 class="h4 mb-2">{{ reclamation.subject }}</h3>
+>>>>>>> c139a4e (Résolution des conflits)
+                            <p class="text-muted mb-0">
+                                <i class="far fa-clock me-2"></i>
+                                Soumis le {{ reclamation.date|date('d/m/Y H:i') }}
+                            </p>
+                        </div>
+<<<<<<< HEAD
+                        <span class="status-badge {% if reclamation.statut == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
+                            {% if reclamation.statut == 'resolved' %}
+=======
+>>>>>>> Salles
                         <span class="status-badge {% if reclamation.status == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
                             {% if reclamation.status == 'resolved' %}
 =======
@@ -124,6 +141,10 @@
                         <span class="status-badge {% if reclamation.statut == 'resolved' %}status-resolved{% else %}status-pending{% endif %}">
                             {% if reclamation.statut == 'resolved' %}
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                 Résolu
                             {% else %}
                                 En attente
@@ -149,16 +170,36 @@
                                         </span>
                                         <div class="admin-details">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                                            <h6 class="mb-0">Réponse de l'administrateur</h6>
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
                                             <h6 class="mb-0">{{ reclamation.response.respondedBy.firstName }} {{ reclamation.response.respondedBy.lastName }}</h6>
                                             <small class="text-muted">Répondu le {{ reclamation.response.createdAt|date('d/m/Y H:i') }}</small>
 =======
                                             <h6 class="mb-0">Réponse de l'administrateur</h6>
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                         </div>
                                     </div>
                                 </div>
                                 <div class="response-content">
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                                    {{ reclamation.response.contenu|nl2br }}
+                                </div>
+                            </div>
+                        </div>
+                    {% elseif reclamation.statut == 'resolved' %}
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
                                     {{ reclamation.response.content|nl2br }}
                                 </div>
                             </div>
@@ -171,6 +212,10 @@
                         </div>
                     {% elseif reclamation.statut == 'resolved' %}
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                         <div class="alert alert-success">
                             <i class="fas fa-check-circle me-2"></i>
                             Cette réclamation a été résolue. Merci de votre patience !

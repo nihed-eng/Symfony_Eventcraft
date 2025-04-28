@@ -16,10 +16,20 @@
 /***/ (() => {
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+eval("console.log(\"Hello, Webpack!\");\n\n\n//# sourceURL=webpack://eventcraft/./src/index.js?");
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 eval("console.log(\"Hello, Webpack!\");\r\n\n\n//# sourceURL=webpack://eventcraft/./src/index.js?");
 =======
 eval("console.log(\"Hello, Webpack!\");\n\n\n//# sourceURL=webpack://eventcraft/./src/index.js?");
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 /***/ })
 

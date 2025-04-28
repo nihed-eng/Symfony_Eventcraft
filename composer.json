@@ -12,11 +12,22 @@
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        "knplabs/knp-paginator-bundle": "^6.8",
+        "knplabs/knp-snappy-bundle": "^1.10",
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
         "knplabs/knp-paginator-bundle": "^6.7",
 =======
         "knplabs/knp-paginator-bundle": "^6.8",
         "knplabs/knp-snappy-bundle": "^1.10",
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         "league/oauth2-google": "^4.0",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpmailer/phpmailer": "^6.9",
@@ -54,9 +65,19 @@
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "6.4.*",
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
         "symfonycasts/reset-password-bundle": "^1.23",
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+        "symfonycasts/reset-password-bundle": "^1.23",
+=======
+<<<<<<< HEAD
+=======
+        "symfonycasts/reset-password-bundle": "^1.23",
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

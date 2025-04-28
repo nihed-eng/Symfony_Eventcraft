@@ -4,9 +4,19 @@ namespace App\Entity;
 
 use App\Repository\ResponseRepository;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 use Doctrine\DBAL\Types\Types;
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+use Doctrine\DBAL\Types\Types;
+=======
+<<<<<<< HEAD
+=======
+use Doctrine\DBAL\Types\Types;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: ResponseRepository::class)]
@@ -15,6 +25,15 @@ class Response
 {
     #[ORM\Id]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(name: 'id_reponse', type: Types::INTEGER)]
+    private ?int $id = null;
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
@@ -26,12 +45,23 @@ class Response
     #[ORM\Column(name: 'id_reponse', type: Types::INTEGER)]
     private ?int $id = null;
 
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     #[ORM\Column(name: 'contenu_reponse', type: Types::STRING, length: 255)]
     private ?string $contenu = null;
 
     #[ORM\OneToOne(inversedBy: 'response')]
     #[ORM\JoinColumn(name: 'reclamation_id', referencedColumnName: 'id_reclamation', nullable: false)]
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     private ?Reclamation $reclamation = null;
 
     public function getId(): ?int
@@ -45,10 +75,20 @@ class Response
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    public function setContenu(string $contenu): self
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     public function setContenu(string $contenu): static
 =======
     public function setContenu(string $contenu): self
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     {
         $this->contenu = $contenu;
         return $this;
@@ -60,10 +100,20 @@ class Response
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    public function setReclamation(Reclamation $reclamation): self
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     public function setReclamation(Reclamation $reclamation): static
 =======
     public function setReclamation(Reclamation $reclamation): self
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     {
         $this->reclamation = $reclamation;
         return $this;

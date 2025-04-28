@@ -1,10 +1,20 @@
 {% extends 'base.html.twig' %}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+{% block title %}Modifier une salle{% endblock %}
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 {% block title %}Modifier la salle{% endblock %}
 =======
 {% block title %}Modifier une salle{% endblock %}
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 {% block stylesheets %}
     {{ parent() }}
@@ -16,6 +26,7 @@
             --dark-gray: #343a40;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         .edit-salle-container {
             max-width: 1000px;
@@ -26,6 +37,80 @@
 
         .edit-salle-card {
             background: white;
+=======
+        select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 2.5em;
+    cursor: pointer;
+}
+   body {
+            position: relative;
+            min-height: 100vh;
+        }
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/salle1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            opacity: 0.9;
+            filter: brightness(0.8);
+        }
+
+select.form-control:focus {
+    border-color: #8D598F;
+    box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+}
+            
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .form-errors {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+<<<<<<< HEAD
+            background: rgb(255 255 255 / 66%);
+
+=======
+>>>>>>> Salles
 =======
         select.form-control {
     -webkit-appearance: none;
@@ -95,12 +180,23 @@ select.form-control:focus {
             background: rgb(255 255 255 / 66%);
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             box-shadow: 0 2px 15px rgba(0,0,0,0.08);
             border: 1px solid #e0e0e0;
             padding: 40px;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        
+        .add-salle-title {
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
         .edit-salle-card:hover {
             box-shadow: 0 5px 25px rgba(0,0,0,0.1);
@@ -111,6 +207,10 @@ select.form-control:focus {
         
         .add-salle-title {
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             text-align: center;
             font-size: 32px;
             font-weight: 300;
@@ -121,12 +221,23 @@ select.form-control:focus {
             position: relative;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        
+        .add-salle-title::after {
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
         .edit-salle-title::after {
 =======
         
         .add-salle-title::after {
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             content: '';
             position: absolute;
             bottom: -1px;
@@ -137,21 +248,45 @@ select.form-control:focus {
             background: var(--secondary-color);
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
 =======
         
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .modal-form {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 25px;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
         .form-group {
             margin-bottom: 25px;
             position: relative;
         }
+=======
+        
+=======
+<<<<<<< HEAD
+
+>>>>>>> c139a4e (Résolution des conflits)
+        .form-group {
+            margin-bottom: 25px;
+        }
+<<<<<<< HEAD
+        
+=======
+>>>>>>> Salles
 
 =======
         
@@ -160,6 +295,10 @@ select.form-control:focus {
         }
         
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .form-group label {
             display: block;
             margin-bottom: 8px;
@@ -167,6 +306,13 @@ select.form-control:focus {
             color: #555;
             font-weight: 500;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        }
+        
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             transition: all 0.3s ease;
         }
 
@@ -174,12 +320,17 @@ select.form-control:focus {
         }
         
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .form-control {
             width: 100%;
             padding: 12px;
             border: 1px solid #ddd;
             font-size: 14px;
             background: #f9f9f9;
+<<<<<<< HEAD
 <<<<<<< HEAD
             transition: all 0.3s ease;
         }
@@ -199,6 +350,56 @@ select.form-control:focus {
             padding: 14px;
             font-size: 16px;
             cursor: pointer;
+=======
+=======
+<<<<<<< HEAD
+            transition: all 0.3s ease;
+>>>>>>> c139a4e (Résolution des conflits)
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+   .btn-reserver {
+            background: #8d598f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin: 2rem 0 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-reserver:hover, .btn-reserver:focus {
+         background: transparent;
+border: 2px solid  #8d598f;
+
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            letter-spacing: 1.5px;
+            outline: none;
+        }
+        
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
             transition: all 0.3s ease;
 =======
         }
@@ -244,10 +445,15 @@ border: 2px solid  #8d598f;
             font-size: 16px;
             cursor: pointer;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             text-transform: uppercase;
             letter-spacing: 1px;
             font-weight: 500;
         }
+<<<<<<< HEAD
 <<<<<<< HEAD
 
         .form-submit:hover {
@@ -268,6 +474,28 @@ border: 2px solid  #8d598f;
         .pulse-animation {
             animation: pulse 2s infinite;
         }
+=======
+        
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 15px;
+            border: 1px solid #fecaca;
+            margin-bottom: 20px;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+<<<<<<< HEAD
+        
+=======
+>>>>>>> Salles
 
 =======
         
@@ -286,25 +514,49 @@ border: 2px solid  #8d598f;
         }
         
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         @keyframes pulse {
             0% { transform: scale(1); }
             50% { transform: scale(1.02); }
             100% { transform: scale(1); }
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
 =======
         
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         @media (max-width: 768px) {
             .modal-form {
                 grid-template-columns: 1fr;
             }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
 =======
             
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             .form-submit {
                 grid-column: span 1;
             }
@@ -314,6 +566,17 @@ border: 2px solid  #8d598f;
 
 {% block body %}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+<section class="add-salle-section">
+  <div class="add-salle-container">
+    <div class="add-salle-card">
+        <h1 class="add-salle-title">Modifier La Salle</h1>
+        
+        {% for message in app.flashes('error') %}
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 <section class="gradient-custom-2">
   <div class="edit-salle-container">
     <div class="edit-salle-card">
@@ -370,9 +633,18 @@ border: 2px solid  #8d598f;
 
             {{ form_end(form) }}
         {% else %}
+<<<<<<< HEAD
             <div class="alert-danger">
                 Le formulaire n'est pas disponible. Contactez l'administrateur.
             </div>
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+            <div class="alert-danger">
+                {{ message }}
+            </div>
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
         {% endif %}
 =======
 <section class="add-salle-section">
@@ -384,6 +656,10 @@ border: 2px solid  #8d598f;
             <div class="alert-danger">
                 {{ message }}
             </div>
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         {% endfor %}
         
         {{ form_start(form, {'attr': {'class': 'modal-form', 'novalidate': 'novalidate'}}) }}
@@ -483,20 +759,60 @@ border: 2px solid  #8d598f;
             </button>
             
         {{ form_end(form) }}
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     </div>
   </div>
 </section>
 {% endblock %}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 {% block javascripts %}
     {{ parent() }}
     <script>
         document.addEventListener('DOMContentLoaded', function() {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            const form = document.querySelector('form');
+            if (form) {
+                // Validation au submit
+                form.addEventListener('submit', function(e) {
+                    let isValid = true;
+                    
+                    form.querySelectorAll('[required]').forEach(field => {
+                        const formGroup = field.closest('.form-group');
+                        const errorDiv = formGroup.querySelector('.form-errors');
+
+                        if (field.value.trim() === '') {
+                            field.classList.add('is-invalid');
+
+                            // Affiche une erreur *uniquement* s'il n'y en a pas déjà une
+                            if (errorDiv && errorDiv.textContent.trim() === '') {
+                                errorDiv.textContent = 'Ce champ est obligatoire';
+                            }
+
+                            isValid = false;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             document.querySelector('form').setAttribute('novalidate', true);
             const forms = document.querySelectorAll('form');
             forms.forEach(form => {
@@ -504,9 +820,26 @@ border: 2px solid  #8d598f;
                     this.querySelectorAll('.form-control').forEach(input => {
                         if (input.value.trim() === '' && input.hasAttribute('required')) {
                             input.classList.add('error');
+<<<<<<< HEAD
                         }
                     });
                 });
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+                        }
+                    });
+
+                    if (!isValid) {
+                        e.preventDefault();
+                        const firstError = form.querySelector('.is-invalid');
+                        if (firstError) {
+                            firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }
+                    }
+                });
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
             });
 =======
             const form = document.querySelector('form');
@@ -539,6 +872,10 @@ border: 2px solid  #8d598f;
                         }
                     }
                 });
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
                 // Retirer l'erreur quand on commence à taper
                 form.querySelectorAll('[required]').forEach(field => {
@@ -555,7 +892,14 @@ border: 2px solid  #8d598f;
 });
 
             }
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         });
     </script>
 {% endblock %}

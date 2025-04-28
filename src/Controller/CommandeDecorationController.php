@@ -16,10 +16,20 @@ use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+use App\Repository\UtilisateurRepository;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
 =======
 use App\Repository\UtilisateurRepository;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 
 class CommandeDecorationController extends AbstractController
@@ -27,6 +37,15 @@ class CommandeDecorationController extends AbstractController
    
     
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    #[Route('/commande/new/{idDecoration?}', name: 'app_commande_decoration_new')]
+public function new(Request $request, EntityManagerInterface $entityManager, UtilisateurRepository $userRepository, DecorationRepository $decorationRepository, int $idDecoration): Response
+{
+    $commandeDecoration = new CommandeDecoration();
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     #[Route('/commandedecoration/new', name: 'commande_decoration_new')]
     public function new(Request $request, EntityManagerInterface $entityManager, Security $security): Response
     {
@@ -37,6 +56,7 @@ class CommandeDecorationController extends AbstractController
         if (!$user) {
             throw $this->createAccessDeniedException('Vous devez être connecté pour ajouter une commande.');
         }
+<<<<<<< HEAD
 
         // Créer le formulaire et définir l'utilisateur connecté comme valeur par défaut
         $form = $this->createForm(CommandeDecorationType::class, $commandeDecoration, [
@@ -60,6 +80,17 @@ class CommandeDecorationController extends AbstractController
     }
 
 =======
+>>>>>>> c139a4e (Résolution des conflits)
+
+    $decoration = $decorationRepository->find($idDecoration);
+    if (!$decoration) {
+        throw $this->createNotFoundException("Décoration non trouvée");
+    }
+
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
+=======
     #[Route('/commande/new/{idDecoration?}', name: 'app_commande_decoration_new')]
 public function new(Request $request, EntityManagerInterface $entityManager, UtilisateurRepository $userRepository, DecorationRepository $decorationRepository, int $idDecoration): Response
 {
@@ -70,6 +101,10 @@ public function new(Request $request, EntityManagerInterface $entityManager, Uti
         throw $this->createNotFoundException("Décoration non trouvée");
     }
 
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     $user = $this->getUser();
     if (!$user) {
         throw $this->createAccessDeniedException("Utilisateur non connecté");
@@ -95,7 +130,14 @@ public function new(Request $request, EntityManagerInterface $entityManager, Uti
 }
 
 
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     #[Route('/decoration', name: 'decoration_index')]
 public function index(
     Request $request,

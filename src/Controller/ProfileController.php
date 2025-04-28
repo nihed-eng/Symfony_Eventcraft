@@ -17,6 +17,7 @@ class ProfileController extends AbstractController
 {
     #[Route('/profile', name: 'app_profile')]
 <<<<<<< HEAD
+<<<<<<< HEAD
     public function index(SalleRepository $salleRepository): Response
     {
         // Récupérer l'utilisateur connecté
@@ -33,6 +34,22 @@ class ProfileController extends AbstractController
         ]);
     }
 
+=======
+    public function index(): Response
+=======
+<<<<<<< HEAD
+    public function index(SalleRepository $salleRepository): Response
+>>>>>>> c139a4e (Résolution des conflits)
+    {
+        return $this->render('profile/index.html.twig', [
+            'user' => $this->getUser(),
+            'activeTab' => 'profile'
+        ]);
+    }
+
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
 
 =======
     public function index(): Response
@@ -44,6 +61,10 @@ class ProfileController extends AbstractController
     }
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     #[Route('/profile/update', name: 'app_profile_update', methods: ['POST'])]
     public function updateProfile(Request $request, EntityManagerInterface $entityManager): Response
     {

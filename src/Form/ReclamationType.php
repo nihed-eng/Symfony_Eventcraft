@@ -7,9 +7,19 @@ use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+=======
+<<<<<<< HEAD
+=======
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 
@@ -19,10 +29,20 @@ class ReclamationType extends AbstractType
     {
         $builder
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            ->add('titre', TextType::class, [
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             ->add('subject', TextType::class, [
 =======
             ->add('titre', TextType::class, [
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 'attr' => [
                     'class' => 'form-control',
                     'placeholder' => 'Enter the subject of your complaint'
@@ -38,6 +58,12 @@ class ReclamationType extends AbstractType
                 'label' => 'Description'
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             ])
             ->add('type', ChoiceType::class, [
                 'choices' => [
@@ -48,7 +74,14 @@ class ReclamationType extends AbstractType
                 ],
                 'attr' => ['class' => 'form-control'],
                 'label' => 'Type'
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             ]);
     }
 
@@ -57,11 +90,23 @@ class ReclamationType extends AbstractType
         $resolver->setDefaults([
             'data_class' => Reclamation::class,
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            'csrf_protection' => true,
+            'csrf_field_name' => '_token',
+            'csrf_token_id' => 'reclamation_form',
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
             'csrf_protection' => true,
             'csrf_field_name' => '_token',
             'csrf_token_id' => 'reclamation_form',
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         ]);
     }
 }

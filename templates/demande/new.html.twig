@@ -1,6 +1,16 @@
 {% extends 'baseoffre.html.twig' %}
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+{% block title %}Créer une nouvelle demande{% endblock %}
+
+{% block stylesheets %}
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 {% block title %}Créer une Demande{% endblock %}
 {% block stylesheets %}
 
@@ -12,11 +22,22 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <style>
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         body {
             font-family: 'Roboto', sans-serif;
             background: #f8f9fa;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        .hero-wrap {
+            background-size: cover;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
         .hero-wrap {
              background-size: cover;
@@ -24,6 +45,10 @@
         .hero-wrap {
             background-size: cover;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             background-position: center center;
             height: 400px;
             display: flex;
@@ -33,6 +58,18 @@
             text-align: center;
         }
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        .hero-wrap .overlay {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 58%;
+            background: rgba(0, 0, 0, 0.5);
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 
       .hero-wrap .overlay {
     position: absolute;
@@ -46,6 +83,7 @@
         .hero-wrap h1 {
             font-size: 3rem;
             font-weight: 700;
+<<<<<<< HEAD
         }
 
         .card {
@@ -93,6 +131,60 @@ margin-top: 15px         }
             <div class="row no-gutters slider-text align-items-end justify-content-start">
                 <div class="col-md-12 ftco-animate text-center mb-5">
                     <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Demandes</span></p>
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+        }
+        .form-container {
+            background: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            max-width: 500px;
+            width: 100%;
+            margin-top: 30px;
+        }
+        .btn-custom {
+            padding: 5px 10px;
+            border-radius: 0px;
+            text-decoration: none;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            margin: 4px;
+            justify-content: center;
+            background-color: #CBA979;
+        }
+        .btn-custom:hover {
+            background-color: #F0C8C6 !important;
+        }
+        .form-label {
+            font-weight: bold;
+            color: #333;
+        }
+        .form-control {
+            border-radius: 8px;
+        }
+        .is-invalid {
+            border-color: #dc3545;
+        }
+        .text-danger {
+            color: #dc3545;
+        }
+    </style>
+{% endblock %}
+
+{% block body %}
+    <div class="hero-wrap" style="background-image: url('/images/ajoutdemande.jpg');">
+        <div class="overlay"></div>
+        <div class="container">
+            <div class="row no-gutters slider-text align-items-end justify-content-start">
+                <div class="col-md-12 text-center mb-5">
+                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Demandes</span></p>
+<<<<<<< HEAD
+                    <h1 class="mb-3 bread">Faire une demande pour l'offre : {{ offre.titreOffre }}</h1>
+=======
+>>>>>>> Salles
                     <h1 class="mb-3 bread">Liste des Demandes</h1>
 =======
         .hero-wrap .overlay {
@@ -152,12 +244,25 @@ margin-top: 15px         }
                     <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Home <i class="ion-ios-arrow-forward"></i></a></span> <span>Demandes</span></p>
                     <h1 class="mb-3 bread">Faire une demande pour l'offre : {{ offre.titreOffre }}</h1>
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 </div>
             </div>
         </div>
     </div>
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    <div class="container">
+        <div class="form-container">
+            <h2 class="text-center mb-4">Créer une Nouvelle Demande</h2>
+            {{ form_start(form) }}
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     <!-- SEPARATE DIV FOR FORM SECTION -->
     <div class="form-container" >
         <!-- FORM SECTION -->
@@ -168,6 +273,7 @@ margin-top: 15px         }
                         <div class="p-5 bg-white">
                             <h3 class="h5 text-black mb-3">Formulaire de Demande</h3>
                             {{ form_start(form) }}
+<<<<<<< HEAD
 
                             <div class="row form-group">
                                 <div class="col-md-12 mb-3 mb-md-0">
@@ -201,6 +307,33 @@ margin-top: 15px         }
         </section>
     </div>
 =======
+>>>>>>> c139a4e (Résolution des conflits)
+
+            <div class="mb-3">
+                {{ form_label(form.nom, 'Nom', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.nom, {'attr': {'class': 'form-control', 'placeholder': 'Entrez le nom'}}) }}
+                <div id="error-nom" class="text-danger small"></div>
+            </div>
+
+            <div class="mb-3">
+                {{ form_label(form.description, 'Description', {'label_attr': {'class': 'form-label'}}) }}
+                {{ form_widget(form.description, {'attr': {'class': 'form-control', 'rows': 3, 'placeholder': 'Décrivez votre demande...'}}) }}
+                <div id="error-description" class="text-danger small"></div>
+            </div>
+
+            <button type="submit" class="btn btn-custom w-100" id="submit-btn">Envoyer</button>
+
+            {{ form_end(form) }}
+
+            <div class="text-center mt-3">
+                <a href="{{ path('app_offre_index') }}" class="text-muted">⬅ Retour à la liste des offres</a>
+            </div>
+        </div>
+    </div>
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
+=======
     <div class="container">
         <div class="form-container">
             <h2 class="text-center mb-4">Créer une Nouvelle Demande</h2>
@@ -227,6 +360,10 @@ margin-top: 15px         }
             </div>
         </div>
     </div>
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 {% endblock %}
 
@@ -279,5 +416,12 @@ margin-top: 15px         }
         });
     </script>
 
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 {% endblock %}

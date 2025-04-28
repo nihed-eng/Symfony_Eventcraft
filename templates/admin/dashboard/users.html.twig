@@ -31,9 +31,18 @@
                         <th>Rôle</th>
                         <th>Statut</th>
 <<<<<<< HEAD
+<<<<<<< HEAD
                         <th>Date d'inscription</th>
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+                        <th>Date d'inscription</th>
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                         <th>Actions</th>
                     </tr>
                 </thead>
@@ -42,6 +51,15 @@
                         <tr>
                             <td>{{ user.id }}</td>
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+                            <td>{{ user.prenom }} {{ user.nom }}</td>
+                            <td>{{ user.email }}</td>
+                            <td>
+                                {% if user.role == 'ROLE_ADMIN' %}
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
                             <td>{{ user.firstName }} {{ user.lastName }}</td>
                             <td>{{ user.email }}</td>
                             <td>
@@ -52,12 +70,17 @@
                             <td>
                                 {% if user.role == 'ROLE_ADMIN' %}
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                     <span class="badge bg-primary">Admin</span>
                                 {% else %}
                                     <span class="badge bg-secondary">User</span>
                                 {% endif %}
                             </td>
                             <td>
+<<<<<<< HEAD
 <<<<<<< HEAD
                                 {% if user.statutCompte == 'banned' %}
                                     <span class="badge bg-danger">Banni</span>
@@ -69,6 +92,20 @@
                                 {% if user.createdAt %}
                                     {{ user.createdAt|date('d/m/Y H:i') }}
                                 {% else %}
+=======
+                                {% if user.statutCompte == 'active' %}
+=======
+<<<<<<< HEAD
+                                {% if user.statutCompte == 'banned' %}
+                                    <span class="badge bg-danger">Banni</span>
+                                {% else %}
+>>>>>>> c139a4e (Résolution des conflits)
+                                    <span class="badge bg-success">Actif</span>
+                                {% else %}
+<<<<<<< HEAD
+                                    <span class="badge bg-danger">Banni</span>
+=======
+>>>>>>> Salles
                                     <span class="text-muted">Non disponible</span>
 =======
                                 {% if user.statutCompte == 'active' %}
@@ -76,11 +113,20 @@
                                 {% else %}
                                     <span class="badge bg-danger">Banni</span>
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                 {% endif %}
                             </td>
                             <td>
                                 {% if app.user != user %}
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
                                     <div class="btn-group">
                                         <form method="post" action="{{ path('app_admin_user_toggle_ban', {'id': user.id}) }}" style="display: inline-block"
                                               onsubmit="return confirm('Êtes-vous sûr de vouloir {% if user.statutCompte == 'banned' %}réactiver{% else %}bannir{% endif %} cet utilisateur ?');">
@@ -98,6 +144,10 @@
                                         </form>
                                     </div>
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                     {% if user.role != 'ROLE_ADMIN' %}
                                         {% if user.statutCompte == 'active' %}
                                             <form method="post" action="{{ path('app_admin_user_ban', {'id': user.id}) }}" style="display: inline-block">
@@ -122,7 +172,14 @@
                                             <i class="fas fa-trash"></i>
                                         </button>
                                     </form>
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                                 {% endif %}
                             </td>
                         </tr>

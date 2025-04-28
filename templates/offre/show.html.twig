@@ -24,6 +24,11 @@
         }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
       .hero-wrap .overlay {
     position: absolute;
     top: 0;
@@ -33,6 +38,10 @@
     background: rgba(0, 0, 0, 0.5);
 }
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .hero-wrap .overlay {
             position: absolute;
             top: 0;
@@ -41,7 +50,14 @@
             height: 58%;
             background: rgba(0, 0, 0, 0.5);
         }
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
         .hero-wrap h1 {
             font-size: 3rem;
@@ -63,6 +79,21 @@
 
         .btn-custom, .btn-delete {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            padding: 5px 10px;
+            color: white;
+            display: inline-flex;
+            align-items: center;
+            border: none;
+            margin: 4px;
+            justify-content: center;
+            background-color: rgb(161, 104, 163);
+        }
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
            padding: 5px 10px;
     /* border-radius: 5px; */
     text-decoration: none;
@@ -115,23 +146,44 @@
         }
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         .btn-custom:hover {
             background-color: #F0C8C6;
         }
 
         .btn-delete {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            background-color: rgb(161, 104, 163);
+        }
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
  background-color: rgb(161, 104, 163);        }
 =======
             background-color: rgb(161, 104, 163);
         }
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
         .btn-delete:hover {
             background-color: #F0C8C6;
         }
 <<<<<<< HEAD
 =======
+<<<<<<< HEAD
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
         .btn-secondary {
             padding: 5px 10px;
@@ -143,7 +195,14 @@
         .btn-secondary:hover {
             background-color: #6d7e61;
         }
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     </style>
 {% endblock %}
 
@@ -154,9 +213,18 @@
             <div class="row no-gutters slider-text align-items-end justify-content-center">
                 <div class="col-md-12 ftco-animate text-center mb-5">
 <<<<<<< HEAD
+<<<<<<< HEAD
                    
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+                   
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                     <h1 class="mb-3 bread">Offre - {{ offre.titreOffre }}</h1>
                 </div>
             </div>
@@ -192,6 +260,7 @@
                         </tbody>
                     </table>
 <<<<<<< HEAD
+<<<<<<< HEAD
                     <div class="d-flex justify-content-between mt-4">
                         <a href="{{ path('app_offre_index') }}" class="btn btn-secondary">Retour</a>
                         <div>
@@ -202,6 +271,37 @@
                             </form>
                         </div>
                     </div>
+=======
+
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+                    <div class="d-flex justify-content-between mt-4">
+                        <!-- "Retour" Button -->
+                        <a href="{{ path('app_offre_index') }}" class="btn btn-custom">Retour</a>
+                        
+                        <!-- Buttons for edit, delete, view demandes, and apply -->
+                        <div class="d-flex gap-3">
+                           <a href="{{ path('app_offre_edit', {'id': offre.id}) }}" class="btn btn-custom">✏ Modifier</a>
+<form method="post" action="{{ path('app_offre_delete', {'id': offre.id}) }}" style="display:inline;" onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette offre ?');">
+    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ offre.id) }}">
+    <button type="submit" class="btn btn-custom">🗑 Supprimer</button>
+</form>
+
+<a href="{{ path('app_offre_demandes', {'id': offre.id}) }}" class="btn btn-custom">
+    Voir les Demandes
+</a>
+
+<a href="{{ path('app_demande_new', {'offreId': offre.id}) }}" class="btn btn-custom">
+    Postuler à cette offre
+</a>
+
+                        </div>
+                    </div>
+<<<<<<< HEAD
+
+=======
+>>>>>>> Salles
 =======
 
                     <div class="d-flex justify-content-between mt-4">
@@ -228,6 +328,10 @@
                     </div>
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 </div>
             </div>
         </div>

@@ -21,10 +21,20 @@ class ReclamationController extends AbstractController
         $reclamations = $entityManager
             ->getRepository(Reclamation::class)
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            ->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             ->findBy(['user' => $this->getUser()], ['createdAt' => 'DESC']);
 =======
             ->findBy(['user' => $this->getUser()], ['date' => 'DESC']);
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
         return $this->render('reclamation/index.html.twig', [
             'reclamations' => $reclamations,
@@ -37,22 +47,42 @@ class ReclamationController extends AbstractController
         $reclamation = new Reclamation();
         $reclamation->setUser($this->getUser());
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+        $reclamation->setDate(new \DateTime());
+        $reclamation->setStatut('pending');
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
         $reclamation->setDate(new \DateTime());
         $reclamation->setStatut('pending');
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         
         $form = $this->createForm(ReclamationType::class, $reclamation);
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             $entityManager->persist($reclamation);
             $entityManager->flush();
 
             $this->addFlash('success', 'Your complaint has been submitted successfully.');
             return $this->redirectToRoute('app_reclamation_index');
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             try {
                 $entityManager->persist($reclamation);
                 $entityManager->flush();
@@ -61,7 +91,14 @@ class ReclamationController extends AbstractController
             } catch (\Exception $e) {
                 $this->addFlash('error', 'An error occurred: ' . $e->getMessage());
             }
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
         }
 
         return $this->render('reclamation/new.html.twig', [

@@ -6,9 +6,19 @@ use App\Repository\UtilisateurRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 use Doctrine\DBAL\Types\Types;
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+use Doctrine\DBAL\Types\Types;
+=======
+<<<<<<< HEAD
+=======
+use Doctrine\DBAL\Types\Types;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
 use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
@@ -20,6 +30,7 @@ use Symfony\Component\Security\Core\User\UserInterface;
 class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
+<<<<<<< HEAD
 <<<<<<< HEAD
     #[ORM\GeneratedValue]
     #[ORM\Column]
@@ -43,6 +54,38 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     #[ORM\Column(length: 255, unique: true)]
     private ?string $email = null;
 
+=======
+    #[ORM\GeneratedValue(strategy: 'IDENTITY')]
+    #[ORM\Column(name: 'id', type: Types::INTEGER)]
+=======
+<<<<<<< HEAD
+    #[ORM\GeneratedValue]
+    #[ORM\Column]
+>>>>>>> c139a4e (Résolution des conflits)
+    private ?int $id = null;
+
+    #[ORM\Column(length: 255, name: 'nom')]
+    private ?string $nom = null;
+
+    #[ORM\Column(length: 255, name: 'prenom')]
+    private ?string $prenom = null;
+
+    #[ORM\Column(length: 255, name: 'password')]
+    private ?string $password = null;
+
+    #[ORM\Column(length: 255, name: 'statut_compte')]
+    private ?string $statut_compte = 'active';
+
+    #[ORM\Column(length: 255, name: 'role')]
+    private ?string $role = 'ROLE_USER';
+
+    #[ORM\Column(length: 255, name: 'email')]
+    private ?string $email = null;
+
+<<<<<<< HEAD
+    #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
+=======
+>>>>>>> Salles
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class)]
 =======
     #[ORM\GeneratedValue(strategy: 'IDENTITY')]
@@ -69,6 +112,10 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 
     #[ORM\OneToMany(mappedBy: 'user', targetEntity: Reclamation::class, orphanRemoval: true)]
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     private Collection $reclamations;
 
     public function __construct()
@@ -93,11 +140,20 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     // Remove this duplicate annotation
     // #[ORM\Column(length: 255)]
 
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     public function getPrenom(): ?string
     {
         return $this->prenom;
@@ -193,5 +249,14 @@ class Utilisateur implements UserInterface, PasswordAuthenticatedUserInterface
 <<<<<<< HEAD
 }
 =======
+<<<<<<< HEAD
 }
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles

@@ -4,6 +4,7 @@
 
 {% block body %}
 <<<<<<< HEAD
+<<<<<<< HEAD
     <h1>Ajouter une commande de décoration</h1>
 
     {{ form_start(form) }}
@@ -14,6 +15,50 @@
         
         <button type="submit" class="btn btn-primary">Ajouter</button>
     {{ form_end(form) }}
+=======
+<div class="container my-5">
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+    <h1>Ajouter une commande de décoration</h1>
+
+{{ form_start(form, { 'attr': { 'novalidate': 'novalidate' } }) }}
+
+        <!-- Champ Quantité -->
+        <div class="mb-3">
+            {{ form_label(form.quantite) }}
+            {{ form_widget(form.quantite, {
+                'attr': {
+                    'class': 'form-control' ~ (form.quantite.vars.errors|length ? ' is-invalid' : '')
+                }
+            }) }}
+            <div class="invalid-feedback d-block">
+                {{ form_errors(form.quantite) }}
+            </div>
+        </div>
+
+        <!-- Champ Date -->
+        <div class="mb-3">
+            {{ form_label(form.dateCommande) }}
+            {{ form_widget(form.dateCommande, {
+                'attr': {
+                    'class': 'form-control' ~ (form.dateCommande.vars.errors|length ? ' is-invalid' : '')
+                }
+            }) }}
+            <div class="invalid-feedback d-block">
+                {{ form_errors(form.dateCommande) }}
+            </div>
+        </div>
+
+        <!-- Boutons -->
+        <button type="submit" class="btn btn-primary">Ajouter</button>
+        <a href="{{ path('commandedecoration_index') }}" class="btn btn-secondary">Annuler</a>
+
+    {{ form_end(form) }}
+<<<<<<< HEAD
+</div>
+=======
+>>>>>>> Salles
 =======
 <div class="container my-5">
     <h1>Ajouter une commande de décoration</h1>
@@ -53,4 +98,8 @@
     {{ form_end(form) }}
 </div>
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 {% endblock %}

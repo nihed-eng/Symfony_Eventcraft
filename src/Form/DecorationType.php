@@ -1,8 +1,17 @@
 <?php
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 namespace App\Form;
 
 use App\Entity\Decoration;
@@ -16,14 +25,30 @@ use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\File;
 <<<<<<< HEAD
+<<<<<<< HEAD
 use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 
 =======
+=======
+=======
+<<<<<<< HEAD
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
+
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 use Symfony\Component\Validator\Constraints\Positive;
 use Symfony\Component\Validator\Constraints\PositiveOrZero;
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 class DecorationType extends AbstractType
 {
@@ -31,6 +56,18 @@ class DecorationType extends AbstractType
     {
         $builder
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+            ->add('nomDecor', TextType::class, [
+                'label' => 'Nom de la décoration',
+               'empty_data' => '',
+                'attr' => [
+                    'placeholder' => 'Entrez le nom de la décoration'
+                ]
+            ])
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
             ->add('nomDecor', TextType::class)
             ->add('typeDecor', TextType::class)
             ->add('descriptionDecor', TextType::class)
@@ -63,6 +100,10 @@ class DecorationType extends AbstractType
                     'placeholder' => 'Entrez le nom de la décoration'
                 ]
             ])
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             ->add('typeDecor', TextType::class, [
                 'label' => 'Type de décoration',
                 'empty_data' => '',
@@ -112,7 +153,14 @@ class DecorationType extends AbstractType
                     'accept' => 'image/jpeg,image/png,image/webp'
                 ]
             ]);
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     }
 
     public function configureOptions(OptionsResolver $resolver)
@@ -124,5 +172,14 @@ class DecorationType extends AbstractType
 <<<<<<< HEAD
 }
 =======
+<<<<<<< HEAD
 }
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles

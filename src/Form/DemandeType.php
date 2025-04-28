@@ -4,25 +4,52 @@ namespace App\Form;
 
 use App\Entity\Demande;
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 use App\Entity\Offre;
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+use App\Entity\Offre;
+=======
+<<<<<<< HEAD
+=======
+use App\Entity\Offre;
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+use Symfony\Bridge\Doctrine\Form\Type\EntityType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
 use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Validator\Constraints\NotBlank;
 use Symfony\Component\Validator\Constraints\Length;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 class DemandeType extends AbstractType
 {
     public function buildForm(FormBuilderInterface $builder, array $options): void
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     {
         $builder
             ->add('nom', TextType::class, [
@@ -37,6 +64,10 @@ class DemandeType extends AbstractType
             ]);
     }
 =======
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 {
     $builder
         ->add('nom', TextType::class, [
@@ -79,7 +110,14 @@ class DemandeType extends AbstractType
             ]
         ]);
 }
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
     public function configureOptions(OptionsResolver $resolver): void
     {
@@ -89,6 +127,15 @@ class DemandeType extends AbstractType
     }
 }
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 =======
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+=======
+<<<<<<< HEAD
+
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles

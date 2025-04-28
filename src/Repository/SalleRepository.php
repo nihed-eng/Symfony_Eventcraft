@@ -15,8 +15,16 @@ class SalleRepository extends ServiceEntityRepository
     }
 
 <<<<<<< HEAD
+<<<<<<< HEAD
     // Ajoutez ici vos méthodes personnalisées si nécessaire
 =======
+=======
+=======
+<<<<<<< HEAD
+    // Ajoutez ici vos méthodes personnalisées si nécessaire
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     public function findWithFilters(array $filters)
     {
         $qb = $this->createQueryBuilder('s');
@@ -49,5 +57,12 @@ class SalleRepository extends ServiceEntityRepository
         return $qb->getQuery()->getResult();
     }
 
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 }

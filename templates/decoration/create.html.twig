@@ -2,6 +2,7 @@
 
 {% block title %}Ajouter une décoration{% endblock %}
 <<<<<<< HEAD
+<<<<<<< HEAD
 
 {% block body %}
 <div class="container mt-5">
@@ -12,6 +13,322 @@
         <button type="submit" class="btn btn-success mt-3">Enregistrer</button>
     {{ form_end(form) }}
 </div>
+=======
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --primary-color: #8D598F;
+            --secondary-color: #CBA979;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .add-salle-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin: 0 0 40px 0;
+            color: var(--primary-color);
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .add-salle-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+        
+        /* Styles pour les éléments de formulaire */
+        .card {
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+        }
+        
+        .card-header {
+            background-color: var(--primary-color) !important;
+            padding: 1.5rem;
+        }
+        
+        .card-body {
+            padding: 2rem;
+        }
+        
+        .form-control {
+            border: 1px solid #ddd;
+            padding: 12px;
+            transition: all 0.3s;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+        }
+        
+        select.form-control {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 10px center;
+            background-size: 1em;
+            padding-right: 2.5em;
+            cursor: pointer;
+        }
+        
+        .btn-primary {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-primary:hover {
+            background-color: #7a4a7a;
+            border-color: #7a4a7a;
+        }
+        
+        .btn-outline-secondary {
+            color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .btn-outline-secondary:hover {
+            background-color: var(--primary-color);
+            color: white;
+        }
+        
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .error-message {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.5rem;
+            background-color: #f8d7da;
+            border-radius: 4px;
+            border-left: 3px solid #dc3545;
+            animation: fadeIn 0.3s ease-in-out;
+            display: flex;
+            align-items: center;
+        }
+        
+        .error-message i {
+            margin-right: 8px;
+            font-size: 1rem;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        .error-highlight {
+            animation: pulse 0.5s ease-in-out;
+            box-shadow: 0 0 0 2px rgba(220, 53, 69, 0.25);
+        }
+        
+        @media (max-width: 768px) {
+            .add-salle-container {
+                margin: 60px auto;
+                padding: 0 15px;
+            }
+            
+            .add-salle-card {
+                padding: 20px;
+            }
+        }
+    </style>
+{% endblock %}
+=======
+<<<<<<< HEAD
+>>>>>>> c139a4e (Résolution des conflits)
+
+{% block body %}
+<div class="container my-4">
+    <div class="row justify-content-center">
+        <div class="col-lg-8">
+            <div class="card shadow-sm">
+                <div class="card-header bg-primary text-white">
+                    <h2 class="h4 mb-0 text-center">Ajouter une décoration</h2>
+                </div>
+                
+                <div class="card-body p-4">
+                    {{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+                    
+                    {# Flash messages #}
+                    {% for label, messages in app.flashes %}
+                        {% for message in messages %}
+                            <div class="alert alert-{{ label }} alert-dismissible fade show mb-4">
+                                {{ message }}
+                                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                            </div>
+                        {% endfor %}
+                    {% endfor %}
+                    
+                    {# Nom #}
+                    <div class="mb-3">
+                        {{ form_label(form.nomDecor, 'Nom de la décoration') }}
+                        {{ form_widget(form.nomDecor, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.nomDecor.vars.errors|length ? 'is-invalid error-highlight'),
+                                'placeholder': 'Entrez le nom de la décoration'
+                            }
+                        }) }}
+                        {% if form.nomDecor.vars.errors|length %}
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form.nomDecor.vars.errors[0].message }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {# Type #}
+                    <div class="mb-3">
+                        {{ form_label(form.typeDecor, 'Type de décoration') }}
+                        {{ form_widget(form.typeDecor, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.typeDecor.vars.errors|length ? 'is-invalid error-highlight'),
+                                'placeholder': 'Entrez le type de décoration'
+                            }
+                        }) }}
+                        {% if form.typeDecor.vars.errors|length %}
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form.typeDecor.vars.errors[0].message }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    {# Description #}
+                    <div class="mb-3">
+                        {{ form_label(form.descriptionDecor, 'Description') }}
+                        {{ form_widget(form.descriptionDecor, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.descriptionDecor.vars.errors|length ? 'is-invalid error-highlight'),
+                                'rows': 4,
+                                'placeholder': 'Décrivez la décoration en détail'
+                            }
+                        }) }}
+                        {% if form.descriptionDecor.vars.errors|length %}
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form.descriptionDecor.vars.errors[0].message }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="row">
+                        {# Stock #}
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.stock, 'Quantité en stock') }}
+                            {{ form_widget(form.stock, {
+                                'attr': {
+                                    'class': 'form-control ' ~ (form.stock.vars.errors|length ? 'is-invalid error-highlight'),
+                                    'placeholder': 'Quantité disponible'
+                                }
+                            }) }}
+                            {% if form.stock.vars.errors|length %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ form.stock.vars.errors[0].message }}
+                                </div>
+                            {% endif %}
+                        </div>
+                        
+                        {# Prix #}
+                        <div class="col-md-6 mb-3">
+                            {{ form_label(form.prix, 'Prix (DT)') }}
+                            <div class="input-group">
+                                {{ form_widget(form.prix, {
+                                    'attr': {
+                                        'class': 'form-control ' ~ (form.prix.vars.errors|length ? 'is-invalid error-highlight'),
+                                        'placeholder': 'Prix en dinars'
+                                    }
+                                }) }}
+                                <span class="input-group-text">DT</span>
+                            </div>
+                            {% if form.prix.vars.errors|length %}
+                                <div class="error-message">
+                                    <i class="fas fa-exclamation-circle"></i>
+                                    {{ form.prix.vars.errors[0].message }}
+                                </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                    
+                    {# Image #}
+                    <div class="mb-4">
+                        {{ form_label(form.imagedeco, 'Image de la décoration') }}
+                        {{ form_widget(form.imagedeco, {
+                            'attr': {
+                                'class': 'form-control ' ~ (form.imagedeco.vars.errors|length ? 'is-invalid error-highlight')
+                            }
+                        }) }}
+                        <small class="text-muted">Formats acceptés: JPG, PNG, WEBP (max 5MB)</small>
+                        {% if form.imagedeco.vars.errors|length %}
+                            <div class="error-message">
+                                <i class="fas fa-exclamation-circle"></i>
+                                {{ form.imagedeco.vars.errors[0].message }}
+                            </div>
+                        {% endif %}
+                    </div>
+                    
+                    <div class="d-flex justify-content-between mt-4">
+                        <a href="{{ path('decoration_index') }}" class="btn btn-outline-secondary">
+                            <i class="fas fa-arrow-left me-2"></i> Retour
+                        </a>
+                        <button type="submit" class="btn btn-primary">
+                            <i class="fas fa-save me-2"></i> Enregistrer
+                        </button>
+                    </div>
+                    
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<<<<<<< HEAD
+=======
+>>>>>>> Salles
 {% endblock %}
 =======
 {% block stylesheets %}
@@ -323,6 +640,10 @@
         </div>
     </div>
 </div>
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 <script>
 document.addEventListener('DOMContentLoaded', function() {
@@ -353,5 +674,14 @@ document.addEventListener('DOMContentLoaded', function() {
     });
 });
 </script>
+<<<<<<< HEAD
 {% endblock %}
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+{% endblock %}
+=======
+{% endblock %}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles

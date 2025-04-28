@@ -4,10 +4,21 @@ namespace App\Entity;
 
 use App\Repository\CommandeDecorationRepository;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+use Symfony\Component\Validator\Constraints as Assert;
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
 use Symfony\Component\Validator\Constraints as Assert;
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
 use Doctrine\ORM\Mapping as ORM;
 
@@ -22,24 +33,50 @@ class CommandeDecoration
 
     #[ORM\Column(name: 'quantité', type: 'integer')]
 <<<<<<< HEAD
+<<<<<<< HEAD
     private int $quantite;
 =======
+=======
+=======
+<<<<<<< HEAD
+    private int $quantite;
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     #[Assert\NotBlank(message: 'La quantité est requise.')]
     #[Assert\GreaterThanOrEqual(
         value: 1,
         message: 'La quantité doit être au moins égale à 1.'
     )]    private int $quantite;
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
     #[ORM\Column(name: 'prix', type: 'float', precision: 10, scale: 2)]
     private float $prix;
 
     #[ORM\Column(name: 'date_commande', type: 'date', nullable: true)]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    #[Assert\NotBlank(message: 'La date de commande est requise.')]
+#[Assert\GreaterThanOrEqual('today', message: 'La date de commande doit être aujourd\'hui ou dans le futur.')]
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
     #[Assert\NotBlank(message: 'La date de commande est requise.')]
 #[Assert\GreaterThanOrEqual('today', message: 'La date de commande doit être aujourd\'hui ou dans le futur.')]
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     private ?\DateTimeInterface $dateCommande = null;
 
     #[ORM\ManyToOne(targetEntity: Decoration::class)]

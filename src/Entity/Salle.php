@@ -23,10 +23,20 @@ class Salle
         maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
     )]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    private ?string $nomSalle = null;
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     private string $nomSalle;
 =======
     private ?string $nomSalle = null;
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 
     #[ORM\Column(name: 'capacité', type: 'string', length: 255)]
     #[Assert\NotBlank(message: "La capacité est obligatoire")]
@@ -42,6 +52,12 @@ class Salle
 
     #[ORM\Column(name: 'image_salle', type: 'string', length: 255)]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     #[Assert\Image(
         maxSize: "2M",
         mimeTypes: ["image/jpeg", "image/png", "image/webp"],
@@ -50,6 +66,10 @@ class Salle
 =======
     
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     private ?string $imageSalle = null;
 
     #[ORM\Column(name: 'location_salle', type: 'string', length: 255)]
@@ -58,6 +78,15 @@ class Salle
 
     #[ORM\Column(name: 'qualite', type: 'string', length: 255, nullable: true)]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    #[Assert\NotBlank(message: "La qualité est obligatoire")]
+    #[Assert\Choice(
+        choices: ["Bien", "Très bien", "Superbe", "Exceptionnelle"],
+        message: "Choisissez une qualité valide"
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     #[Assert\Choice(
         choices: ["standard", "premium", "luxe"],
         message: "Choisissez une qualité valide (standard, premium ou luxe)"
@@ -67,6 +96,10 @@ class Salle
         choices: ["Bien", "Très bien", "Superbe", "Exceptionnelle"],
         message: "Choisissez une qualité valide"
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     )]
     private ?string $qualite;
 
@@ -82,6 +115,16 @@ class Salle
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+    #[Assert\NotBlank(message: "L’utilisateur est obligatoire")]
+    private ?Utilisateur $user;
+
+
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
     private ?Utilisateur $user;
 
 
@@ -92,6 +135,10 @@ class Salle
 
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
     public function getIdSalle(): int
     {
         return $this->idSalle;

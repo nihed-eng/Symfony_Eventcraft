@@ -3,9 +3,19 @@
 namespace App\Form;
 
 <<<<<<< HEAD
+<<<<<<< HEAD
 =======
 
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+
+=======
+<<<<<<< HEAD
+=======
+
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use App\Entity\Salle;
 use Symfony\Component\Form\AbstractType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
@@ -14,10 +24,21 @@ use Symfony\Component\Form\Extension\Core\Type\FileType;
 use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\NumberType;
 <<<<<<< HEAD
+<<<<<<< HEAD
+=======
+use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
+
+=======
+<<<<<<< HEAD
+>>>>>>> Salles
 =======
 use Symfony\Component\Form\Extension\Core\Type\ChoiceType;
 
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
 use Symfony\Component\Validator\Constraints\NotBlank;
@@ -53,15 +74,30 @@ class SalleType extends AbstractType
                 'required' => false,
                 'attr' => ['class' => 'form-control'],
 <<<<<<< HEAD
+<<<<<<< HEAD
               
 =======
+=======
+=======
+<<<<<<< HEAD
+              
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
                 'constraints' => [
                     new File([
                         'maxSize' => '5M',
                         'mimeTypes' => ['image/jpeg', 'image/png'],
                     ])
                 ],
+<<<<<<< HEAD
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+=======
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             ])
             ->add('locationSalle', TextType::class, [
                 'label' => 'Localisation',
@@ -69,9 +105,29 @@ class SalleType extends AbstractType
              
             ])
 <<<<<<< HEAD
+<<<<<<< HEAD
             ->add('qualite', TextType::class, [
                 'label' => 'Qualité',
                 'attr' => ['class' => 'form-control'],
+=======
+            ->add('qualite', ChoiceType::class, [
+=======
+<<<<<<< HEAD
+            ->add('qualite', TextType::class, [
+>>>>>>> c139a4e (Résolution des conflits)
+                'label' => 'Qualité',
+                'choices' => [
+                    'Bien' => 'Bien', 
+                    'Très bien' => 'Très bien',
+                    'Superbe' => 'Superbe',
+                    'Exceptionnelle' => 'Exceptionnelle'
+                ],
+                'attr' => ['class' => 'form-control'],
+<<<<<<< HEAD
+                'required' => false,
+                'placeholder' => 'Sélectionnez une qualité...'
+=======
+>>>>>>> Salles
                 'required' => false
 =======
             ->add('qualite', ChoiceType::class, [
@@ -86,6 +142,10 @@ class SalleType extends AbstractType
                 'required' => false,
                 'placeholder' => 'Sélectionnez une qualité...'
 >>>>>>> 6ab9b1d (Initial commit)
+<<<<<<< HEAD
+=======
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
             ])
             ->add('prix', NumberType::class, [
                 'label' => 'Prix (€)',
@@ -105,5 +165,14 @@ class SalleType extends AbstractType
 <<<<<<< HEAD
 }
 =======
+<<<<<<< HEAD
 }
 >>>>>>> 6ab9b1d (Initial commit)
+=======
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 6ab9b1d (Initial commit)
+>>>>>>> c139a4e (Résolution des conflits)
+>>>>>>> Salles
