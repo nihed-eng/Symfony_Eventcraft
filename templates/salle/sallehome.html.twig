@@ -58,19 +58,10 @@
     </div>
 </section>
 
+<!-- Hero Section End -->
 
-    <!-- Hero Section End -->
-
-    <!-- Home About Section Begin -->
-    
-    <!-- Home About Section End -->
-
-    <!-- Services Section Begin -->
-    
-    <!-- Services Section End -->
-
-    <!-- Home Room Section Begin -->
-    <section class="home-room spad" style="margin-top: 70px;">
+<!-- Home Room Section Begin -->
+<section class="home-room spad" style="margin-top: 70px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -83,36 +74,30 @@
     </div>           
 
     <div class="container-fluid">
+        <div class="d-flex justify-content-end mb-4 gap-3">
+            <a href="{{ path('app_salle_new') }}" class="btn" style="background-color: rgb(161, 104, 163); border-color: rgb(161, 104, 163); color: white;">
+                 Ajouter une Salle
+            </a>
+        </div>
         <div class="row">
         {% for salle in pagination %}
-    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
-  {% if salle.imageSalle %}
-    {# Sépare les chemins s'il y a des virgules (plusieurs images) et prend la première #}
-    {% set firstPath = salle.imageSalle | split(',') | first %}
-
-    {# Garde seulement le nom du fichier, enlève tout le chemin #}
-    {% set filename = firstPath | split('/') | last | split('\\') | last %}
-
-    {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
-    <div class="home__room__item set-bg" style="background-image: url('/images/{{ filename | url_encode }}');">
-{% else %}
-    <div class="home__room__item">
-        <p>Aucune image disponible</p>
-{% endif %}
-
-
-
-
-        
-            <div class="home__room__title">
-                <h4>{{ salle.nomSalle }}</h4>
-                <h2><sup>DT</sup>{{ salle.prix }}<span>/jour</span></h2>
+            <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                {% if salle.imageSalle %}
+                    {% set firstPath = salle.imageSalle | split(',') | first %}
+                    {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                    <div class="home__room__item set-bg" style="background-image: url('/images/{{ filename | url_encode }}');">
+                {% else %}
+                    <div class="home__room__item">
+                        <p>Aucune image disponible</p>
+                {% endif %}
+                    <div class="home__room__title">
+                        <h4>{{ salle.nomSalle }}</h4>
+                        <h2><sup>DT</sup>{{ salle.prix }}<span>/jour</span></h2>
+                    </div>
+                    <a href="{{ path('details_salle', {'idSalle': salle.idSalle}) }}" class="btn btn-outline-light">CONSULTER MAINTENANT</a>
+                </div>
             </div>
-            <a href="{{ path('details_salle', {'idSalle': salle.idSalle}) }}" class="btn btn-outline-light">CONSULTER MAINTENANT</a>
-        </div>
-    </div>
-{% endfor %}
-
+        {% endfor %}
         </div>
 
         <!-- Pagination Navigation -->
@@ -121,70 +106,67 @@
         </div>
     </div>
 </section>
-
-
     
-    <section class="latest-blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h5>MILLEURS SELECTION</h5>
-                        <h2>MIEUX RESERVEES</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 p-0 order-lg-1 col-md-6 order-md-1">
-
-                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-1.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-2 col-md-6 order-md-2">
-                    <div class="latest__blog__text">
-                        <div class="label">Hotel</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 19th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-3 col-md-6 order-md-4">
-                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-2.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-4 col-md-6 order-md-3">
-                    <div class="latest__blog__text">
-                        <div class="label">Restaurant</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 22th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-6 col-md-6 order-md-5">
-                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
-                        style="background-image: url('{{asset('assets/img/latest-blog/lb-3.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-5 col-md-6 order-md-6">
-                    <div class="latest__blog__text">
-                        <div class="label">Travel</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 25th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-8 col-md-6 order-md-8">
-                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
-                        style="background-image: url('{{asset('assets/img/latest-blog/lb-4.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-7 col-md-6 order-md-7">
-                    <div class="latest__blog__text">
-                        <div class="label">Booking</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 29th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>MILLEURS SELECTION</h5>
+                    <h2>MIEUX RESERVEES</h2>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="row">
+            <div class="col-lg-3 p-0 order-lg-1 col-md-6 order-md-1">
+                <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-1.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-2 col-md-6 order-md-2">
+                <div class="latest__blog__text">
+                    <div class="label">Hotel</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 19th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-3 col-md-6 order-md-4">
+                <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-2.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-4 col-md-6 order-md-3">
+                <div class="latest__blog__text">
+                    <div class="label">Restaurant</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 22th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-6 col-md-6 order-md-5">
+                <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                    style="background-image: url('{{asset('assets/img/latest-blog/lb-3.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-5 col-md-6 order-md-6">
+                <div class="latest__blog__text">
+                    <div class="label">Travel</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 25th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-8 col-md-6 order-md-8">
+                <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
+                    style="background-image: url('{{asset('assets/img/latest-blog/lb-4.jpg') }}"></div>
+            </div>
+            <div class="col-lg-3 p-0 order-lg-7 col-md-6 order-md-7">
+                <div class="latest__blog__text">
+                    <div class="label">Booking</div>
+                    <h5>Ut enim ad minim veniam, quis nostrud</h5>
+                    <p><i class="fa fa-clock-o"></i> 29th March, 2019</p>
+                    <a href="#">Voir Détails</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
 <section class="testimonial spad">
     <div class="container">
@@ -233,32 +215,226 @@
     </div>
 </section>
 
+<!-- Chat Bubble -->
+<div id="chat-bubble" class="chat-bubble">
+    <i class="fa fa-comments"></i>
+</div>
 
-<!-- Include the necessary scripts for Owl Carousel -->
+<!-- Chat Box (hidden by default) -->
+<div id="chat-box" class="chat-box">
+    <div class="chat-header">
+        <h5>Assistant de Recherche de Salles</h5>
+        <span class="close-chat">&times;</span>
+    </div>
+    <div class="chat-messages" id="chat-messages">
+        <div class="message received">
+            <p>Bonjour ! Je suis votre assistant pour trouver la salle parfaite. Dites-moi ce que vous cherchez (localisation, capacité, équipements, budget).</p>
+        </div>
+    </div>
+    <div class="chat-input">
+        <input type="text" id="user-input" placeholder="Ex: Je cherche une salle à Tunis pour 500 personnes...">
+        <button id="send-btn"><i class="fa fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<!-- Include the necessary scripts -->
 <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/owl-carousel/1.3.3/owl.carousel.min.js"></script>
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/js/owl.carousel.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/OwlCarousel2/2.3.4/assets/js/owl.theme.default.min.css">
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs@3.18.0/dist/tf.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow-models/universal-sentence-encoder@1.3.3"></script>
+
+<style>
+    /* Chat Bubble Styles */
+    .chat-bubble {
+        position: fixed;
+        bottom: 30px;
+        right: 30px;
+        width: 60px;
+        height: 60px;
+        background-color: #CBA979;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        z-index: 1000;
+        transition: all 0.3s ease;
+        opacity: 0;
+        transform: translateY(20px);
+    }
+
+    .chat-bubble.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* Chat Box Styles */
+    .chat-box {
+        position: fixed;
+        bottom: 100px;
+        right: 30px;
+        width: 350px;
+        background: white;
+        border-radius: 10px;
+        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        z-index: 1001;
+        display: none;
+        flex-direction: column;
+        overflow: hidden;
+    }
+
+    .chat-box.active {
+        display: flex;
+    }
+
+    .chat-header {
+        background-color: rgb(161, 104, 163);
+        color: white;
+        padding: 15px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .chat-header h5 {
+        margin: 0;
+        font-size: 16px;
+    }
+
+    .close-chat {
+        font-size: 20px;
+        cursor: pointer;
+    }
+
+    .chat-messages {
+        padding: 15px;
+        height: 300px;
+        overflow-y: auto;
+        background-color: #f9f9f9;
+    }
+
+    .message {
+        margin-bottom: 10px;
+        padding: 8px 12px;
+        border-radius: 18px;
+        max-width: 80%;
+        word-wrap: break-word;
+    }
+
+    .message.received {
+        background-color: #e5e5ea;
+        color: #000;
+        align-self: flex-start;
+    }
+
+    .message.sent {
+        background-color: rgb(161, 104, 163);
+        color: white;
+        align-self: flex-end;
+        margin-left: auto;
+    }
+
+    .chat-input {
+        display: flex;
+        padding: 10px;
+        border-top: 1px solid #eee;
+        background-color: white;
+    }
+
+    .chat-input input {
+        flex: 1;
+        padding: 10px;
+        border: 1px solid #ddd;
+        border-radius: 20px;
+        outline: none;
+    }
+
+    .chat-input button {
+        background: none;
+        border: none;
+        color: rgb(161, 104, 163);
+        font-size: 18px;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+    
+    /* Suggestion buttons */
+    .suggestions {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+        margin-top: 10px;
+    }
+    
+    .suggestion-btn {
+        background-color: #e5e5ea;
+        border: none;
+        border-radius: 15px;
+        padding: 5px 10px;
+        font-size: 12px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+    
+    .suggestion-btn:hover {
+        background-color: #d1d1d6;
+    }
+    
+    /* Loading indicator */
+    .typing-indicator {
+        display: inline-block;
+        padding: 8px 12px;
+        background-color: #e5e5ea;
+        border-radius: 18px;
+    }
+    
+    .typing-indicator span {
+        height: 8px;
+        width: 8px;
+        background-color: #666;
+        border-radius: 50%;
+        display: inline-block;
+        margin: 0 2px;
+        opacity: 0.4;
+    }
+    
+    .typing-indicator span:nth-child(1) {
+        animation: typing 1s infinite;
+    }
+    
+    .typing-indicator span:nth-child(2) {
+        animation: typing 1s infinite 0.2s;
+    }
+    
+    .typing-indicator span:nth-child(3) {
+        animation: typing 1s infinite 0.4s;
+    }
+    
+    @keyframes typing {
+        0% { opacity: 0.4; }
+        50% { opacity: 1; }
+        100% { opacity: 0.4; }
+    }
+</style>
+
 <script>
     $(document).ready(function() {
+        // Initialize Owl Carousels
         $(".testimonial__slider").owlCarousel({
             loop: true,
             margin: 10,
             nav: true,
             dots: true,
-            items: 1,  /* Afficher une seule slide à la fois */
+            items: 1,
             autoplay: true,
             autoplayTimeout: 3000,
             autoplayHoverPause: true,
-            smartSpeed: 1000,  /* Vitesse de transition */
-            animateOut: null,  /* Pas d'animation de fade */
-            animateIn: null,   /* Pas d'animation de fade */
+            smartSpeed: 1000,
         });
-    });
-</script>
 
-<script>
-    $(document).ready(function() {
         $(".hero__slider").owlCarousel({
             loop: true,
             margin: 0,
@@ -270,52 +446,323 @@
             autoplayHoverPause: true,
             smartSpeed: 1000
         });
-    });
-</script>
 
+        // Chat bubble functionality
+        const chatBubble = document.getElementById('chat-bubble');
+        const chatBox = document.getElementById('chat-box');
+        const closeChat = document.querySelector('.close-chat');
+        const chatMessages = document.getElementById('chat-messages');
+        const userInput = document.getElementById('user-input');
+        const sendBtn = document.getElementById('send-btn');
+        
+        // Sample salle data (in a real app, this would come from your database)
+        const salles = [
+            {id: 1, nom: "D", capacite: 777, equipement: "tous", location: "Tunis", qualite: "Exceptionnelle", prix: 7895.00},
+            {id: 63, nom: "Bouraoui", capacite: 600, equipement: "projecteur", location: "Carthage", qualite: "Exceptionnel", prix: 1000.00},
+            {id: 69, nom: "Espace Bouraoui", capacite: 500, equipement: "tout", location: "Carthage", qualite: "Très bien", prix: 12000.00},
+            {id: 70, nom: "123456azertyy", capacite: 900, equipement: "tout", location: "Ariana", qualite: "Moyenne", prix: 15000.00},
+            {id: 71, nom: "Dar Jebal", capacite: 250, equipement: "tous", location: "Bizerte", qualite: "Superbe", prix: 1000.00},
+            {id: 72, nom: "MAWAZIN", capacite: 500, equipement: "tous", location: "Hammamet nabeul", qualite: "super", prix: 2500.00},
+            {id: 73, nom: "MAWAZIN", capacite: 500, equipement: "ttttt", location: "Hammamet nabeul", qualite: "super", prix: 2500.00},
+            {id: 74, nom: "MAWAZINtest", capacite: 500, equipement: "jhgfdsvcxfd", location: "Hammamet nabeul", qualite: "super", prix: 2500.00},
+            {id: 75, nom: "Dar Jebal123", capacite: 132, equipement: "1333", location: "Hammamet nabeur", qualite: "tres bien", prix: 2500.00},
+            {id: 76, nom: "Dar Mhenna", capacite: 23, equipement: "kk", location: "Hammamet nabeur", qualite: "tres bien", prix: 2500.00},
+            {id: 77, nom: "Dar Mhenna", capacite: 23, equipement: "tout", location: "Hammamet nabeur", qualite: "tres bien", prix: 2500.00},
+            {id: 79, nom: "hiiiiiii", capacite: 55, equipement: "htrhhhhhhg", location: "Hammamet nabeul", qualite: "Très bien", prix: 2500.00},
+            {id: 80, nom: "Dar Mhenna", capacite: 5005, equipement: "dddddddd", location: "zzzzz", qualite: "Superbe", prix: 444.00},
+            {id: 81, nom: "zzzzzzzzzzzz", capacite: 5005, equipement: "zzzzzzzzz", location: "zzzzz", qualite: "Très bien", prix: 444.00},
+            {id: 82, nom: "Dar Jebal", capacite: 5005, equipement: "ssssssss", location: "Hammamet nabeur", qualite: "Bien", prix: 2500.00}
+        ];
 
-<script>
-    window.addEventListener('scroll', function () {
-        const header = document.querySelector('.header__content');
-        if (window.scrollY > 50) {
-            header.style.backgroundColor = 'black';
-        } else {
-            header.style.backgroundColor = 'transparent';
+        // Show chat bubble on scroll
+        window.addEventListener('scroll', function() {
+            if (window.scrollY > 300) {
+                chatBubble.classList.add('visible');
+            } else {
+                chatBubble.classList.remove('visible');
+            }
+        });
+
+        // Toggle chat box
+        chatBubble.addEventListener('click', function() {
+            chatBox.classList.toggle('active');
+        });
+
+        // Close chat box
+        closeChat.addEventListener('click', function() {
+            chatBox.classList.remove('active');
+        });
+
+        // Send message when button is clicked
+        sendBtn.addEventListener('click', sendMessage);
+        
+        // Send message when Enter key is pressed
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        // Function to send a message
+        function sendMessage() {
+            const message = userInput.value.trim();
+            if (message === '') return;
+            
+            // Add user message to chat
+            addMessage(message, 'sent');
+            userInput.value = '';
+            
+            // Show typing indicator
+            showTypingIndicator();
+            
+            // Process the message after a short delay
+            setTimeout(() => {
+                processUserMessage(message);
+            }, 1000);
         }
-    });
-</script>
-
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-    const dropdownToggle = document.getElementById('navbarDropdown');
-    const dropdownMenu = dropdownToggle.nextElementSibling;
-
-    // Masquer le menu dropdown par défaut
-    dropdownMenu.classList.remove('show');
-
-    // Toggle l'affichage du dropdown au clic
-    dropdownToggle.addEventListener('click', function (event) {
-        event.preventDefault(); // Empêche le lien de recharger la page
-        dropdownMenu.classList.toggle('show');
-    });
-
-    // Fermer le dropdown si on clique ailleurs dans la page
-    document.addEventListener('click', function (event) {
-        if (!dropdownToggle.contains(event.target) && !dropdownMenu.contains(event.target)) {
-            dropdownMenu.classList.remove('show');
+        
+        // Function to add a message to the chat
+        function addMessage(text, type) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', type);
+            messageDiv.innerHTML = `<p>${text}</p>`;
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
         }
+        
+        // Function to show typing indicator
+        function showTypingIndicator() {
+            const typingDiv = document.createElement('div');
+            typingDiv.classList.add('typing-indicator');
+            typingDiv.id = 'typing-indicator';
+            typingDiv.innerHTML = '<span></span><span></span><span></span>';
+            chatMessages.appendChild(typingDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Function to hide typing indicator
+        function hideTypingIndicator() {
+            const typingDiv = document.getElementById('typing-indicator');
+            if (typingDiv) {
+                typingDiv.remove();
+            }
+        }
+        
+        // Function to process user message and generate response
+        async function processUserMessage(message) {
+            hideTypingIndicator();
+            
+            // Simple keyword matching (in a real app, you'd use ML/NLP)
+            const lowerMessage = message.toLowerCase();
+            
+            // Check for greetings
+            if (lowerMessage.includes('bonjour') || lowerMessage.includes('salut') || 
+                lowerMessage.includes('hello') || lowerMessage.includes('hi')) {
+                addMessage("Bonjour ! Comment puis-je vous aider à trouver la salle parfaite ?", 'received');
+                showSuggestions([
+                    "Salles à Tunis", 
+                    "Salles pour 500 personnes", 
+                    "Salles avec projecteur",
+                    "Salles moins de 2000 DT"
+                ]);
+                return;
+            }
+            
+            // Check for location
+            if (lowerMessage.includes('tunis') || lowerMessage.includes('carthage') || 
+                lowerMessage.includes('ariana') || lowerMessage.includes('bizerte') || 
+                lowerMessage.includes('hammamet') || lowerMessage.includes('nabeul')) {
+                
+                const locations = ['tunis', 'carthage', 'ariana', 'bizerte', 'hammamet', 'nabeul'];
+                const foundLocation = locations.find(loc => lowerMessage.includes(loc));
+                
+                if (foundLocation) {
+                    const filteredSalles = salles.filter(salle => 
+                        salle.location.toLowerCase().includes(foundLocation)
+                    );
+                    
+                    if (filteredSalles.length > 0) {
+                        let response = `Voici des salles disponibles à ${foundLocation.charAt(0).toUpperCase() + foundLocation.slice(1)}:`;
+                        filteredSalles.slice(0, 3).forEach(salle => {
+                            response += `<br>- ${salle.nom} (${salle.capacite} pers., ${salle.prix} DT)`;
+                        });
+                        
+                        if (filteredSalles.length > 3) {
+                            response += `<br><br>Et ${filteredSalles.length - 3} autres salles. Voulez-vous plus de détails ?`;
+                        }
+                        
+                        addMessage(response, 'received');
+                        showSuggestions([
+                            `Voir toutes les salles à ${foundLocation}`,
+                            "Filtrer par capacité",
+                            "Filtrer par prix"
+                        ]);
+                    } else {
+                        addMessage(`Désolé, je n'ai pas trouvé de salles à ${foundLocation}. Voulez-vous essayer une autre localisation ?`, 'received');
+                    }
+                    return;
+                }
+            }
+            
+            // Check for capacity
+            if (lowerMessage.includes('personnes') || lowerMessage.includes('capacité') || 
+                lowerMessage.includes('capacite') || lowerMessage.includes('gens') || 
+                /(\d+)\s*(pers|personnes|gens|capacité|capacite)/i.test(message)) {
+                
+                const capacityMatch = message.match(/\d+/);
+                if (capacityMatch) {
+                    const capacity = parseInt(capacityMatch[0]);
+                    const filteredSalles = salles.filter(salle => salle.capacite >= capacity);
+                    
+                    if (filteredSalles.length > 0) {
+                        let response = `Voici des salles avec une capacité d'au moins ${capacity} personnes:`;
+                        filteredSalles.slice(0, 3).forEach(salle => {
+                            response += `<br>- ${salle.nom} (${salle.location}, ${salle.prix} DT)`;
+                        });
+                        
+                        if (filteredSalles.length > 3) {
+                            response += `<br><br>Et ${filteredSalles.length - 3} autres salles.`;
+                        }
+                        
+                        addMessage(response, 'received');
+                        showSuggestions([
+                            "Filtrer par localisation",
+                            "Filtrer par équipement",
+                            `Voir toutes les salles pour ${capacity} personnes`
+                        ]);
+                    } else {
+                        addMessage(`Désolé, je n'ai pas trouvé de salles avec une capacité d'au moins ${capacity} personnes.`, 'received');
+                    }
+                    return;
+                }
+            }
+            
+            // Check for price
+            if (lowerMessage.includes('prix') || lowerMessage.includes('budget') || 
+                lowerMessage.includes('dt') || lowerMessage.includes('dinars') || 
+                /moins de (\d+)\s*(dt|dinars)/i.test(message) || 
+                /(\d+)\s*(dt|dinars)/i.test(message)) {
+                
+                const priceMatch = message.match(/\d+/);
+                if (priceMatch) {
+                    const maxPrice = parseInt(priceMatch[0]);
+                    const filteredSalles = salles.filter(salle => salle.prix <= maxPrice);
+                    
+                    if (filteredSalles.length > 0) {
+                        let response = `Voici des salles à moins de ${maxPrice} DT:`;
+                        filteredSalles.slice(0, 3).forEach(salle => {
+                            response += `<br>- ${salle.nom} (${salle.location}, ${salle.capacite} pers.)`;
+                        });
+                        
+                        if (filteredSalles.length > 3) {
+                            response += `<br><br>Et ${filteredSalles.length - 3} autres salles.`;
+                        }
+                        
+                        addMessage(response, 'received');
+                        showSuggestions([
+                            "Filtrer par localisation",
+                            "Filtrer par capacité",
+                            `Voir toutes les salles à moins de ${maxPrice} DT`
+                        ]);
+                    } else {
+                        addMessage(`Désolé, je n'ai pas trouvé de salles à moins de ${maxPrice} DT. Voulez-vous augmenter votre budget ?`, 'received');
+                    }
+                    return;
+                }
+            }
+            
+            // Check for equipment
+            if (lowerMessage.includes('équipement') || lowerMessage.includes('equipement') || 
+                lowerMessage.includes('projecteur') || lowerMessage.includes('sono') || 
+                lowerMessage.includes('écran') || lowerMessage.includes('écrans')) {
+                
+                const equipmentKeywords = ['projecteur', 'sono', 'écran', 'équipement', 'equipement', 'tout'];
+                const foundEquipment = equipmentKeywords.find(keyword => lowerMessage.includes(keyword));
+                
+                if (foundEquipment) {
+                    const filteredSalles = salles.filter(salle => 
+                        salle.equipement.toLowerCase().includes(foundEquipment)
+                    );
+                    
+                    if (filteredSalles.length > 0) {
+                        let response = `Voici des salles avec ${foundEquipment}:`;
+                        filteredSalles.slice(0, 3).forEach(salle => {
+                            response += `<br>- ${salle.nom} (${salle.location}, ${salle.prix} DT)`;
+                        });
+                        
+                        if (filteredSalles.length > 3) {
+                            response += `<br><br>Et ${filteredSalles.length - 3} autres salles.`;
+                        }
+                        
+                        addMessage(response, 'received');
+                        showSuggestions([
+                            "Filtrer par localisation",
+                            "Filtrer par prix",
+                            `Voir toutes les salles avec ${foundEquipment}`
+                        ]);
+                    } else {
+                        addMessage(`Désolé, je n'ai pas trouvé de salles avec ${foundEquipment}.`, 'received');
+                    }
+                    return;
+                }
+            }
+            
+            // Default response if no specific intent is detected
+            addMessage("Je peux vous aider à trouver une salle selon la localisation, capacité, équipements ou budget. Pouvez-vous préciser votre recherche ?", 'received');
+            showSuggestions([
+                "Salles à Tunis", 
+                "Salles pour 500 personnes", 
+                "Salles avec projecteur",
+                "Salles moins de 2000 DT"
+            ]);
+        }
+        
+        // Function to show quick reply suggestions
+        function showSuggestions(suggestions) {
+            const suggestionsDiv = document.createElement('div');
+            suggestionsDiv.classList.add('suggestions');
+            
+            suggestions.forEach(suggestion => {
+                const button = document.createElement('button');
+                button.classList.add('suggestion-btn');
+                button.textContent = suggestion;
+                button.addEventListener('click', () => {
+                    userInput.value = suggestion;
+                    sendMessage();
+                });
+                suggestionsDiv.appendChild(button);
+            });
+            
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message', 'received');
+            messageDiv.appendChild(suggestionsDiv);
+            
+            chatMessages.appendChild(messageDiv);
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+        
+        // Initialize TensorFlow.js model (for more advanced NLP in the future)
+        async function loadModel() {
+            try {
+                // Load the Universal Sentence Encoder
+                const model = await use.load();
+                console.log("Model loaded successfully");
+                return model;
+            } catch (err) {
+                console.error("Failed to load model:", err);
+                return null;
+            }
+        }
+        
+        // Load the model when chat is opened
+        let useModel = null;
+        chatBubble.addEventListener('click', async function() {
+            if (!useModel) {
+                showTypingIndicator();
+                useModel = await loadModel();
+                hideTypingIndicator();
+            }
+        });
     });
-});
-
-
-
 </script>
-
-
-
-<!-- Your JavaScript to initialize Owl Carousel -->
-
-    <!-- Testimonial Section End -->
-
-    <!-- Home Room Section End -->
 {% endblock %}

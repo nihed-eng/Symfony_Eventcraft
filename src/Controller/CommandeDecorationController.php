@@ -15,7 +15,12 @@ use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\Security\Core\Security;
+<<<<<<< Updated upstream
 
+=======
+use App\Repository\UtilisateurRepository;
+use App\Service\PdfService;
+>>>>>>> Stashed changes
 
 
 class CommandeDecorationController extends AbstractController
@@ -102,9 +107,32 @@ public function show(
 }
 
    
-   
+#[Route('/paimentsucess', name: 'paimentsucess_index', methods: ['GET'])]
+public function paimentsucess(
+    Request $request,
+    CommandeDecorationRepository $commandeRepo,
+    PaginatorInterface $paginator
+): Response
+{
+    // Récupération des commandes avec les décorations associées
+    $query = $commandeRepo->createQueryBuilder('c')
+        ->leftJoin('c.decoration', 'd')
+        ->addSelect('d')
+        ->orderBy('c.idCommande', 'DESC')
+        ->getQuery();
 
+    // Pagination des résultats
+    $pagination = $paginator->paginate(
+        $query,
+        $request->query->getInt('page', 1), // Page courante
+        10 // Nombre d'éléments par page
+    );
 
+    // Rendu du template avec la variable pagination
+    return $this->render('commandedecoration/sucesspaiment.html.twig', [
+        'pagination' => $pagination
+    ]);
+}
 
     #[Route('/commandedecoration/{id}/edit', name: 'commandedecoration_edit')]
     public function edit(
@@ -148,4 +176,45 @@ public function show(
 
         return $this->redirectToRoute('commandedecoration_index');
     }
+    #[Route('/commande/payer/{id}', name: 'commande_payer')]
+public function payer(CommandeDecoration $commande): Response
+{
+    return $this->redirectToRoute('paiement_checkout', [
+        'id' => $commande->getIdCommande(),
+    ]);
+}
+
+
+
+#[Route('/commande/{id}/facture', name: 'commande_facture')]
+public function facture(CommandeDecoration $commande, PdfService $pdfService): Response
+{
+    $pdfContent = $pdfService->generatePdf('invoice/invoice.html.twig', [
+        'commande' => $commande,
+    ]);
+
+    return new Response($pdfContent, 200, [
+        'Content-Type' => 'application/pdf',
+        'Content-Disposition' => 'attachment; filename="facture_'.$commande->getIdCommande().'.pdf"',
+    ]);
+}
+#[Route('/ticket/{id}', name: 'commande_qr')]
+public function showTicket($id, CommandeDecorationRepository $commandeDecorationRepository): Response
+{
+    // Recherche de la commande
+    $commande = $commandeDecorationRepository->find($id);
+
+    if (!$commande) {
+        throw $this->createNotFoundException("Commande avec l'ID $id non trouvée.");
+    }
+
+    // Vérifie que les données de la commande sont correctement passées à la vue
+    dump($commande); // Pour vérifier les données de la commande
+
+    return $this->render('commandedecoration/ticket.html.twig', [
+        'commande' => $commande,
+    ]);
+}
+
+
 }

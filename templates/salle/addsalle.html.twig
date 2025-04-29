@@ -1,6 +1,217 @@
 {% extends 'base.html.twig' %}
 
+<<<<<<< Updated upstream
 {% block title %}Ajouter une nouvelle salle{% endblock %}
+=======
+{% block title %}Ajouter une salle{% endblock %}
+
+{% block stylesheets %}
+    {{ parent() }}
+    <style>
+        :root {
+            --primary-color: #8D598F;
+            --secondary-color: #CBA979;
+            --light-gray: #f8f9fa;
+            --dark-gray: #343a40;
+        }
+        select.form-control {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+    background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%238D598F' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+    background-repeat: no-repeat;
+    background-position: right 10px center;
+    background-size: 1em;
+    padding-right: 2.5em;
+    cursor: pointer;
+}
+   body {
+            position: relative;
+            min-height: 100vh;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('/images/salle1.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            z-index: -2;
+            opacity: 0.9;
+            filter: brightness(0.8);
+        }
+
+select.form-control:focus {
+    border-color: #8D598F;
+    box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.25);
+}
+            
+        .is-invalid {
+            border-color: #dc3545 !important;
+            animation: shake 0.5s;
+        }
+        
+        .form-errors {
+            color: #dc3545;
+            font-size: 0.85rem;
+            margin-top: 0.25rem;
+            padding: 0.25rem;
+            border-radius: 4px;
+        }
+        
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            10%, 30%, 50%, 70%, 90% { transform: translateX(-5px); }
+            20%, 40%, 60%, 80% { transform: translateX(5px); }
+        }
+        
+        .add-salle-container {
+            max-width: 1000px;
+            margin: 110px auto;
+            padding: 0 20px;
+            font-family: 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        .add-salle-card {
+            background: white;
+            background: rgb(255 255 255 / 66%);
+
+            box-shadow: 0 2px 15px rgba(0,0,0,0.08);
+            border: 1px solid #e0e0e0;
+            padding: 40px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .add-salle-title {
+            text-align: center;
+            font-size: 32px;
+            font-weight: 300;
+            margin: 0 0 40px 0;
+            color: var(--primary-color);
+            padding-bottom: 15px;
+            border-bottom: 1px solid #e0e0e0;
+            position: relative;
+        }
+        
+        .add-salle-title::after {
+            content: '';
+            position: absolute;
+            bottom: -1px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 2px;
+            background: var(--secondary-color);
+        }
+        
+        .modal-form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 25px;
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            font-size: 14px;
+            color: #555;
+            font-weight: 500;
+        }
+        
+        .form-control {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            font-size: 14px;
+            background: #f9f9f9;
+        }
+        
+        .form-control:focus {
+            border-color: var(--primary-color);
+            outline: none;
+            box-shadow: 0 0 0 2px rgba(141, 89, 143, 0.1);
+        }
+        
+   .btn-reserver {
+            background: #8d598f;
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 0px;
+            font-weight: 600;
+            font-size: 1.1rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s;
+            display: block;
+            width: 100%;
+            margin: 2rem 0 1rem;
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        
+        .btn-reserver:hover, .btn-reserver:focus {
+         background: transparent;
+border: 2px solid  #8d598f;
+
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(0,0,0,0.2);
+            letter-spacing: 1.5px;
+            outline: none;
+        }
+        
+
+        .form-submit {
+            grid-column: span 2;
+            padding: 14px;
+            font-size: 16px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            font-weight: 500;
+        }
+        
+
+
+        .alert-danger {
+            background: #fee2e2;
+            color: #b91c1c;
+            padding: 15px;
+            border: 1px solid #fecaca;
+            margin-bottom: 20px;
+        }
+        
+        .pulse-animation {
+            animation: pulse 2s infinite;
+        }
+        
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.02); }
+            100% { transform: scale(1); }
+        }
+        
+        @media (max-width: 768px) {
+            .modal-form {
+                grid-template-columns: 1fr;
+            }
+            
+            .form-submit {
+                grid-column: span 1;
+            }
+        }
+    </style>
+{% endblock %}
+>>>>>>> Stashed changes
 
 {% block body %}
 <section class="h-100 gradient-custom-2">
@@ -32,6 +243,7 @@
                 Ajouter une salle
               </button>
             </div>
+<<<<<<< Updated upstream
           </div>
 
           <h1 class="edit-salle-title">Ajouter une nouvelle Salle</h1>
@@ -88,6 +300,75 @@
                     onmouseover="this.style.backgroundColor='#CBA979'; this.style.color='white'"
                     onmouseout="this.style.backgroundColor='transparent'; this.style.color='#CBA979'">
                 Enregistrer
+=======
+            
+            <div class="form-group">
+                {{ form_label(form.equipement) }}
+                {{ form_widget(form.equipement, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.equipement.vars.errors|length ? ' is-invalid' : ''),
+                        'rows': 3,
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.equipement) }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.locationSalle) }}
+                {{ form_widget(form.locationSalle, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.locationSalle.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.locationSalle) }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.qualite) }}
+                {{ form_widget(form.qualite, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.qualite.vars.errors|length ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.qualite) }}
+                </div>
+            </div>
+            
+            <div class="form-group">
+                {{ form_label(form.prix) }}
+                {{ form_widget(form.prix, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.prix.vars.errors|length ? ' is-invalid' : ''),
+                        'required': 'required'
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.prix) }}
+                </div>
+            </div>
+            
+            <div class="form-group" style="grid-column: span 2;">
+                {{ form_label(form.imageFile) }}
+                {{ form_widget(form.imageFile, {
+                    'attr': {
+                        'class': 'form-control' ~ (form.imageFile.vars.errors|length ? ' is-invalid' : '')
+                    }
+                }) }}
+                <div class="form-errors">
+                    {{ form_errors(form.imageFile) }}
+                </div>
+            </div>
+            
+            <button type="submit" class="form-submit btn-reserver pulse-animation">
+                <i class="fas fa-plus-circle"></i> Créer la salle
+>>>>>>> Stashed changes
             </button>
 
             {{ form_end(form) }}

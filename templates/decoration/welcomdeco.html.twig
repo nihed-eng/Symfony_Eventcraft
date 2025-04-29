@@ -3,7 +3,7 @@
 {% block title %}Event Craft-Décorations{% endblock %}
 
 {% block body %}
-    <!-- Hero Section Begin -->
+<!-- Hero Section Begin -->
 <section class="hero spad">
     <div class="overlay"></div>
     
@@ -57,20 +57,18 @@
         </form>
     </div>
 </section>
+<!-- Hero Section End -->
 
+<!-- Home About Section Begin -->
 
-    <!-- Hero Section End -->
+<!-- Home About Section End -->
 
-    <!-- Home About Section Begin -->
-    
-    <!-- Home About Section End -->
+<!-- Services Section Begin -->
 
-    <!-- Services Section Begin -->
-    
-    <!-- Services Section End -->
+<!-- Services Section End -->
 
-    <!-- Home Room Section Begin -->
-   <section class="home-room spad" style="margin-top: 70px;">
+<!-- Home Room Section Begin -->
+<section class="home-room spad" style="margin-top: 70px;">
     <div class="container">
         <div class="row">
             <div class="col-lg-12">
@@ -80,115 +78,80 @@
                 </div>
             </div>
         </div>
-    </div>
-    <div class="container-fluid">
-        <div class="row">
-        {% for decoration in pagination %}
-            <div class="col-lg-3 col-md-6 col-sm-6 p-0">
-                {% if decoration.imagedeco %}
-                    <div class="home__room__item set-bg" style="background-image: url('{{ asset('images/' ~ decoration.imagedeco) }}');">
-                {% else %}
-                    <div class="home__room__item">
-                        <p>Aucune image disponible</p>
-                {% endif %}
-                
-                    <div class="home__room__title">
-                        <h4>{{ decoration.nomDecor }}</h4>
-                        <h2><sup></sup>{{ decoration.prix }}<span>/DT</span></h2>
-                    </div>
 
-                 <div class="home__room__buttons mt-2" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
-<a href="{{ path('decoration_show_one', {'id': decoration.idDecor}) }}"    class="btn btn-outline-warning" 
-   style="margin: 0 auto; width: 150px; text-align: center; left: 50%; transform: translateX(-50%);">
-   Voir Détails
-</a>
+        <!-- Ajout de la barre de recherche -->
+        <div class="row mb-4">
+            <div class="col-lg-6 offset-lg-3">
+                <input type="text" id="search-deco" class="form-control" placeholder="Rechercher une décoration par nom...">
+            </div>
+        </div>
 
-                        
+<!-- Sélecteur de tri -->
+
+
+
+
+        <div class="container-fluid">
+            <div class="row" id="decoration-list">
+                {% for decoration in pagination %}
+                <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                    {% if decoration.imagedeco %}
+                        <div class="home__room__item set-bg" style="background-image: url('{{ asset('images/' ~ decoration.imagedeco) }}');">
+                    {% else %}
+                        <div class="home__room__item">
+                            <p>Aucune image disponible</p>
+                    {% endif %}
+                    
+                        <div class="home__room__title">
+                            <h4>{{ decoration.nomDecor }}</h4>
+                            <h2><sup></sup>{{ decoration.prix }}<span>/DT</span></h2>
+                        </div>
+
+                        <div class="home__room__buttons mt-2" style="display: flex; flex-direction: column; align-items: flex-end; gap: 10px;">
+                            <a href="{{ path('decoration_show_one', {'id': decoration.idDecor}) }}" class="btn btn-outline-warning" 
+                            style="margin: 0 auto; width: 150px; text-align: center; left: 50%; transform: translateX(-50%);">
+                            Voir Détails
+                            </a>
+
                             <form method="post" action="{{ path('decoration_delete', {'id': decoration.idDecor}) }}"
-                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette décoration ?');" style="margin: 0;">
-                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ decoration.idDecor) }}">
-                            <button type="submit" class="btn btn-outline-danger" style="font-size: 18px; color: #ffffff; font-family: 'Barlow Condensed', sans-serif; position: relative; padding: 4px 0; display: inline-block; border: none; background: none;">
-                                <i class="ion-ios-trash" style="font-size: 37px; color: #ffffff; transition: color 0.3s; padding-right: 10px;"></i>
-                            </button>
-                        </form>
+                                onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette décoration ?');" style="margin: 0;">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ decoration.idDecor) }}">
+                                <button type="submit" class="btn btn-outline-danger" style="font-size: 18px; color: #ffffff; font-family: 'Barlow Condensed', sans-serif; position: relative; padding: 4px 0; display: inline-block; border: none; background: none;">
+                                    <i class="ion-ios-trash" style="font-size: 37px; color: #ffffff; transition: color 0.3s; padding-right: 10px;"></i>
+                                </button>
+                            </form>
+                        </div>
                     </div>
                 </div>
+                {% endfor %}
             </div>
-        {% endfor %}
-      
 
-        <!-- Pagination Navigation -->
-      <div class="pagination">
-    {{ knp_pagination_render(pagination) }}
-</div>
-
+            <!-- Pagination Navigation -->
+            <div class="pagination">
+                {{ knp_pagination_render(pagination) }}
+            </div>
+        </div>
     </div>
 </section>
 
-
-    
-    <section class="latest-blog spad">
-        <div class="container">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="section-title">
-                        <h5>MILLEURS SELECTION</h5>
-                        <h2>MIEUX RESERVEES</h2>
-                    </div>
-                </div>
-            </div>
-            <div class="row">
-                <div class="col-lg-3 p-0 order-lg-1 col-md-6 order-md-1">
-
-                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-1.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-2 col-md-6 order-md-2">
-                    <div class="latest__blog__text">
-                        <div class="label">Hotel</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 19th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-3 col-md-6 order-md-4">
-                    <div class="latest__blog__pic set-bg" style="background-image: url('{{asset('assets/img/latest-blog/lb-2.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-4 col-md-6 order-md-3">
-                    <div class="latest__blog__text">
-                        <div class="label">Restaurant</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 22th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-6 col-md-6 order-md-5">
-                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
-                        style="background-image: url('{{asset('assets/img/latest-blog/lb-3.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-5 col-md-6 order-md-6">
-                    <div class="latest__blog__text">
-                        <div class="label">Travel</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 25th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-8 col-md-6 order-md-8">
-                    <div class="latest__blog__pic latest__blog__pic__last__row set-bg"
-                        style="background-image: url('{{asset('assets/img/latest-blog/lb-4.jpg') }}"></div>
-                </div>
-                <div class="col-lg-3 p-0 order-lg-7 col-md-6 order-md-7">
-                    <div class="latest__blog__text">
-                        <div class="label">Booking</div>
-                        <h5>Ut enim ad minim veniam, quis nostrud</h5>
-                        <p><i class="fa fa-clock-o"></i> 29th March, 2019</p>
-                        <a href="#">Voir Détails</a>
-                    </div>
+<!-- Latest Blog Section -->
+<section class="latest-blog spad">
+    <div class="container">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="section-title">
+                    <h5>MILLEURS SELECTION</h5>
+                    <h2>MIEUX RESERVEES</h2>
                 </div>
             </div>
         </div>
-    </section>
+        <div class="row">
+            <!-- Blog Items... -->
+        </div>
+    </div>
+</section>
 
+<!-- Testimonial Section -->
 <section class="testimonial spad">
     <div class="container">
         <div class="row">
@@ -202,11 +165,7 @@
                         <div class="testimonial__item">
                             <h5>Detailed Review:</h5>
                             <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
                             </div>
                             <p>This is a review of the product. The quality is great!</p>
                             <div class="testimonial__author">
@@ -217,11 +176,7 @@
                         <div class="testimonial__item">
                             <h5>Detailed Review:</h5>
                             <div class="rating">
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star"></i>
-                                <i class="fa fa-star-o"></i>
+                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i>
                             </div>
                             <p>Excellent service, and the product exceeded my expectations!</p>
                             <div class="testimonial__author">
@@ -233,7 +188,7 @@
                 </div>
             </div>
         </div>
-    </div>
+    </div> 
 </section>
 
 
@@ -272,6 +227,15 @@
             autoplayTimeout: 3000,
             autoplayHoverPause: true,
             smartSpeed: 1000
+        });
+ 
+     // Petite recherche en direct (optionnel)
+        $('#search-deco').keyup(function() {
+            var search = $(this).val().toLowerCase();
+            $('#decoration-list > div').each(function() {
+                var text = $(this).text().toLowerCase();
+                $(this).toggle(text.indexOf(search) > -1);
+            });
         });
     });
 </script>
@@ -321,4 +285,28 @@ document.addEventListener('DOMContentLoaded', function () {
     <!-- Testimonial Section End -->
 
     <!-- Home Room Section End -->
+
+
+    <!-- AJAX Script -->
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $('#search-deco').on('keyup', function () {
+        const query = $(this).val();
+        $.ajax({
+            url: "{{ path('decoration_search') }}",
+            data: { q: query },
+            success: function (data) {
+                $('#deco-results').html(data);
+            }
+        });
+    });
+</script>
+<script>
+    document.getElementById('sort-deco').addEventListener('change', function () {
+        const selectedSort = this.value;
+        const url = new URL(window.location.href);
+        url.searchParams.set('sort', selectedSort);
+        window.location.href = url.toString();
+    });
+</script>
 {% endblock %}

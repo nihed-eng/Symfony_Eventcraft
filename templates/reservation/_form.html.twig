@@ -1,4 +1,88 @@
-{{ form_start(form) }}
-    {{ form_widget(form) }}
-    <button class="btn">{{ button_label|default('Save') }}</button>
+{{ form_start(form, {'attr': {'novalidate': 'novalidate', 'class': 'needs-validation'}}) }}
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <script>
+            alert("{{ message|e('js') }}");
+        </script>
+    {% endfor %}
+{% endfor %}
+
+<div class="form-group">
+    {{ form_label(form.dateDebut) }}
+    {{ form_widget(form.dateDebut, {
+        'attr': {
+            'class': 'form-control' ~ (form.dateDebut.vars.valid ? '' : ' is-invalid'),
+        }
+    }) }}
+    <div class="invalid-feedback">
+        {% if form.dateDebut.vars.errors|length %}
+            {% for error in form.dateDebut.vars.errors %}
+                {{ error.message }}
+            {% endfor %}
+        {% else %}
+            La date de début est obligatoire et doit être dans le futur
+        {% endif %}
+    </div>
+</div>
+
+<div class="form-group">
+    {{ form_label(form.dateFin) }}
+    {{ form_widget(form.dateFin, {
+        'attr': {
+            'class': 'form-control' ~ (form.dateFin.vars.valid ? '' : ' is-invalid'),
+        }
+    }) }}
+    <div class="invalid-feedback">
+        {% if form.dateFin.vars.errors|length %}
+            {% for error in form.dateFin.vars.errors %}
+                {{ error.message }}
+            {% endfor %}
+        {% endif %}
+    </div>
+</div>
+
+<button type="submit" class="btn btn-primary btn-reserver">Réserver</button>
 {{ form_end(form) }}
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    const form = document.querySelector('form');
+    
+    form.addEventListener('submit', function(e) {
+        if (!form.checkValidity()) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+        
+        form.classList.add('was-validated');
+    }, false);
+    
+    // Validation en temps réel
+    const dateInputs = document.querySelectorAll('.form-control');
+    dateInputs.forEach(input => {
+        input.addEventListener('change', function() {
+            this.classList.remove('is-invalid');
+            
+            if (this.id.includes('dateDebut')) {
+                const dateDebut = new Date(this.value);
+                const today = new Date();
+                today.setHours(0, 0, 0, 0);
+                
+                if (dateDebut <= today) {
+                    this.classList.add('is-invalid');
+                }
+            }
+            
+            if (this.id.includes('dateFin')) {
+                const dateFin = new Date(this.value);
+                const dateDebut = new Date(document.getElementById('{{ form.dateDebut.vars.id }}').value);
+                
+                if (dateFin <= dateDebut) {
+                    this.classList.add('is-invalid');
+                }
+            }
+        });
+    });
+});
+</script>

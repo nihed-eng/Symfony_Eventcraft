@@ -243,6 +243,7 @@
         </div>
 
         <nav class="admin-nav">
+<<<<<<< Updated upstream
             <h4 class="admin-nav-title">Menu Principal</h4>
             <ul class="admin-nav-items">
                 <li>
@@ -264,6 +265,71 @@
                     </a>
                 </li>
             </ul>
+=======
+           <h4 class="admin-nav-title">Menu Principal</h4>
+<ul class="admin-nav-items">
+    <li>
+        <a href="{{ path('app_admin_dashboard') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_dashboard' ? 'active' }}">
+            <i class="fas fa-tachometer-alt"></i>
+            <span>Tableau de bord</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_users') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_users' ? 'active' }}">
+            <i class="fas fa-users"></i>
+            <span>Utilisateurs</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_reclamations') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_reclamations' ? 'active' }}">
+            <i class="fas fa-exclamation-circle"></i>
+            <span>Réclamations</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_salles_full') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_salles_full' ? 'active' }}">
+            <i class="nav-icon fas fa-door-open"></i>
+            <span>Salles</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_offres') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_offres' ? 'active' }}">
+            <i class="fas fa-briefcase"></i>
+            <span>Offres</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_demandes') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_demandes' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>Demandes</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_decorations') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_decorations' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>decorations</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('app_admin_commandes') }}" class="admin-nav-link {{ app.request.get('_route') == 'app_admin_commandes' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>commandes</span>
+        </a>
+    </li>
+    <li>
+        <a href="{{ path('admin_commentaire_index') }}" class="admin-nav-link {{ app.request.get('_route') == 'admin_commentaire_index' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>commentaire</span>
+        </a>
+    </li>
+      <li>
+        <a href="{{ path('admin_forum_index') }}" class="admin-nav-link {{ app.request.get('_route') == 'admin_forum_index' ? 'active' }}">
+            <i class="fas fa-file-signature"></i>
+            <span>forum</span>
+        </a>
+    </li>
+</ul>
+>>>>>>> Stashed changes
 
             <h4 class="admin-nav-title mt-4">Compte</h4>
             <ul class="admin-nav-items">

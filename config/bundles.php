@@ -15,4 +15,9 @@ return [
     Symfony\Bundle\MakerBundle\MakerBundle::class => ['dev' => true],
     Knp\Bundle\PaginatorBundle\KnpPaginatorBundle::class => ['all' => true],
     Symfony\WebpackEncoreBundle\WebpackEncoreBundle::class => ['all' => true],
+<<<<<<< Updated upstream
+=======
+    SymfonyCasts\Bundle\ResetPassword\SymfonyCastsResetPasswordBundle::class => ['all' => true],
+    Payum\Bundle\PayumBundle\PayumBundle::class => ['all' => true],
+>>>>>>> Stashed changes
 ];

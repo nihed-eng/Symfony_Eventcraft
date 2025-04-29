@@ -44,12 +44,22 @@ class SalleType extends AbstractType
                 'label' => 'Image',
                 'mapped' => false,
                 'required' => false,
+<<<<<<< Updated upstream
                 'constraints' => [
                     new File([
                         'maxSize' => '2M',
                         'mimeTypes' => ['image/jpeg', 'image/png'],
                     ])
                 ]
+=======
+                'attr' => ['class' => 'form-control'],
+                'constraints' => [
+                    new File([
+                        'maxSize' => '5M',
+                        'mimeTypes' => ['image/jpeg', 'image/png'],
+                    ])
+                ],
+>>>>>>> Stashed changes
             ])
             ->add('locationSalle', TextType::class, [
                 'label' => 'Localisation'

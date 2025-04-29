@@ -1,0 +1,47 @@
+
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Facture</title>
+    <style>
+        body { font-family: sans-serif; }
+        .header { text-align: center; margin-bottom: 20px; }
+        .details { margin-bottom: 30px; }
+        .footer { text-align: center; font-size: 12px; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Facture N°{{ commande.idCommande }}</h1>
+    </div>
+
+    <div class="details">
+        <p><strong>Date :</strong> {{ commande.dateCommande|date('d/m/Y') }}</p>
+        <p><strong>Client :</strong> {{ commande.user.nom }} {{ commande.user.prenom }}</p>
+        <p><strong>Produit :</strong> {{ commande.decoration.nomDecor }}</p>
+        <p><strong>Quantité :</strong> {{ commande.quantite }}</p>
+        <p><strong>Prix total :</strong> {{ commande.prix }} €</p>
+    </div>
+
+<div class="text-center mt-4">
+
+				<img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data={{ (
+					    ' prix: ' ~ commande.prix ~
+					    ', quantite: ' ~ commande.quantite ~
+					    ', decor: ' ~ commande.decoration.nomDecor ~
+                        ', Date: ' ~ commande.dateCommande|date('d/m/Y') ~
+					    ', Commande par: ' ~ commande.user.nom ~ ' '
+					)|url_encode }}" alt="QR Code">
+
+				<p class="text-muted mt-2">Scannez pour consulter votre réservation</p>
+			</div>
+
+
+
+
+    <div class="footer">
+        Merci pour votre achat !
+    </div>
+</body>
+</html>

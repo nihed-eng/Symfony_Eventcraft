@@ -3,8 +3,19 @@
 {% block title %}Détails Réservation #{{ reservation.idReservation }}{% endblock %}
 
 {% block body %}
+<<<<<<< Updated upstream
 <div class="container py-4">
     <h1 class="mb-4">Réservation #{{ reservation.idReservation }}</h1>
+=======
+<div class="hero-cover">
+    {% if reservation.salle.imageSalle %}
+            <div class="room-image-container">
+                {% set firstPath = reservation.salle.imageSalle | split(',') | first %}
+                {% set filename = firstPath | split('/') | last | split('\\') | last %}
+                <div class="room-image-bg" style="background-image: url('/images/{{ filename | url_encode }}');"></div>
+            </div>
+        {% endif %}
+>>>>>>> Stashed changes
     
     <div class="card">
         <div class="card-body">

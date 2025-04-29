@@ -1,0 +1,163 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des Commandes - Admin EventCraft{% endblock %}
+
+{% block content %}
+<div class="admin-header">
+    <h1 class="admin-title">Gestion des Commandes</h1>
+</div>
+
+{% for label, messages in app.flashes %}
+    {% for message in messages %}
+        <div class="alert alert-{{ label }} alert-dismissible fade show" role="alert">
+            {{ message }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+    {% endfor %}
+{% endfor %}
+
+<!-- Statistiques -->
+<div class="row">
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Quantité Totale par Décoration</h5>
+                <ul class="list-group">
+                    {% if quantiteStats is defined and quantiteStats is not empty %}
+                        {% for stat in quantiteStats %}
+                            <li class="list-group-item">
+                                {{ stat.nom_decor }} : {{ stat.total_quantity }}
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-muted">Aucune statistique disponible.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="card">
+            <div class="card-body">
+                <h5 class="card-title">Prix Total par Décoration</h5>
+                <ul class="list-group">
+                    {% if prixStats is defined and prixStats is not empty %}
+                        {% for stat in prixStats %}
+                            <li class="list-group-item">
+                                {{ stat.nom_decor }} : {{ stat.total_price|number_format(2, '.', ' ') }} TND
+                            </li>
+                        {% endfor %}
+                    {% else %}
+                        <li class="list-group-item text-muted">Aucune statistique disponible.</li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Liste des Commandes -->
+<div class="data-card mt-4">
+    <div class="data-card-header d-flex justify-content-between align-items-center">
+        <h2 class="data-card-title">Liste des Commandes</h2>
+    </div>
+    <div class="data-card-body">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle">
+                <thead>
+                    <tr>
+                        <th>ID Commande</th>
+                        <th>Décoration</th>
+                        <th>Quantité</th>
+                        <th>Date Commande</th>
+                        <th>Prix</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for commande in pagination %}
+                        <tr>
+                            <td>{{ commande.idCommande }}</td>
+                            <td>{{ commande.decoration.nomDecor }}</td>
+                            <td>{{ commande.quantite }}</td>
+                            <td>{{ commande.dateCommande  ? commande.dateCommande |date('d/m/Y') : '—' }}</td>
+                            <td>{{ commande.prix|number_format(2, '.', ' ') }} TND</td>
+                        </tr>
+                    {% else %}
+                        <tr>
+                            <td colspan="5" class="text-center text-muted py-4">
+                                Aucune commande enregistrée.
+                            </td>
+                        </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+
+        <!-- Pagination -->
+        <div class="pagination">
+            {{ knp_pagination_render(pagination) }}
+        </div>
+    </div>
+</div>
+
+<!-- Graphiques Google Charts -->
+<div class="data-card mt-4">
+    <div class="data-card-header">
+        <h2 class="data-card-title">Statistiques Graphiques</h2>
+        
+    </div>
+    <div class="data-card-body">
+        <div id="quantity_chart" style="width: 900px; height: 500px;"></div>
+        <div id="price_chart" style="width: 900px; height: 500px;"></div>
+    </div>
+</div>
+
+
+{% endblock %}
+{% block javascripts %}
+    {{ parent() }}
+    <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+    <script type="text/javascript">
+        google.charts.load('current', {'packages':['corechart', 'bar']});
+        google.charts.setOnLoadCallback(drawCharts);
+
+        function drawCharts() {
+            // Chart Quantité
+            var quantityData = google.visualization.arrayToDataTable([
+                ['Décoration', 'Quantité'],
+                {% for stat in quantiteStats %}
+                    ['{{ stat.nom_decor }}', {{ stat.total_quantity }}],
+                {% endfor %}
+            ]);
+
+            var quantityOptions = {
+                title: 'Quantité Totale par Décoration',
+                chartArea: {width: '50%'},
+                hAxis: {title: 'Quantité', minValue: 0},
+                vAxis: {title: 'Décoration'}
+            };
+
+            var quantityChart = new google.visualization.BarChart(document.getElementById('quantity_chart'));
+            quantityChart.draw(quantityData, quantityOptions);
+
+            // Chart Prix
+            var priceData = google.visualization.arrayToDataTable([
+                ['Décoration', 'Prix'],
+                {% for stat in prixStats %}
+                    ['{{ stat.nom_decor }}', {{ stat.total_price|number_format(2, '.', '') }}],
+                {% endfor %}
+            ]);
+
+            var priceOptions = {
+                title: 'Prix Total par Décoration',
+                chartArea: {width: '50%'},
+                hAxis: {title: 'Prix (TND)', minValue: 0},
+                vAxis: {title: 'Décoration'}
+            };
+
+            var priceChart = new google.visualization.BarChart(document.getElementById('price_chart'));
+            priceChart.draw(priceData, priceOptions);
+        }
+    </script>
+{% endblock %}

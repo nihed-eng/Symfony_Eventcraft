@@ -14,7 +14,18 @@ class Salle
     private int $idSalle;
 
     #[ORM\Column(name: 'nom_salle', type: 'string', length: 255)]
+<<<<<<< Updated upstream
     private string $nomSalle;
+=======
+    #[Assert\NotBlank(message: "Le nom de la salle est obligatoire")]
+    #[Assert\Length(
+        min: 3,
+        max: 255,
+        minMessage: "Le nom doit faire au moins {{ limit }} caractères",
+        maxMessage: "Le nom ne peut pas dépasser {{ limit }} caractères"
+    )]
+    private ?string $nomSalle = null;
+>>>>>>> Stashed changes
 
     #[ORM\Column(name: 'capacité', type: 'string', length: 255)]
     private string $capacite;
@@ -23,12 +34,25 @@ class Salle
     private string $equipement;
 
     #[ORM\Column(name: 'image_salle', type: 'string', length: 255)]
+<<<<<<< Updated upstream
     private ?string $imageSalle = null; 
+=======
+    
+    private ?string $imageSalle = null;
+>>>>>>> Stashed changes
 
     #[ORM\Column(name: 'location_salle', type: 'string', length: 255)]
     private string $locationSalle;
 
     #[ORM\Column(name: 'qualite', type: 'string', length: 255, nullable: true)]
+<<<<<<< Updated upstream
+=======
+    #[Assert\NotBlank(message: "La qualité est obligatoire")]
+    #[Assert\Choice(
+        choices: ["Bien", "Très bien", "Superbe", "Exceptionnelle"],
+        message: "Choisissez une qualité valide"
+    )]
+>>>>>>> Stashed changes
     private ?string $qualite;
 
     #[ORM\Column(name: 'prix', type: 'decimal', precision: 10, scale: 2, nullable: true)]
@@ -36,8 +60,14 @@ class Salle
 
     #[ORM\ManyToOne(targetEntity: Utilisateur::class)]
     #[ORM\JoinColumn(name: 'user_id', referencedColumnName: 'id')]
+    #[Assert\NotBlank(message: "L’utilisateur est obligatoire")]
     private ?Utilisateur $user;
 
+<<<<<<< Updated upstream
+=======
+
+
+>>>>>>> Stashed changes
     public function getIdSalle(): int
     {
         return $this->idSalle;

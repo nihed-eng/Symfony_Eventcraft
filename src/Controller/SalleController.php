@@ -53,7 +53,6 @@ final class SalleController extends AbstractController
         ]);
     }
 
-   
     #[Route('/new', name: 'app_salle_new', methods: ['GET', 'POST'])]
     public function add(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -65,7 +64,8 @@ final class SalleController extends AbstractController
         
         // Vérifier si l'utilisateur est connecté
         if (!$user) {
-            throw new \Exception("Vous devez être connecté pour ajouter une salle.");
+            $this->addFlash('error', 'Vous devez être connecté pour ajouter une salle.');
+            return $this->redirectToRoute('app_login'); 
         }
         
         // Associer l'utilisateur connecté à la salle
@@ -75,6 +75,7 @@ final class SalleController extends AbstractController
         $form = $this->createForm(SalleType::class, $salle);
         $form->handleRequest($request);
         
+<<<<<<< Updated upstream
         // Si le formulaire est soumis et valide
         if ($form->isSubmitted() && $form->isValid()) {
             // Gérer le fichier image
@@ -95,6 +96,38 @@ final class SalleController extends AbstractController
         
             // Redirection vers la liste des salles
             return $this->redirectToRoute('app_profilsalle');
+=======
+        if ($form->isSubmitted()) {
+            if (!$form->isValid()) {
+                foreach ($form->getErrors(true) as $error) {
+                    $this->addFlash('error', $error->getMessage());
+                }
+            } else {
+                $imageFile = $form->get('imageFile')->getData();
+                
+                if ($imageFile) {
+                    $newFilename = uniqid().'.'.$imageFile->guessExtension();
+                    try {
+                        $imageFile->move(
+                            $this->getParameter('images_directory'),
+                            $newFilename
+                        );
+                        $salle->setImageSalle($newFilename);
+                    } catch (FileException $e) {
+                        $this->addFlash('error', 'Erreur lors de l\'upload de l\'image');
+                    }
+                }
+            
+                try {
+                    $entityManager->persist($salle);
+                    $entityManager->flush();
+                    $this->addFlash('success', 'La salle a été créée avec succès!');
+                    return $this->redirectToRoute('app_profilsalle');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur base de données : '.$e->getMessage());
+                }
+            }
+>>>>>>> Stashed changes
         }
         
         // Afficher le formulaire
@@ -102,8 +135,7 @@ final class SalleController extends AbstractController
             'form' => $form->createView(),
         ]);
     }
-    
-    
+
 
     #[Route('/salle/{idSalle}', name: 'app_salle_show')]
     public function show(Salle $salle): Response
@@ -112,20 +144,28 @@ final class SalleController extends AbstractController
             'salle' => $salle,
         ]);
     }
-    #[Route('/salle/profil/{id}', name: 'app_salle_profil')]
-    public function profil(SalleRepository $salleRepository, Request $request, EntityManagerInterface $entityManager, int $id): Response
-    {
-        $salle = $salleRepository->find($id);
+    #[Route('/salle/profil/{idSalle}', name: 'app_salle_profil')]
+    public function profil(
+        SalleRepository $salleRepository, 
+        Request $request, 
+        EntityManagerInterface $entityManager, 
+        int $idSalle
+    ): Response {
+        // Récupère TOUTES les salles de l'utilisateur connecté
+        $salles = $salleRepository->findBy(['user' => $this->getUser()]);
+        
+        // Récupère la salle spécifique pour l'édition
+        $salle = $salleRepository->find($idSalle);
+        
         if (!$salle) {
             throw $this->createNotFoundException('Salle non trouvée');
         }
     
-        // Créez le formulaire d'édition
         $editForm = $this->createForm(SalleType::class, $salle);
         $editForm->handleRequest($request);
     
         if ($editForm->isSubmitted() && $editForm->isValid()) {
-            // Gestion de l'upload de fichier
+            // Gestion de l'upload
             $imageFile = $editForm->get('imageFile')->getData();
             if ($imageFile) {
                 $newFilename = md5(uniqid()).'.'.$imageFile->guessExtension();
@@ -137,16 +177,17 @@ final class SalleController extends AbstractController
             }
     
             $entityManager->flush();
-            return $this->redirectToRoute('app_salle_profil', ['id' => $id]);
+            return $this->redirectToRoute('app_salle_profil', ['idSalle' => $idSalle]);
         }
     
         return $this->render('profilesalle/profilsalle.html.twig', [
-            'salle' => $salle,
-            'edit_form' => $editForm->createView(), // Passez le formulaire sous le nom 'edit_form'
+            'salles' => $salles, // Toutes les salles
+            'current_salle' => $salle, // Salle en cours d'édition
+            'edit_form' => $editForm->createView(),
         ]);
     }
-    
 
+<<<<<<< Updated upstream
   // SalleController.php
 
 
@@ -170,6 +211,79 @@ public function edit(Request $request, Salle $salle): Response
 
         $this->entityManager->flush();
         return $this->redirectToRoute('app_profilsalle');
+=======
+    #[Route('/edit/{idSalle}', name: 'app_salle_edit', methods: ['GET', 'POST'])]
+    public function edit(
+        Request $request, 
+        Salle $salle, 
+        EntityManagerInterface $entityManager,
+        SluggerInterface $slugger
+    ): Response {
+        $user = $this->getUser();
+        if (!$user || $user !== $salle->getUser()) {
+            $this->addFlash('error', 'Vous n\'avez pas les permissions nécessaires pour modifier cette salle.');
+            return $this->redirectToRoute('app_profilsalle');
+        }
+    
+        $form = $this->createForm(SalleType::class, $salle);
+        $form->handleRequest($request);
+    
+        if ($form->isSubmitted()) {
+            if ($form->isValid()) {
+                // Gestion des images
+                $imageFiles = $form->get('imageFile')->getData();
+                
+                if ($imageFiles) {
+                    $uploadedImages = [];
+                    foreach ($imageFiles as $imageFile) {
+                        $originalFilename = pathinfo($imageFile->getClientOriginalName(), PATHINFO_FILENAME);
+                        $safeFilename = $slugger->slug($originalFilename);
+                        $newFilename = $safeFilename.'-'.uniqid().'.'.$imageFile->guessExtension();
+    
+                        try {
+                            $imageFile->move(
+                                $this->getParameter('salles_directory'),
+                                $newFilename
+                            );
+                            $uploadedImages[] = $newFilename;
+                        } catch (FileException $e) {
+                            $this->addFlash('error', 'Erreur lors de l\'upload d\'une image');
+                        }
+                    }
+    
+                    if (!empty($uploadedImages)) {
+                        // Supprimer les anciennes images si nécessaire
+                        if ($salle->getImageSalle()) {
+                            $oldImages = explode(',', $salle->getImageSalle());
+                            foreach ($oldImages as $oldImage) {
+                                $oldImagePath = $this->getParameter('salles_directory').'/'.$oldImage;
+                                if (file_exists($oldImagePath)) {
+                                    unlink($oldImagePath);
+                                }
+                            }
+                        }
+                        
+                        $salle->setImageSalle(implode(',', $uploadedImages));
+                    }
+                }
+    
+                try {
+                    $entityManager->flush();
+                    $this->addFlash('success', 'La salle a été modifiée avec succès !');
+                    return $this->redirectToRoute('app_profilsalle');
+                } catch (\Exception $e) {
+                    $this->addFlash('error', 'Erreur base de données : '.$e->getMessage());
+                }
+            } else {
+                $this->addFlash('error', 'Veuillez corriger les erreurs dans le formulaire.');
+            }
+        }
+    
+        return $this->render('admin/salle/edit.html.twig', [
+            'form' => $form->createView(),
+            'salle' => $salle
+        ]);
+>>>>>>> Stashed changes
     }
 
     return $this->render('salle/edit_salle_modal.html.twig', [
@@ -192,34 +306,50 @@ public function edit(Request $request, Salle $salle): Response
     }
  
     #[Route('/detailsalle/{idSalle}', name: 'details_salle')]
-public function detailsSalle(Salle $salle, EntityManagerInterface $entityManager): Response
-{
-    // Récupérer les réservations de la salle
-    $reservations = $entityManager->getRepository(Reservation::class)
-        ->findBy(['salle' => $salle]);
-
-    // Formatage des événements pour FullCalendar
-    $events = [];
-    foreach ($reservations as $reservation) {
-        $events[] = [
-            'title' => 'Réservation',
-            'start' => $reservation->getDateDebut()->format('Y-m-d H:i:s'),
-            'end' => $reservation->getDateFin()->format('Y-m-d H:i:s'),
+    public function detailsSalle(Salle $salle, EntityManagerInterface $entityManager): Response
+    {
+        $reservations = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->leftJoin('r.user', 'u')
+            ->where('r.salle = :salle')
+            ->setParameter('salle', $salle)
+            ->orderBy('r.dateDebut', 'ASC')
+            ->getQuery()
+            ->getResult();
+    
+        $events = [];
+        foreach ($reservations as $reservation) {
+            $events[] = [
+                'title' => 'Réservé par ' . $reservation->getUser()->getNom() . ' ' . $reservation->getUser()->getPrenom(),
+                'start' => $reservation->getDateDebut()->format('Y-m-d\TH:i:s'),
+                'end' => $reservation->getDateFin()->format('Y-m-d\TH:i:s'),
+                'color' => '#ff0000',
+                'extendedProps' => [
+                    'reservationId' => $reservation->getIdReservation(),
+                    'userEmail' => $reservation->getUser()->getEmail(),
+                ]
+            ];
+        }
+    
+        $stats = [
+            'totalReservations' => count($reservations),
+            'reservationsThisMonth' => count(array_filter($reservations, function($r) {
+                return $r->getDateDebut() >= new \DateTime('first day of this month');
+            })),
+            'upcomingReservations' => count(array_filter($reservations, function($r) {
+                return $r->getDateDebut() >= new \DateTime();
+            }))
         ];
+    
+        return $this->render('salle/detailsalle.html.twig', [
+            'salle' => $salle,
+            'events' => json_encode($events),
+            'reservations' => $reservations,
+            'stats' => $stats,
+            'currentDate' => new \DateTime()
+        ]);
     }
-
-    // Adresse et coordonnées
-    $adresse = $salle->getLocationSalle();
-    $coordinates = $this->getCoordinatesFromAddress($adresse);
-
-    return $this->render('salle/detailsalle.html.twig', [
-        'salle' => $salle,
-        'coordinates' => $coordinates,
-        'adresse' => $adresse,
-        'events' => json_encode($events),  // Passer les événements pour FullCalendar
-        'dateReservation' => $reservations ? $reservations[0]->getDateDebut() : null // Assurer que dateReservation existe
-    ]);
-}
+    
 
     private function getCoordinatesFromAddress(string $adresse): array
     {

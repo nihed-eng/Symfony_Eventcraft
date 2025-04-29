@@ -7,15 +7,32 @@
         "php": ">=8.1",
         "ext-ctype": "*",
         "ext-iconv": "*",
+        "cboden/ratchet": "^0.4.4",
         "doctrine/dbal": "^3",
         "doctrine/doctrine-bundle": "^2.13",
         "doctrine/doctrine-migrations-bundle": "^3.4",
         "doctrine/orm": "^3.3",
+<<<<<<< Updated upstream
         "knplabs/knp-paginator-bundle": "^6.7",
+=======
+        "dompdf/dompdf": "^3.1",
+        "guzzlehttp/psr7": "^2.7",
+        "knplabs/knp-paginator-bundle": "^6.8",
+        "knplabs/knp-snappy-bundle": "^1.10",
+>>>>>>> Stashed changes
         "league/oauth2-google": "^4.0",
+        "payum/payum-bundle": "^2.6",
+        "payum/stripe": "^1.7",
+        "php-http/discovery": "^1.20",
+        "php-http/httplug": "^2.4",
+        "php-http/message": "^1.16",
+        "php-http/message-factory": "^1.1",
         "phpdocumentor/reflection-docblock": "^5.6",
         "phpmailer/phpmailer": "^6.9",
         "phpstan/phpdoc-parser": "^2.1",
+        "ratchet/pawl": "^0.4.3",
+        "ratchet/rfc6455": "0.3.1",
+        "stripe/stripe-php": "^7.128",
         "symfony/asset": "6.4.*",
         "symfony/asset-mapper": "6.4.*",
         "symfony/console": "6.4.*",
@@ -48,6 +65,12 @@
         "symfony/web-link": "6.4.*",
         "symfony/webpack-encore-bundle": "^2.2",
         "symfony/yaml": "6.4.*",
+<<<<<<< Updated upstream
+=======
+        "symfonycasts/reset-password-bundle": "^1.23",
+        "tecnickcom/tcpdf": "^6.9",
+        "textalk/websocket": "^1.6",
+>>>>>>> Stashed changes
         "twig/extra-bundle": "^2.12|^3.0",
         "twig/twig": "^2.12|^3.0"
     },

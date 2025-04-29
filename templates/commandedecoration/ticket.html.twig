@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}<div style="color: rgb(42, 13, 50);">Ticket de Commande</div>{% endblock %}
+
+{% block body %}
+<div class="container mt-5 mb-5">
+    <div class="card p-4 shadow-lg border-success">
+       <h2 class="text-success" style="color:rgb(42, 13, 50);">🎟️ Ticket de Commande</h2>
+        <hr>
+        <p style="color:rgb(85, 51, 128);">
+            <strong style="color: rgb(42, 13, 50); class="text-success">Nom de la Décoration :</strong>
+            <span style="color: rgb(42, 13, 50);">{{ commande.decoration.nomDecor }}</span>
+        </p>
+
+        <p style="color: rgb(42, 13, 50);">
+            <strong style="color: rgb(42, 13, 50); class="text-success">Date de la Commande :</strong>
+            <span style="color: rgb(42, 13, 50);">{{ commande.dateCommande|date('d/m/Y H:i') }}</span>
+        </p>
+
+        <p style="color: rgb(42, 13, 50);">
+            <strong style="color: rgb(42, 13, 50); class="text-success">Commandé par :</strong>
+            <span style="color: rgb(42, 13, 50);">{{ commande.user.nom }} ({{ commande.user.email }})</span>
+        </p>
+
+        <p style="color: rgb(42, 13, 50);">
+            <strong style="color: rgb(42, 13, 50); class="text-success">Quantité :</strong>
+            <span style="color:rgb(42, 13, 50);">{{ commande.quantite }}</span>
+        </p>
+
+        <p style="color:rgb(42, 13, 50);">
+            <strong  style="color: rgb(42, 13, 50); class="text-success">Prix :</strong>
+            <span style="color: rgb(42, 13, 50);">{{ commande.prix }} TND</span>
+        </p>
+
+        <div class="text-center mt-4">
+   {% set qrData = '' %}
+{% if commande %}
+    {% set qrData = 
+        'Nom de la décoration : ' ~ (commande.decoration.nomDecor ?? 'N/A') ~
+        ', Adresse : ' ~ (commande.terrain.lieu ?? 'N/A') ~
+        ', Date de la commande : ' ~ (commande.dateCommande ? commande.dateCommande|date('d/m/Y H:i') : 'N/A') ~
+        ', Commandé par : ' ~ (commande.user.nom ?? 'N/A') ~
+        ', Email : ' ~ (commande.user.email ?? 'N/A') ~
+        ', Quantité : ' ~ (commande.quantite ?? 'N/A') ~
+        ', Prix : ' ~ (commande.prix ?? 'N/A') ~ ' TND'
+    %}
+{% endif %}
+
+<div class="text-center mt-4">
+    {% if qrData %}
+        <img src="https://api.qrserver.com/v1/create-qr-code/?size=180x180&data={{ qrData|url_encode }}" alt="QR Code">
+        <p class="text-muted mt-2">Scannez pour consulter votre réservation</p>
+    {% else %}
+        <p>Aucune donnée trouvée pour cette commande.</p>
+    {% endif %}
+</div>
+
+
+        <div class="text-center mt-4">
+            <button onclick="window.print()" class="btn btn-outline-primary">🖨️ Imprimer le ticket</button>
+        </div>
+    </div>
+</div>
+{% endblock %}

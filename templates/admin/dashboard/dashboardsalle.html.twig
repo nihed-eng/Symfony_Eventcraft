@@ -1,0 +1,264 @@
+{% extends 'admin/layout.html.twig' %}
+
+{% block title %}Gestion des salles - Admin EventCraft{% endblock %}
+
+{% block stylesheets %}
+{{ parent() }}
+<style>
+    /* Vos styles existants conservés */
+    .stats-card {
+        border-radius: 10px;
+        overflow: hidden;
+        transition: transform 0.3s ease;
+        height: 100%;
+    }
+    
+    .stats-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+    }
+    
+    /* ... autres styles existants ... */
+
+    /* Nouveaux styles ajoutés */
+    .sortable:hover {
+        cursor: pointer;
+        background-color: rgba(0,0,0,0.03);
+    }
+    
+    .sort-icon {
+        margin-left: 5px;
+        font-size: 0.8em;
+    }
+    
+    .filter-form .form-select {
+        max-width: 200px;
+    }
+</style>
+{% endblock %}
+
+{% block content %}
+<div class="admin-header d-flex justify-content-between align-items-center mb-4">
+    <div>
+        <h1 class="admin-title mb-1">Gestion des salles</h1>
+        <p class="text-muted mb-0">Gérez l'ensemble des salles disponibles</p>
+    </div>
+    <a href="{{ path('app_admin_salle_new') }}" class="btn btn-primary">
+        <i class="fas fa-plus me-2"></i>Ajouter une salle
+    </a>
+</div>
+
+<div class="row g-4 mb-4">
+    <!-- Statistiques -->
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-primary text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles.getTotalItemCount }}</div>
+                <div class="stats-card-title">Total Salles</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-door-open"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-success text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.prix < 100)|length }}</div>
+                <div class="stats-card-title">Salles économiques</div>
+                <div class="stats-card-subtitle">Moins de 100DT</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-euro-sign"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-info text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.qualite == 'luxe')|length }}</div>
+                <div class="stats-card-title">Salles luxe</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-crown"></i>
+            </div>
+        </div>
+    </div>
+    
+    <div class="col-md-6 col-xl-3">
+        <div class="stats-card bg-warning text-white">
+            <div class="stats-card-body">
+                <div class="stats-card-value">{{ salles|filter(s => s.capacite >= 100)|length }}</div>
+                <div class="stats-card-title">Grandes salles</div>
+                <div class="stats-card-subtitle">100+ personnes</div>
+            </div>
+            <div class="stats-card-icon">
+                <i class="fas fa-users"></i>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Filtres -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body">
+        <form method="get" class="row g-3 align-items-center">
+            <div class="col-md-4">
+                <input type="text" name="search" value="{{ app.request.query.get('search') }}" 
+                       class="form-control" placeholder="Rechercher par nom ou localisation">
+            </div>
+            <div class="col-md-3">
+                <select name="qualite" class="form-select">
+                    <option value="">Toutes qualités</option>
+                    <option value="standard" {{ app.request.query.get('qualite') == 'standard' ? 'selected' }}>Standard</option>
+                    <option value="premium" {{ app.request.query.get('qualite') == 'premium' ? 'selected' }}>Premium</option>
+                    <option value="luxe" {{ app.request.query.get('qualite') == 'luxe' ? 'selected' }}>Luxe</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select name="capacite" class="form-select">
+                    <option value="">Toutes capacités</option>
+                    <option value="50" {{ app.request.query.get('capacite') == '50' ? 'selected' }}>50+ personnes</option>
+                    <option value="100" {{ app.request.query.get('capacite') == '100' ? 'selected' }}>100+ personnes</option>
+                    <option value="200" {{ app.request.query.get('capacite') == '200' ? 'selected' }}>200+ personnes</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <button type="submit" class="btn btn-primary w-100">
+                    <i class="fas fa-filter me-1"></i> Filtrer
+                </button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Liste des salles -->
+<div class="card shadow-sm">
+    <div class="card-header bg-white d-flex justify-content-between align-items-center py-3">
+        <h5 class="mb-0">Liste complète des salles</h5>
+        <div class="text-muted">
+            {{ salles.getTotalItemCount }} résultats
+        </div>
+    </div>
+    
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover mb-0">
+                <thead class="table-light">
+                    <tr>
+                        <th class="sortable" onclick="window.location='{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'sort': 's.idSalle', 'direction': current_sort == 's.idSalle' and current_direction == 'ASC' ? 'DESC' : 'ASC'})) }}'">
+                            ID
+                            {% if current_sort == 's.idSalle' %}
+                                <i class="fas fa-caret-{{ current_direction == 'ASC' ? 'up' : 'down' }} sort-icon"></i>
+                            {% endif %}
+                        </th>
+                        <th class="sortable" onclick="window.location='{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'sort': 's.nomSalle', 'direction': current_sort == 's.nomSalle' and current_direction == 'ASC' ? 'DESC' : 'ASC'})) }}'">
+                            Nom
+                            {% if current_sort == 's.nomSalle' %}
+                                <i class="fas fa-caret-{{ current_direction == 'ASC' ? 'up' : 'down' }} sort-icon"></i>
+                            {% endif %}
+                        </th>
+                        <th class="sortable" onclick="window.location='{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'sort': 's.capacite', 'direction': current_sort == 's.capacite' and current_direction == 'ASC' ? 'DESC' : 'ASC'})) }}'">
+                            Capacité
+                            {% if current_sort == 's.capacite' %}
+                                <i class="fas fa-caret-{{ current_direction == 'ASC' ? 'up' : 'down' }} sort-icon"></i>
+                            {% endif %}
+                        </th>
+                        <th>Localisation</th>
+                        <th>Qualité</th>
+                        <th class="sortable" onclick="window.location='{{ path(app.request.attributes.get('_route'), app.request.query.all|merge({'sort': 's.prix', 'direction': current_sort == 's.prix' and current_direction == 'ASC' ? 'DESC' : 'ASC'})) }}'">
+                            Prix
+                            {% if current_sort == 's.prix' %}
+                                <i class="fas fa-caret-{{ current_direction == 'ASC' ? 'up' : 'down' }} sort-icon"></i>
+                            {% endif %}
+                        </th>
+                        <th class="text-end">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for salle in salles %}
+                    <tr>
+                        <td>{{ salle.idSalle }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                              
+                                <span>{{ salle.nomSalle }}</span>
+                            </div>
+                        </td>
+                        <td>{{ salle.capacite }} <small class="text-muted">personnes</small></td>
+                        <td>{{ salle.locationSalle }}</td>
+                        <td>
+                            <span class="badge bg-{{ salle.qualite == 'luxe' ? 'purple' : (salle.qualite == 'premium' ? 'primary' : 'secondary') }}">
+                                {{ salle.qualite|capitalize }}
+                            </span>
+                        </td>
+                        <td>{{ salle.prix }} <small class="text-muted">DT</small></td>
+                        <td class="text-end">
+                            <div class="d-flex justify-content-end gap-2">
+                                <a href="{{ path('admin_salle_details', {'idSalle': salle.idSalle}) }}" 
+                                   class="btn btn-sm btn-action btn-info" 
+                                   title="Voir détails"
+                                   data-bs-toggle="tooltip">
+                                    <i class="fas fa-eye"></i>
+                                </a>
+                                <a href="{{ path('app_admin_salle_edit', {'id': salle.idSalle}) }}" 
+                                   class="btn btn-sm btn-action btn-warning" 
+                                   title="Modifier"
+                                   data-bs-toggle="tooltip">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <form method="post" 
+                                      action="{{ path('admin_salle_delete', {'idSalle': salle.idSalle}) }}" 
+                                      onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette salle ?');">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ salle.idSalle) }}">
+                                    <button type="submit" class="btn btn-sm btn-action btn-danger" title="Supprimer" data-bs-toggle="tooltip">
+                                        <i class="fas fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </td>
+                    </tr>
+                    {% else %}
+                    <tr>
+                        <td colspan="7" class="text-center py-4">
+                            <div class="py-3">
+                                <i class="fas fa-door-open fa-3x text-muted mb-3"></i>
+                                <p class="text-muted mb-0">Aucune salle trouvée</p>
+                            </div>
+                        </td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <div class="card-footer bg-white">
+        {{ knp_pagination_render(salles) }}
+    </div>
+</div>
+{% endblock %}
+
+{% block javascripts %}
+{{ parent() }}
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Initialisation des tooltips
+    var tooltipTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="tooltip"]'));
+    var tooltipList = tooltipTriggerList.map(function (tooltipTriggerEl) {
+        return new bootstrap.Tooltip(tooltipTriggerEl);
+    });
+    
+    // Confirmation avant suppression
+    document.querySelectorAll('form[onsubmit]').forEach(form => {
+        form.addEventListener('submit', function(e) {
+            if (!confirm(this.getAttribute('data-confirm') || 'Êtes-vous sûr de vouloir supprimer cette salle ?')) {
+                e.preventDefault();
+            }
+        });
+    });
+});
+</script>
+{% endblock %}

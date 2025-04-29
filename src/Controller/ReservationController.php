@@ -58,30 +58,63 @@ final class ReservationController extends AbstractController
     
     
     #[Route('/new/{idSalle}', name: 'app_reservation_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, Salle $salle): Response
+    public function new(Request $request, Salle $salle, EntityManagerInterface $entityManager): Response
     {
         $reservation = new Reservation();
-        $reservation->setSalle($salle); // Associate the room with the reservation
-
+        $reservation->setSalle($salle);
+    
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            // Set the user for the reservation, assuming the user is logged in
-            $reservation->setUser($this->getUser());
-
-            // Persist and flush the reservation
-            $this->entityManager->persist($reservation);
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_reservation_index');
+    
+        if ($form->isSubmitted()) {
+            // Validation manuelle supplémentaire
+            $errors = [];
+            $now = new \DateTime();
+    
+            if ($reservation->getDateDebut() < $now) {
+                $errors[] = 'La date de début doit être dans le futur';
+            }
+    
+            if ($reservation->getDateFin() <= $reservation->getDateDebut()) {
+                $errors[] = 'La date de fin doit être supérieure à la date de début';
+            }
+    
+            // Vérification de conflit de réservation
+            $conflictingReservations = $entityManager->getRepository(Reservation::class)
+            ->createQueryBuilder('r')
+            ->where('r.salle = :salle')
+            ->andWhere('r.dateFin > :start AND r.dateDebut < :end')
+            ->setParameter('salle', $salle)
+            ->setParameter('start', $reservation->getDateDebut())
+            ->setParameter('end', $reservation->getDateFin())
+            ->getQuery()
+            ->getResult();
+        
+    
+            if (!empty($conflictingReservations)) {
+                $errors[] = 'La salle est déjà réservée pour la période sélectionnée.';
+            }
+    
+            if (empty($errors)) {
+                $reservation->setUser($this->getUser());
+                $entityManager->persist($reservation);
+                $entityManager->flush();
+    
+                $this->addFlash('success', 'Réservation créée avec succès');
+                return $this->redirectToRoute('app_reservation_index');
+            }
+    
+            foreach ($errors as $error) {
+                $this->addFlash('error', $error);
+            }
         }
-
+    
         return $this->render('reservation/new.html.twig', [
             'form' => $form->createView(),
             'salle' => $salle,
         ]);
     }
+    
 
     #[Route('/{idReservation}', name: 'app_reservation_show', methods: ['GET'])]
     public function show(Reservation $reservation): Response
@@ -92,22 +125,72 @@ final class ReservationController extends AbstractController
     }
 
     #[Route('/{idReservation}/edit', name: 'app_reservation_edit', methods: ['GET', 'POST'])]
-    public function edit(Request $request, Reservation $reservation): Response
+    public function edit(Request $request, Reservation $reservation, EntityManagerInterface $entityManager): Response
     {
+        // Sauvegarde des dates originales pour la vérification de conflit
+        $originalDateDebut = $reservation->getDateDebut();
+        $originalDateFin = $reservation->getDateFin();
+        
         $form = $this->createForm(ReservationType::class, $reservation);
         $form->handleRequest($request);
-
-        if ($form->isSubmitted() && $form->isValid()) {
-            $this->entityManager->flush();
-
-            return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
+    
+        if ($form->isSubmitted()) {
+            $errors = [];
+            $now = new \DateTime();
+            $today = new \DateTime('today');
+    
+            // Vérification que la date de début n'est pas dans le passé
+            if ($reservation->getDateDebut() < $today) {
+                $errors[] = 'Vous ne pouvez pas réserver pour une date passée.';
+            }
+    
+            // Vérification que la date de début n'est pas aujourd'hui
+            if ($reservation->getDateDebut()->format('Y-m-d') === $today->format('Y-m-d')) {
+                $errors[] = 'Les réservations doivent être faites au moins 24h à l\'avance.';
+            }
+    
+            // Vérification que la date de fin est égale ou postérieure à la date de début
+            if ($reservation->getDateFin() < $reservation->getDateDebut()) {
+                $errors[] = 'La date de fin doit être égale ou postérieure à la date de début.';
+            }
+    
+            // Vérification de conflit seulement si les dates ont changé
+            if ($reservation->getDateDebut() != $originalDateDebut || $reservation->getDateFin() != $originalDateFin) {
+                $conflictingReservations = $entityManager->getRepository(Reservation::class)
+                    ->createQueryBuilder('r')
+                    ->where('r.salle = :salle')
+                    ->andWhere('r.idReservation != :currentReservation')
+                    ->andWhere('r.dateFin > :start AND r.dateDebut < :end')
+                    ->setParameter('salle', $reservation->getSalle())
+                    ->setParameter('currentReservation', $reservation->getIdReservation())
+                    ->setParameter('start', $reservation->getDateDebut())
+                    ->setParameter('end', $reservation->getDateFin())
+                    ->getQuery()
+                    ->getResult();
+    
+                if (!empty($conflictingReservations)) {
+                    $errors[] = 'La salle est déjà réservée pour cette période. Veuillez choisir d\'autres dates.';
+                }
+            }
+    
+            if (empty($errors)) {
+                $entityManager->flush();
+                $this->addFlash('success', 'La réservation a été modifiée avec succès.');
+                return $this->redirectToRoute('app_reservation_index');
+            }
+    
+            foreach ($errors as $error) {
+                $this->addFlash('error', $error);
+            }
         }
-
+    
         return $this->render('reservation/edit.html.twig', [
             'reservation' => $reservation,
-            'form' => $form,
+            'form' => $form->createView(),
         ]);
     }
+    
+
 
     #[Route('/{idReservation}', name: 'app_reservation_delete', methods: ['POST'])]
     public function delete(Request $request, Reservation $reservation): Response
@@ -120,31 +203,7 @@ final class ReservationController extends AbstractController
         return $this->redirectToRoute('app_reservation_index', [], Response::HTTP_SEE_OTHER);
     }
 
-    #[Route('/ajax/reservations', name: 'ajax_reservations', methods: ['GET'])]
-    public function ajaxReservations(): JsonResponse
-    {
-        // Récupérer l'utilisateur connecté
-        $user = $this->getUser();
-
-        if (!$user) {
-            return new JsonResponse(['error' => 'Utilisateur non connecté'], Response::HTTP_UNAUTHORIZED);
-        }
-
-        // Récupérer uniquement les réservations de l'utilisateur connecté
-        $reservations = $this->entityManager->getRepository(Reservation::class)->findBy(['user' => $user]);
-
-        $data = [];
-        foreach ($reservations as $reservation) {
-            $data[] = [
-                'id' => $reservation->getIdReservation(),
-                'salle' => $reservation->getSalle()->getNomSalle(),
-                'date' => $reservation->getDateDebut()->format('Y-m-d H:i'),
-                'image' => '/images/' . $reservation->getSalle()->getImageSalle(), // Ajoute l'image
-            ];
-        }
-
-        return new JsonResponse($data);
-    }
+   
 
     #[Route('/admin/reservations', name: 'app_admin_reservations')]
     public function listAll(EntityManagerInterface $em, PaginatorInterface $paginator, Request $request): Response

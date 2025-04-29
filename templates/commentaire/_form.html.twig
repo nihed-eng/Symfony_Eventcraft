@@ -1,0 +1,102 @@
+{% extends 'basetemp.html.twig' %}
+
+{% block stylesheets %}
+<style>
+    body {
+        background: #fdfbfa;
+        font-family: 'Roboto', sans-serif;
+    }
+
+    .sidebar-box {
+        background: #fff;
+        border-radius: 12px;
+        padding: 30px;
+        box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        border-left: 6px solid #CBA979;
+    }
+
+    h3 {
+        color: #8D598F;
+        font-weight: bold;
+    }
+
+    label {
+        color: #6c6c6c;
+        font-weight: 500;
+    }
+
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ccc;
+        padding: 10px;
+        font-size: 1rem;
+        transition: border-color 0.3s;
+    }
+
+    .form-control:focus {
+        border-color: #8D598F;
+        box-shadow: 0 0 0 0.2rem rgba(141, 89, 143, 0.2);
+    }
+
+    .btn-primary {
+        background-color: #F0C8C6;
+        color: #000;
+        font-weight: 500;
+        border: none;
+        border-radius: 30px;
+        padding: 12px 25px;
+        transition: background 0.3s;
+    }
+ .btn-custom {
+        display: inline-block;
+        background: #F0C8C6;
+        color: #000;
+        padding: 10px 25px;
+        border-radius: 30px;
+        margin-right: 10px;
+        text-decoration: none;
+        font-weight: 500;
+        transition: all 0.3s ease-in-out;
+    }
+    .btn-primary:hover {
+        background-color: #B19BB2;
+        color: white;
+    }
+
+    .form-error {
+        color: #c0392b;
+        font-size: 0.9rem;
+    }
+</style>
+{% endblock %}
+
+{% block body %}
+{{ form_start(form) }}
+<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="sidebar-box">
+                <h3 class="text-center mb-4">💬 {{ button_label|default('Créer') }} le Commentaire</h3>
+
+                <div class="mb-4">
+                    {{ form_label(form.contenu) }}
+                    {{ form_widget(form.contenu, {'attr': {'class': 'form-control'}}) }}
+                    <div class="form-error">{{ form_errors(form.contenu) }}</div>
+                </div>
+
+               
+                <div class="mb-4">
+                    {{ form_label(form.forum) }}
+                    {{ form_widget(form.forum, {'attr': {'class': 'form-control'}}) }}
+                    <div class="form-error">{{ form_errors(form.forum) }}</div>
+                </div>
+
+                <div class="text-center">
+                    <button class="btn btn-primary">{{ button_label|default('Créer') }}</button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{{ form_end(form) }}
+{% endblock %}

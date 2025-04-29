@@ -10,14 +10,23 @@
 
     <!-- Ton style personnalisé ici (déjà envoyé donc pas répété pour la lisibilité) -->
   <style>
-
-
-
-
 /*---------------------
   Home Room
 -----------------------*/
 
+<<<<<<< Updated upstream
+=======
+.btn-primary {
+   
+    --bs-btn-active-bg: #8D598F !important;}
+.dropdown-menu {
+  
+    --bs-dropdown-link-hover-color: var(--bs-body-color);
+    --bs-dropdown-link-hover-bg: #B19BB2 !important;
+    --bs-dropdown-link-active-color: #fff;
+    --bs-dropdown-link-active-bg: #B19BB2 !important;}
+
+>>>>>>> Stashed changes
 .home-room .container-fluid {
 	padding-right: 0;
 	overflow: hidden;
@@ -383,12 +392,29 @@ background-color: #000;
     background-color: #CBA979 !important;
     border-color: #CBA979 !important;
 }
+.home__room__item {
+    position: relative;
+    height: 493px;
+    margin-bottom: 15px;
+}
+
+
+.home__room__buttons a {
+    min-width: 110px;
+}
+
 
         }
     </style>
 {% endblock %}
 
 {% block body %}
+
+<div id="toastContainer"
+     class="toast-container position-fixed top-0 end-0 p-3"
+     style="z-index: 9999; max-width: 300px;">
+</div>
+
 <div>
     <!-- Section Héro -->
     <section class="hero-section">
@@ -407,24 +433,22 @@ background-color: #000;
     <!-- Section Profil -->
     <section class="profile-section">
         <div class="container text-center position-relative">
-            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" 
-                 alt="User" class="profile-image">
+            <img src="https://mdbcdn.b-cdn.net/img/Photos/new-templates/bootstrap-profiles/avatar-1.webp" alt="User" class="profile-image">
             {% if app.user %}
                 <h3>{{ app.user.nom }} {{ app.user.prenom }}</h3>
                 <p class="text-muted">{{ app.user.email }}</p>
             {% endif %}
 
-            <!-- Boutons -->
             <div class="buttons-container">
                 <div class="dropdown">
                     <a class="btn btn-primary me-2 dropdown-toggle" href="#" role="button" id="dropdownMenuLink" data-bs-toggle="dropdown" aria-expanded="false">
                         MES Décorations
                     </a>
-    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
-            <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Événement</a></li>
-        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Salle</a></li>
-        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Offre</a></li>
-        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Décorations</a></li>
+                    <ul class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+                        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Événement</a></li>
+                        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Salle</a></li>
+                        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Offre</a></li>
+                        <li><a class="dropdown-item" href="{{ path('decoration_index') }}">Décorations</a></li>
                     </ul>
                 </div>
                 <a href="{{ path('commandedecoration_index') }}" class="btn btn-primary me-2">MES COMMANDES</a>
@@ -437,47 +461,115 @@ background-color: #000;
 
     <!-- Liste des décorations -->
     <section class="home-room spad" style="margin-top: 70px;">
-      
         <div class="container-fluid">
             <div class="row">
-    {% for commande in pagination %}
-    {% set decoration = commande.decoration %}
-    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
-        {% if decoration and decoration.imagedeco %}
-            <div class="home__room__item set-bg" 
-                 style="background-image: url('{{ asset('images/' ~ decoration.imagedeco) }}');">
-        {% else %}
-            <div class="home__room__item">
-                <p>Aucune image disponible</p>
-        {% endif %}
-                
-                <div class="home__room__title">
-                    <h4>{{ decoration.nomDecor ?? 'Nom non disponible' }}</h4>
-                    <h1>{{ commande.prix|number_format(2) }} DT</h2>
-                    <p>Commandé le: {{ commande.dateCommande|date('d/m/Y') }}</p>
-                </div>
+                {% for commande in pagination %}
+                    {% set decoration = commande.decoration %}
+                    <div class="col-lg-3 col-md-6 col-sm-6 p-0">
+                        {% if decoration and decoration.imagedeco %}
+                            <div class="home__room__item set-bg"
+                                 style="background-image: url('{{ asset('images/' ~ decoration.imagedeco) }}'); position: relative; overflow: hidden;">
+                                
+                                <div style="position: absolute; top: 10px; left: 10px; z-index: 10;" class="d-flex gap-2">
+                                    <form method="post"
+                                          action="{{ path('decoration_delete', {'id': decoration.idDecor}) }}"
+                                          onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette décoration ?');"
+                                          style="margin: 0;">
+                                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ decoration.idDecor) }}">
+                                        <button type="submit" class="btn btn-outline-danger btn-sm">
+                                            <i class="ion-ios-trash"></i>
+                                        </button>
+                                    </form>
 
-                <div class="home__room__buttons mt-2">
-                    <a href="{{ path('commandedecoration_edit', {'id': commande.idCommande}) }}" 
-                       class="btn btn-outline-warning">
-                       Modifier commande
-                    </a>
-                      <form method="post" action="{{ path('decoration_delete', {'id': decoration.idDecor}) }}"
-                              onsubmit="return confirm('Êtes-vous sûr de vouloir supprimer cette décoration ?');" style="margin: 0;">
-                       <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ decoration.idDecor) }}">
-                            <button type="submit" class="btn btn-outline-danger" style="font-size: 18px; color: #ffffff; font-family: 'Barlow Condensed', sans-serif; position: relative; padding: 4px 0; display: inline-block; border: none; background: none;">
-                                <i class="ion-ios-trash" style="font-size: 37px; color: #ffffff; transition: color 0.3s; padding-right: 10px;"></i>
-                            </button>
-                        </form>
-                </div>
-            </div>
-        </div>
-{% endfor %}
-            </div>
+                                    <a href="{{ path('commandedecoration_edit', {'id': commande.idCommande}) }}"
+                                       class="d-flex gap-2">Modifier</a>
+                                </div>
 
-            <!-- Pagination -->
-        
+                                <div class="home__room__buttons d-flex justify-content-center"
+                                     style="position: absolute; bottom: 20px; left: 50%; transform: translateX(-50%); z-index: 10;">
+                                    <a href="{{ path('commande_payer', { id: commande.idCommande }) }}"
+                                       class="btn btn-success btn-sm">Payer maintenant</a>
+                                </div>
+                                
+                                <a href="{{ path('commande_facture', {'id': commande.idCommande}) }}"  class="btn btn-success btn-sm">
+    Télécharger la Facture
+</a>
+                            </div>
+                             <a href="{{ path('commande_qr', { id: commande.idCommande }) }}"
+                                      class="btn btn-success btn-sm">scanner la commade</a>
+                        {% else %}
+                            <div class="home__room__item d-flex align-items-center justify-content-center text-white bg-secondary"
+                                 style="height: 493px;">
+                                <p>Aucune image disponible</p>
+                            </div>
+                           
+                        {% endif %}
+                    </div>
+                {% endfor %}
+            </div>
         </div>
     </section>
 </div>
+<!-- Charger Bootstrap Bundle -->
+<!-- Charger Bootstrap Bundle -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+   function showToast(message, type = 'success') {
+    const toastContainer = document.getElementById('toastContainer');
+
+    // Créer l'élément toast
+    const toastElement = document.createElement('div');
+    toastElement.className = 'toast fade show'; // fade + show pour animation douce
+    toastElement.setAttribute('role', 'alert');
+    toastElement.setAttribute('aria-live', 'assertive');
+    toastElement.setAttribute('aria-atomic', 'true');
+
+    toastElement.style.minWidth = "200px";
+    toastElement.style.maxWidth = "300px";
+    toastElement.style.marginBottom = "1rem";
+    toastElement.style.transition = "all 0.5s ease";  // Pour une animation plus fluide
+
+    // Couleur du header selon type
+    let bgColor = 'bg-success';
+    if (type === 'error') bgColor = 'bg-danger';
+    if (type === 'warning') bgColor = 'bg-warning text-dark';
+
+    toastElement.innerHTML = `
+        <div class="toast-header ${bgColor} text-black py-2 px-3">
+            <strong class="me-auto">${type.charAt(0).toUpperCase() + type.slice(1)}</strong>
+            <button type="button" class="btn-close btn-close-white ms-2 mb-1" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        <div class="toast-body small px-3 py-2">
+            ${message}
+        </div>
+    `;
+
+    toastContainer.appendChild(toastElement);
+
+    // Initialiser et afficher le toast
+    const toast = new bootstrap.Toast(toastElement, { delay: 3000 });
+    toast.show();
+
+    // Calculer la position dynamique du toast
+    const navbarHeight = document.querySelector('.navbar').offsetHeight;
+    toastElement.style.marginTop = `${navbarHeight + 10}px`;  // Positionne juste sous la navbar
+
+    // Nettoyer du DOM après fermeture
+    toastElement.addEventListener('hidden.bs.toast', () => {
+        toastElement.remove();
+    });
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    {% for label, messages in app.flashes %}
+        {% for message in messages %}
+            showToast(`{{ message|e('js') }}`, '{{ label }}');
+            
+        {% endfor %}
+    {% endfor %}
+});
+    
+</script>
+
 {% endblock %}

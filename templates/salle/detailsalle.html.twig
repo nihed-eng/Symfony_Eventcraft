@@ -1,196 +1,427 @@
-{% extends 'baseoffre.html.twig' %}
+{% extends 'base.html.twig' %}
 
-{% block title %}Liste des Offres{% endblock %}
+{% block title %}Détails de la Salle | {{ salle.nomSalle }}{% endblock %}
 
 {% block stylesheets %}
+    {{ parent() }}
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/ionicons/4.5.6/css/ionicons.min.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&family=Playfair+Display:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
+    <link href='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.css' rel='stylesheet' />
     <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            background: #f8f9fa;
+        :root {
+            --primary: #8D598F;
+            --secondary: #CBA979;
+            --accent: #F0C8C6;
+            --dark: #2D2D2D;
+            --light: #F8F9FA;
         }
 
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: var(--light);
+            color: var(--dark);
+            overflow-x: hidden;
+        }
 
-        .p-4 {
-    margin-bottom: -35px;
-}
-
-        .hero-wrap {
+        /* Hero Section - Parallax Effect */
+        .hero-parallax {
+            height: 70vh;
+            min-height: 500px;
+            background-attachment: fixed;
+            background-position: center;
+            background-repeat: no-repeat;
             background-size: cover;
-            background-position: center center;
-            height: 400px;
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            text-align: center;
+            overflow: hidden;
         }
 
-        .hero-wrap .overlay {
+        .hero-overlay {
             position: absolute;
             top: 0;
             left: 0;
             width: 100%;
-            height: 58%  ;
-            background: rgba(0, 0, 0, 0.5);
-        } 
+            height: 100%;
+            background: linear-gradient(135deg, rgba(141, 89, 143, 0.8) 0%, rgba(0, 0, 0, 0.7) 100%);
+        }
 
-        .hero-wrap h1 {
-            font-size: 3rem;
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .hero-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 4rem;
+            font-weight: 700;
+            margin-bottom: 1rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+            animation: fadeInDown 1s both;
+        }
+
+        .breadcrumb-custom {
+            background: transparent;
+            justify-content: center;
+            animation: fadeIn 1s both 0.3s;
+        }
+
+        .breadcrumb-custom a {
+            color: var(--accent);
+            text-decoration: none;
+            transition: all 0.3s;
+        }
+
+        .breadcrumb-custom a:hover {
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        /* Main Content */
+        .salle-container {
+            margin-top: -100px;
+            position: relative;
+            z-index: 10;
+        }
+
+        .salle-card {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 30px 60px rgba(0, 0, 0, 0.1);
+            overflow: hidden;
+            transition: transform 0.5s, box-shadow 0.5s;
+        }
+
+        .salle-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 40px 80px rgba(0, 0, 0, 0.15);
+        }
+
+        .salle-header {
+            position: relative;
+            height: 250px;
+            overflow: hidden;
+        }
+
+        .salle-badge {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: var(--secondary);
+            color: white;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(203, 169, 121, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        .salle-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            margin-bottom: 1rem;
+            position: relative;
+            display: inline-block;
+        }
+
+        .salle-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: var(--secondary);
+        }
+
+        /* Info Sections */
+        .info-section {
+            padding: 40px;
+        }
+
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 30px;
+        }
+
+        .info-box {
+            background: white;
+            padding: 25px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+            transition: all 0.3s;
+            border-left: 1px solid var(--primary);
+        }
+
+        .info-box:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.1);
+            border-left: 4px solid var(--secondary);
+        }
+
+        .info-box h3 {
+            color: var(--primary);
+            font-weight: 600;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+        }
+
+        .info-box h3 i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+
+        /* Calendar Section */
+        .calendar-section {
+            background: linear-gradient(135deg, #f8f9fa 0%, #ffffff 100%);
+            border-radius: 10px;
+            padding: 30px;
+            margin-top: 40px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+        }
+
+        /* FullCalendar Customization */
+        .fc {
+            font-family: 'Poppins', sans-serif;
+        }
+
+        .fc-header-toolbar {
+            margin-bottom: 1.5em;
+        }
+
+        .fc-toolbar-title {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
             font-weight: 700;
         }
 
-        .breadcrumbs a {
+        .fc-button {
+            background-color: white;
+            color: var(--primary);
+            border: 1px solid var(--primary);
+            transition: all 0.3s;
+            text-transform: capitalize;
+        }
+
+        .fc-button:hover {
+            background-color: var(--primary);
             color: white;
         }
 
-        .ftco-section {
-            padding: 50px 0;
+        .fc-button-active {
+            background-color: var(--primary);
+            color: white;
         }
 
-        .job-post-item {
-            display: flex;
-            justify-content: space-between;
+        .fc-daygrid-day-number {
+            color: var(--dark);
+        }
+
+        .fc-day-today {
+            background-color: rgba(203, 169, 121, 0.1) !important;
+        }
+
+        .fc-event {
+            background-color: var(--secondary);
+            border-color: var(--secondary);
+            color: white;
+            padding: 3px 6px;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        .fc-event:hover {
+            opacity: 0.9;
+        }
+
+        .fc-daygrid-event-dot {
+            border-color: white !important;
+        }
+
+        .fc-col-header-cell {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .fc-daygrid-day.fc-day-today .fc-daygrid-day-number {
+            color: var(--primary);
+            font-weight: bold;
+        }
+
+        /* Button Styles */
+        .btn-reserver {
+            background: #8D598F;
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 0 10px 20px rgba(141, 89, 143, 0.3);
+            transition: all 0.3s;
+            display: inline-flex;
             align-items: center;
-            background: white;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
-        .job-post-item:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        .btn-reserver:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 30px rgba(141, 89, 143, 0.4);
+            color: white;
         }
 
-        .job-post-item-header {
-            display: flex;
-            align-items: center;
-            width: 100%;
+        .btn-reserver i {
+            margin-left: 8px;
         }
 
-        .job-post-item-header h2 {
-            flex-grow: 1;
-            text-align: left;
+        /* Animations */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
         }
 
-        .one-forth {
-            justify-content: flex-end;
+        /* Responsive Adjustments */
+        @media (max-width: 992px) {
+            .hero-title {
+                font-size: 3rem;
+            }
+
+            .salle-title {
+                font-size: 2rem;
+            }
         }
 
-       .btn-custom {
-    padding: 5px 10px;
-    /* border-radius: 5px; */
-    text-decoration: none;
-    color: white;
-    display: inline-flex
-;
-    align-items: center;
-    border: none;
-    margin: 4px;
-    justify-content: center;
-    background-color: rgb(161, 104, 163);
-}
-.btn-primary {
-    --bs-btn-color: #fff;
-    --bs-btn-bg: #CBA979;
-    border-radius: 0;
-    border: 1px;
-}
+        @media (max-width: 768px) {
+            .hero-parallax {
+                height: 60vh;
+                background-attachment: scroll;
+            }
 
+            .hero-title {
+                font-size: 2.5rem;
+            }
 
-.btn-primary:hover {
-    --bs-btn-color: #fff;
-background-color:#98A695; ;
-    border-radius: 0;
-    color:#FFF;
-    border: 1px rgb(10, 9, 10) important!;
-}
+            .info-grid {
+                grid-template-columns: 1fr;
+            }
 
+            .fc-toolbar {
+                flex-direction: column;
+                align-items: flex-start;
+            }
 
-        .btn-custom:hover {
-            background-color: #F0C8C6;
+            .fc-toolbar-title {
+                margin: 10px 0;
+            }
         }
 
-        .btn-delete {
-          padding: 5px 10px;
-    /* border-radius: 5px; */
-    text-decoration: none;
-    color: white;
-    display: inline-flex
-;
-    align-items: center;
-    border: none;
-    margin: 4px;
-    justify-content: center;
-    background-color: rgb(161, 104, 163);
-        }
+        @media (max-width: 576px) {
+            .hero-parallax {
+                height: 50vh;
+            }
 
-        .btn-delete:hover {
-            background-color: #F0C8C6;
-        }
+            .hero-title {
+                font-size: 2rem;
+            }
 
-        .sidebar-box {
-            background: white;
-            padding: 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-        }
+            .salle-container {
+                margin-top: -50px;
+            }
 
-        a {
-            color: #6c757d;
-            text-decoration: none;
+            .fc-header-toolbar {
+                flex-direction: column;
+            }
+
+            .fc-toolbar-chunk {
+                margin-bottom: 10px;
+            }
         }
     </style>
 {% endblock %}
+
 {% block body %}
+    <!-- Hero Parallax Section -->
     {% if salle.imageSalle %}
-        {# Sépare les chemins s'il y a des virgules (plusieurs images) et prend la première #}
         {% set firstPath = salle.imageSalle | split(',') | first %}
-
-        {# Garde seulement le nom du fichier, enlève tout le chemin #}
         {% set filename = firstPath | split('/') | last | split('\\') | last %}
-
-        {# Affiche l'image avec l'encodage URL (pour gérer les espaces) #}
-        <div class="hero-wrap" style="background-image: url('/images/{{ filename | url_encode }}');">
+        <div class="hero-parallax" style="background-image: url('/images/{{ filename | url_encode }}');">
     {% else %}
-        <div class="hero-wrap" style="background-image: url('/images/offre.jpeg');">
+        <div class="hero-parallax" style="background-image: url('/images/offre.jpeg');">
     {% endif %}
-        <div class="overlay"></div>
-        <div class="container">
-            <div class="row no-gutters slider-text align-items-end justify-content-start">
-                <div class="col-md-12 ftco-animate text-center mb-5">
-                    <p class="breadcrumbs mb-0"><span class="mr-3"><a href="/">Salle <i class="ion-ios-arrow-forward"></i></a></span> <span>Détails</span></p>
-                    <h1 class="mb-3 bread">Détails de la Salle</h1>
-                </div>
-            </div>
+        <div class="hero-overlay"></div>
+        <div class="hero-content">
+            <h1 class="hero-title">{{ salle.nomSalle }}</h1>
+            <nav aria-label="breadcrumb" class="breadcrumb-custom">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="{{ path('app_home') }}">Accueil</a></li>
+                    <li class="breadcrumb-item"><a href="{{ path('app_salle_index') }}">Salles</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Détails</li>
+                </ol>
+            </nav>
         </div>
     </div>
 
-    <div class="container">
-        <div class="image-section">
-            <div class="header-text"><h1>{{ salle.nomSalle }}</h1></div>
-        </div>
+    <!-- Main Content -->
+    <div class="container salle-container">
+        <div class="salle-card animate__animated animate__fadeInUp">
+            <div class="salle-header" style="background-image: url('{% if salle.imageSalle %}/images/{{ filename | url_encode }}{% else %}/images/offre.jpeg{% endif %}'); background-size: cover; background-position: center;">
+                <span class="salle-badge">Capacité: {{ salle.capacite }} personnes</span>
+            </div>
 
-        <section class="ftco-section bg-light">
-            <div class="container">
-                <div class="row">
-                    <div class="col-lg-9 pr-lg-4">
-                        <div class="row">
-                            <div class="details-section">
-                                <div class="info-box">
-                                    <h2>Informations</h2>
-                                    <p><strong>Adresse :</strong> {{ salle.locationSalle }}</p>
-                                    <p><strong>Capacité :</strong> {{ salle.capacite }} personnes</p>
-                                    <p><strong>Description :</strong> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</p>
-                                    
-                                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn-primary">RÉSERVER MAINTENANT</a>
-                                </div>
+            <div class="info-section">
+                <h2 class="salle-title">Détails de la Salle</h2>
 
-                                <div class="calendar-container">
+                <div class="info-grid">
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.1s">
+                        <h3><i class="fas fa-map-marker-alt"></i> Localisation</h3>
+                        <p>{{ salle.locationSalle }}</p>
+                        <div class="mt-3">
+                            <a href="#" class="btn btn-outline-primary btn-sm">Voir sur la carte</a>
+                        </div>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.2s">
+                        <h3><i class="fas fa-star"></i> Qualité</h3>
+                        <div class="d-flex align-items-center">
+                            {% for i in 1..5 %}
+                                <i class="fas fa-star {% if i <= salle.qualite %}text-warning{% else %}text-muted{% endif %}"></i>
+                            {% endfor %}
+                            <span class="ms-2">({{ salle.qualite }}/5)</span>
+                        </div>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.3s">
+                        <h3><i class="fas fa-euro-sign"></i> Tarifs</h3>
+                        <p class="display-6 text-primary">{{ salle.prix }} € <small class="text-muted">/ jour</small></p>
+                    </div>
+
+                    <div class="info-box animate__animated animate__fadeIn" data-wow-delay="0.4s">
+                        <h3><i class="fas fa-info-circle"></i> À propos</h3>
+                        <p>{{ salle.description ?? "Cette magnifique salle est parfaite pour vos événements. Espace lumineux et modulable selon vos besoins." }}</p>
+                    </div>
+                </div>
+
+                <div class="text-center mt-5">
+                    <a href="{{ path('app_reservation_new', {'idSalle': salle.idSalle}) }}" class="btn-reserver animate__animated animate__pulse animate__infinite">
+                        Réserver maintenant <i class="fas fa-arrow-right"></i>
+                    </a>
+                </div>
+
+                <!-- Calendar Section -->
+            <div class="col-lg-8">
+        <div class="card shadow-sm mb-4">
+           
+            <div class="card-body">
+                <div class="calendar-container">
+                   <div class="calendar-container">
                                     <h2>Disponibilité</h2>
                                     <div id="calendar" data-controller="calendar" data-calendar-events-value='{{ events|raw }}'></div>
                                     
@@ -225,12 +456,86 @@ background-color:#98A695; ;
                                         </div>
                                     {% endif %}
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
             </div>
-        </section>
+        </div>
+
+        <!-- Liste des réservations -->
+        
     </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+
+{% block javascripts %}
+    {{ parent() }}
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/main.min.js'></script>
+    <script src='https://cdn.jsdelivr.net/npm/fullcalendar@5.11.3/locales/fr.js'></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const animatedElements = document.querySelectorAll('.animate__animated');
+
+            const animateOnScroll = () => {
+                animatedElements.forEach(element => {
+                    const elementPosition = element.getBoundingClientRect().top;
+                    const windowHeight = window.innerHeight;
+
+                    if (elementPosition < windowHeight - 100) {
+                        const animationClass = element.classList.item(1);
+                        element.classList.add(animationClass);
+                    }
+                });
+            };
+
+            window.addEventListener('scroll', animateOnScroll);
+            animateOnScroll();
+
+            // Initialize FullCalendar if events exist
+            {% if events is not empty %}
+                var calendarEl = document.getElementById('calendar');
+                var calendar = new FullCalendar.Calendar(calendarEl, {
+                    initialView: 'dayGridMonth',
+                    locale: 'fr',
+                    headerToolbar: {
+                        left: 'prev,next today',
+                        center: 'title',
+                        right: 'dayGridMonth,timeGridWeek,timeGridDay'
+                    },
+                    events: {{ events|raw }},
+                    eventColor: 'var(--secondary)',
+                    eventTextColor: '#ffffff',
+                    eventBackgroundColor: 'var(--secondary)',
+                    eventBorderColor: 'var(--secondary)',
+                    dayHeaderContent: function(args) {
+                        return args.text.charAt(0).toUpperCase() + args.text.slice(1);
+                    },
+                    buttonText: {
+                        today: "Aujourd'hui",
+                        month: "Mois",
+                        week: "Semaine",
+                        day: "Jour"
+                    },
+                    firstDay: 1,
+                    height: 'auto',
+                    fixedWeekCount: false,
+                    showNonCurrentDates: true,
+                    dayMaxEvents: true,
+                    navLinks: true,
+                    eventDisplay: 'block',
+                    eventTimeFormat: {
+                        hour: '2-digit',
+                        minute: '2-digit',
+                        hour12: false
+                    },
+                    eventClick: function(info) {
+                        // Optional: Add click handler for events
+                        console.log('Event clicked:', info.event);
+                    }
+                });
+                calendar.render();
+            {% endif %}
+        });
+    </script>
 {% endblock %}
