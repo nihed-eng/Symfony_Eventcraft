@@ -71,10 +71,9 @@ class ResetPasswordController extends AbstractController
                 ];
                 $request->getSession()->set('reset_password_data', $tokenData);
 
-                // Development mode - show verification code directly
+                // Development mode - log the verification code but don't add it as a flash message
                 if ($this->getParameter('kernel.environment') === 'dev') {
                     $this->logger->info('DEV MODE: Verification code for ' . $email . ': ' . $verificationCode);
-                    $this->addFlash('dev_verification_code', $verificationCode);
                 }
 
                 // Send verification code via email using our EmailService
@@ -88,7 +87,7 @@ class ResetPasswordController extends AbstractController
                     if ($emailSent) {
                         $this->addFlash('success', 'Un code de vérification a été envoyé à votre adresse email.');
                     } else if ($this->getParameter('kernel.environment') === 'dev') {
-                        $this->addFlash('warning', 'L\'envoi d\'email a échoué, mais en mode développement, vous pouvez utiliser le code de vérification affiché ci-dessus.');
+                        $this->addFlash('warning', 'L\'envoi d\'email a échoué, mais en mode développement, le code a été généré et enregistré dans les logs.');
                     }
                     return $this->redirectToRoute('app_verify_code', ['email' => $email]);
                 } else {

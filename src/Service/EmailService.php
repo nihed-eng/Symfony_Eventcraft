@@ -2,49 +2,87 @@
 
 namespace App\Service;
 
-use Symfony\Component\Mailer\MailerInterface;
-use Symfony\Component\Mime\Email;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 use Psr\Log\LoggerInterface;
-use Symfony\Component\Mime\Address;
 
 class EmailService
 {
-    private string $senderEmail;
-    private string $senderName;
+    private LoggerInterface $logger;
+    private string $senderEmail = 'ayadi.baha35@gmail.com';
+    private string $appPassword = 'pmib bgtr oeyg zpcz'; // App password WITH spaces like in JavaFX
 
-    public function __construct(
-        private MailerInterface $mailer,
-        private ParameterBagInterface $params,
-        private LoggerInterface $logger
-    ) {
-        $this->senderEmail = $this->params->get('app.mail_from_address', 'ayadi.baha35@gmail.com');
-        $this->senderName = $this->params->get('app.mail_from_name', 'EventCraft');
+    public function __construct(LoggerInterface $logger) 
+    {
+        $this->logger = $logger;
     }
 
     /**
-     * Send verification email with a code
+     * Send verification email with reset password code - implemented like JavaFX version
      * 
-     * @param string $toEmail Email address of the recipient
-     * @param string $verificationCode The code to verify
+     * @param string $toEmail The recipient email
+     * @param string $verificationCode The verification code
      * @param \DateTimeInterface|null $expiresAt When the code expires
+     * 
      * @return bool Whether the email was sent successfully
      */
     public function sendVerificationEmail(string $toEmail, string $verificationCode, ?\DateTimeInterface $expiresAt = null): bool
     {
-        try {
-            $email = (new Email())
-                ->from(new Address($this->senderEmail, $this->senderName))
-                ->to($toEmail)
-                ->subject('Code de vérification pour réinitialiser votre mot de passe')
-                ->html($this->createVerificationEmailBody($verificationCode, $expiresAt));
+        // Create a new PHPMailer instance - equivalent to JavaFX MimeMessage
+        $mail = new PHPMailer(true);
 
-            $this->mailer->send($email);
+        try {
+            // Configure SMTP settings - exactly like JavaFX Properties
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 587;
+
+            // Authentication - equivalent to JavaFX PasswordAuthentication
+            $mail->Username = $this->senderEmail;
+            $mail->Password = $this->appPassword; // Using app password WITH spaces like in JavaFX
             
-            $this->logger->info('Verification email sent successfully to: ' . $toEmail);
+            // Set important email properties
+            $mail->CharSet = 'UTF-8';
+            $mail->isHTML(true);
+
+            // Sender and recipient - like JavaFX setFrom and setRecipients
+            $mail->setFrom($this->senderEmail, 'EventCraft');
+            $mail->addAddress($toEmail);
+
+            // Subject
+            $mail->Subject = 'Code de vérification - EventCraft';
+
+            // Get HTML content from Twig template as a string
+            // We're doing this manually as we're not using Symfony's mailer
+            $html = $this->renderEmailTemplate('reset_password.html.twig', [
+                'verification_code' => $verificationCode,
+                'expires_at' => $expiresAt,
+            ]);
+
+            // Create plain text version (simplified)
+            $plainText = "Réinitialisation de votre mot de passe EventCraft\n\n"
+                . "Bonjour,\n\n"
+                . "Nous avons reçu une demande de réinitialisation de mot de passe pour votre compte EventCraft.\n"
+                . "Votre code de vérification est: " . $verificationCode . "\n\n"
+                . ($expiresAt ? "Ce code expirera le " . $expiresAt->format('d/m/Y à H:i') . ".\n\n" : "")
+                . "Si vous n'avez pas demandé cette réinitialisation, vous pouvez ignorer cet email.\n\n"
+                . "Cordialement,\n"
+                . "L'équipe EventCraft";
+
+            // Set content
+            $mail->Body = $html;
+            $mail->AltBody = $plainText;
+
+            // Send the email - equivalent to JavaFX Transport.send
+            $mail->send();
+            
+            $this->logger->info("Verification email sent successfully to {$toEmail}");
             return true;
-        } catch (\Exception $e) {
-            $this->logger->error('Failed to send verification email: ' . $e->getMessage(), [
+        } catch (Exception $e) {
+            $this->logger->error("Failed to send verification email: " . $mail->ErrorInfo, [
                 'exception' => get_class($e),
                 'trace' => $e->getTraceAsString()
             ]);
@@ -53,65 +91,80 @@ class EmailService
     }
 
     /**
-     * Create the HTML body for the verification email
+     * Send a simple text email
      */
-    private function createVerificationEmailBody(string $verificationCode, ?\DateTimeInterface $expiresAt = null): string
+    public function sendEmail(string $to, string $subject, string $message): bool
     {
-        $expirationInfo = '';
-        if ($expiresAt) {
-            $expirationTime = $expiresAt->format('H:i');
-            $expirationInfo = "<p style=\"color: #666;\">Ce code expirera à $expirationTime.</p>";
+        $mail = new PHPMailer(true);
+
+        try {
+            // Configure SMTP settings
+            $mail->isSMTP();
+            $mail->SMTPAuth = true;
+            $mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;
+            $mail->Host = 'smtp.gmail.com';
+            $mail->Port = 587;
+            
+            // Set UTF-8 charset
+            $mail->CharSet = 'UTF-8';
+
+            // Authentication
+            $mail->Username = $this->senderEmail;
+            $mail->Password = $this->appPassword; // Using app password WITH spaces like in JavaFX
+
+            // Sender and recipient
+            $mail->setFrom($this->senderEmail, 'EventCraft');
+            $mail->addAddress($to);
+
+            // Email content
+            $mail->Subject = $subject;
+            $mail->Body = $message;
+
+            // Send the email
+            $mail->send();
+            
+            $this->logger->info("Email sent successfully to {$to}");
+            return true;
+        } catch (Exception $e) {
+            $this->logger->error("Failed to send email: " . $mail->ErrorInfo, [
+                'exception' => get_class($e)
+            ]);
+            return false;
         }
-
-        return <<<HTML
-        <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; border: 1px solid #eaeaea; border-radius: 5px;">
-            <div style="text-align: center; padding-bottom: 20px;">
-                <h1 style="color: #333;">Réinitialisation de mot de passe</h1>
-            </div>
-            <div style="padding: 20px; background-color: #f9f9f9; border-radius: 4px;">
-                <p>Bonjour,</p>
-                <p>Vous avez demandé la réinitialisation de votre mot de passe pour votre compte EventCraft.</p>
-                <p>Voici votre code de vérification :</p>
-                <div style="text-align: center; margin: 30px 0;">
-                    <div style="font-size: 32px; letter-spacing: 5px; font-weight: bold; background-color: #eee; padding: 10px; border-radius: 4px;">$verificationCode</div>
-                </div>
-                <p>Entrez ce code sur la page de vérification pour continuer le processus de réinitialisation de votre mot de passe.</p>
-                $expirationInfo
-                <p>Si vous n'avez pas demandé de réinitialisation de mot de passe, veuillez ignorer cet email.</p>
-            </div>
-            <div style="text-align: center; margin-top: 20px; color: #888; font-size: 12px;">
-                <p>Cet email a été envoyé automatiquement, merci de ne pas y répondre.</p>
-                <p>&copy; EventCraft</p>
-            </div>
-        </div>
-        HTML;
     }
-
+    
     /**
-     * Send a test email
+     * Manually render a Twig template file as a string
      * 
-     * @param string $toEmail The recipient's email address
-     * @return bool Whether the email was sent successfully
+     * This is a simple implementation since we're not using Symfony's Twig service
      */
-    public function sendTestEmail(string $toEmail): bool
+    private function renderEmailTemplate(string $templateName, array $context = []): string
     {
-        try {
-            $email = (new Email())
-                ->from(new Address($this->senderEmail, $this->senderName))
-                ->to($toEmail)
-                ->subject('Test Email from EventCraft')
-                ->html('<p>This is a test email from EventCraft. If you receive this, email sending is working correctly.</p>');
-
-            $this->mailer->send($email);
-            
-            $this->logger->info('Test email sent successfully to: ' . $toEmail);
-            return true;
-        } catch (\Exception $e) {
-            $this->logger->error('Failed to send test email: ' . $e->getMessage(), [
-                'exception' => get_class($e),
-                'trace' => $e->getTraceAsString()
-            ]);
-            return false;
+        $templatePath = dirname(__DIR__, 2) . '/templates/emails/' . $templateName;
+        
+        if (!file_exists($templatePath)) {
+            $this->logger->error("Email template not found: {$templateName}");
+            // Fallback to basic HTML if template isn't found
+            return "<html><body><p>Votre code de vérification est: <strong>{$context['verification_code']}</strong></p></body></html>";
         }
+        
+        $template = file_get_contents($templatePath);
+        
+        // Very basic template variable replacement - in a real app, use Twig service
+        foreach ($context as $key => $value) {
+            if ($key === 'expires_at' && $value instanceof \DateTimeInterface) {
+                $formattedDate = $value->format('d/m/Y à H:i');
+                $template = str_replace("{{ expires_at|date('d/m/Y à H:i') }}", $formattedDate, $template);
+                // Also handle the if condition by removing the if/endif tags but keeping content
+                $template = preg_replace('/\{% if expires_at %\}(.*?)\{% endif %\}/s', '$1', $template);
+            } else {
+                $template = str_replace("{{ {$key} }}", $value, $template);
+            }
+        }
+        
+        // Handle current year for copyright
+        $template = str_replace("{{ \"now\"|date(\"Y\") }}", date('Y'), $template);
+        
+        return $template;
     }
 }

@@ -36,7 +36,7 @@
                 </div>
             {% endfor %}
 
-            <form method="post" id="login-form" class="needs-validation" novalidate>
+            <form method="post" id="login-form" class="needs-validation" action="{{ path('app_login') }}" novalidate>
                 <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
                 
                 <div class="form-floating mb-3">
@@ -59,6 +59,11 @@
                     <input type="checkbox" class="form-check-input" id="remember_me" name="_remember_me" checked>
                     <label class="form-check-label" for="remember_me">Se souvenir de moi</label>
                 </div>
+                
+                {# Include just the reCAPTCHA field from the form #}
+                {% if form is defined %}
+                    {{ form_row(form.captcha, {'row_attr': {'class': 'd-none'}}) }}
+                {% endif %}
                 
                 <div class="d-grid gap-2">
                     <button type="submit" class="btn btn-primary btn-lg" style="background: linear-gradient(to right, #8a5cf6, #d53f8c); border: none;">
@@ -86,6 +91,10 @@
                     <a href="{{ path('connect_google') }}" class="btn btn-outline-secondary">
                         <img src="https://www.google.com/favicon.ico" alt="Google" width="16" height="16" class="me-2">
                         Se connecter avec Google
+                    </a>
+                    <a href="#" class="btn btn-outline-primary" style="background-color: #fff; color: #3b5998; border-color: #3b5998;">
+                        <i class="fab fa-facebook-f me-2"></i>
+                        Se connecter avec Facebook
                     </a>
                 </div>
             </div>

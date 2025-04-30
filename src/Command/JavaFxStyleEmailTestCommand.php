@@ -11,14 +11,17 @@ use Symfony\Component\Console\Output\OutputInterface;
 use Symfony\Component\Console\Style\SymfonyStyle;
 
 #[AsCommand(
-    name: 'app:test-email',
-    description: 'Send a test email to verify SMTP configuration',
+    name: 'app:javafx-email-test',
+    description: 'Test email sending using JavaFX-style implementation',
 )]
-class TestEmailCommand extends Command
+class JavaFxStyleEmailTestCommand extends Command
 {
-    public function __construct(private EmailService $emailService)
+    private $emailService;
+
+    public function __construct(EmailService $emailService)
     {
         parent::__construct();
+        $this->emailService = $emailService;
     }
 
     protected function configure(): void
@@ -37,25 +40,35 @@ class TestEmailCommand extends Command
             return Command::FAILURE;
         }
 
-        $io->note('Trying to send test email to ' . $email);
+        $io->section('Testing JavaFX-style Email Implementation');
+        $io->text('Sending test email to: ' . $email);
         
         try {
             $code = sprintf('%06d', mt_rand(100000, 999999));
+            $io->note('Generated verification code: ' . $code);
+            
+            $io->text('Sending verification email...');
             $result = $this->emailService->sendVerificationEmail(
                 $email, 
-                $code,
-                new \DateTimeImmutable('+1 hour')
+                $code
             );
             
             if ($result) {
-                $io->success('Email sent successfully! Code: ' . $code);
+                $io->success([
+                    'Email sent successfully!',
+                    'Verification code: ' . $code,
+                    'Please check your inbox (including spam folder)'
+                ]);
                 return Command::SUCCESS;
             } else {
-                $io->error('Failed to send email');
+                $io->error('Failed to send email.');
                 return Command::FAILURE;
             }
         } catch (\Exception $e) {
-            $io->error('Exception occurred: ' . $e->getMessage());
+            $io->error([
+                'Exception occurred: ' . $e->getMessage(),
+                'Type: ' . get_class($e)
+            ]);
             return Command::FAILURE;
         }
     }

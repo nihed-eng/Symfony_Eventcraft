@@ -24,32 +24,15 @@
                 </div>
             {% endfor %}
             
-            {% if app.environment == 'dev' %}
-                {% for code in app.flashes('dev_verification_code') %}
-                    <div class="alert alert-warning" role="alert">
-                        <h5 class="alert-heading"><i class="fas fa-exclamation-triangle"></i> Mode Développement</h5>
-                        <p class="mb-0">Code de vérification (pour développement uniquement): <strong style="font-size: 1.2rem; letter-spacing: 0.3rem;">{{ code }}</strong></p>
-                    </div>
-                    
-                    <div class="text-center mb-3">
-                        <a href="{{ path('app_dev_verification_codes') }}" class="text-decoration-none" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Voir tous les codes de développement
-                        </a>
-                    </div>
-                {% endfor %}
-                
-                {% if not app.flashes('dev_verification_code')|length %}
-                    <div class="text-center mb-3">
-                        <a href="{{ path('app_dev_verification_codes') }}" class="text-decoration-none" target="_blank">
-                            <i class="fas fa-external-link-alt"></i> Voir les codes de développement
-                        </a>
-                    </div>
-                {% endif %}
-            {% endif %}
-            
             {% for message in app.flashes('warning') %}
                 <div class="alert alert-warning" role="alert">
                     {{ message|raw }}
+                </div>
+            {% endfor %}
+            
+            {% for message in app.flashes('success') %}
+                <div class="alert alert-success" role="alert">
+                    {{ message }}
                 </div>
             {% endfor %}
             
